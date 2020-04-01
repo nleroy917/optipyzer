@@ -12,6 +12,8 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+DB_NAME = 'codon_usage_data.db'
+
 # Testing route/main route
 @app.route('/test')
 def api_base_test():
@@ -24,12 +26,15 @@ def api_base_test():
 # Route to optimize DNA sequence
 @app.route('/optimize/dna', methods=['POST'])
 def optimize_dna():
-	seq = request.body['seq']
-	organism_list = request.body['org_list']
-	weights = request.body['weights']
+	data = request.get_json()
+	seq = data['seq']
+	organism_list = [int(x) for x in data['org_list']]
+	weights_cleaned = {}
+	for org in data['weights']:
+		weights_cleaned[int(org)] = float(data['weights'][org])
 
-	optipyzer = CodonOptimizer()
-	optipyzer.set_organisms(organism_list,weights)
+	optipyzer = CodonOptimizer(DB_NAME)
+	optipyzer.set_organisms(organism_list,weights_cleaned)
 	optipyzer.optimize(seq,seq_type='dna')
 
 	return_package = {
@@ -48,11 +53,14 @@ def optimize_dna():
 # Route to optimize Protein sequence
 @app.route('/optimize/protein', methods=['POST'])
 def optimize_pro():
-	seq = request.body['seq']
-	organism_list = request.body['org_list']
-	weights = request.body['weights']
+	data = request.get_json()
+	seq = data['seq']
+	organism_list = [int(x) for x in data['org_list']]
+	weights_cleaned = {}
+	for org in data['weights']:
+		weights_cleaned[int(org)] = float(data['weights'][org])
 
-	optipyzer = CodonOptimizer()
+	optipyzer = CodonOptimizer(DB_NAME)
 	optipyzer.set_organisms(organism_list,weights)
 	optipyzer.optimize(seq,seq_type='protein')
 

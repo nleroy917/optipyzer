@@ -316,6 +316,7 @@ def convert_DNA_to_protein(query):
     protein_query = ""
     position = 0
     # iterates through each base in the DNA query
+    stop_pos = 0
     for base in query:
         position += 1
         # ensures no invalid characters were entered as a DNA-nucleotide base

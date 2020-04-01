@@ -1,8 +1,19 @@
 import sys
+import warnings
 sys.path.append('..')
 
 from lib.engine import *
 from lib.CodonDataPull import *
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 class CodonOptimizer():
 
@@ -41,9 +52,9 @@ class CodonOptimizer():
 			self._seqIsProtein = True
 		else:
 			# If not given, attempt to detect
-			warnings.warn('Seq type {} unknown! Attempting to detect sequence type automatically!'.format(seq_type))
+			print(f"{bcolors.WARNING}Warning: Unknown seq_type: '{seq_type}' ... Attemping to detect sequence{bcolors.ENDC}")
 			type_detected = self.seq_detect(seq)
-			print('seq_type being set to: {}'.format(type_detected))
+			print(f"{bcolors.WARNING}Sequence being set to {type_detected}{bcolors.ENDC}")
 
 		# initialize the dictionary to store usage data.
 		usage_data = {}
@@ -68,9 +79,9 @@ class CodonOptimizer():
 
 		self.peptide_seq,self.stop_codon = validate_query(self.seq, self._seqIsDNA)
 
-		self.optimmized_sd, self.min_difference_sumsquares, self.best_expression_sd = optimize_multitable_sd(average_table, self.seq,
+		self.optimmized_sd, self.min_difference_sumsquares, self.best_expression_sd = optimize_multitable_sd(average_table, self.peptide_seq,
 	                                                                                      	usage_data, rca_xyz, self.weights)
-		self.optimmized_ad, self.min_difference_absvalue, self.best_expression_ad = optimize_multitable_ad(average_table, self.seq,
+		self.optimmized_ad, self.min_difference_absvalue, self.best_expression_ad = optimize_multitable_ad(average_table, self.peptide_seq,
                                                                                           usage_data, rca_xyz, self.weights)
 
 
@@ -78,23 +89,28 @@ class CodonOptimizer():
 	def report(self):
 		if self.stop_codon == 0:
 			print('No Stop Codons Found')
+			print('Protein Sequence: {}\n'.format(self.peptide_seq))
+			print("Optimized sequence (square difference): {}".format(self.optimmized_sd))
+			print("Expression levels (square difference): {}\n".format(self.best_expression_sd))
+			print("Optimized sequence (absolute value of difference): {}".format(self.optimmized_ad))
+			print("Expression levels (absolute value of difference): {}".format(self.best_expression_ad))
 		else:
 			print('Stop Codon found at position {}'.format(self.stop_codon))
-		print('Protein Sequence: {}\n'.format(self.peptide_seq))
-		print("Optimized sequence (square difference): {}".format(self.optimmized_sd))
-		print("Expression levels (square difference): {}\n".format(self.best_expression_sd))
-		print("Optimized sequence (absolute value of difference): {}".format(self.optimmized_ad))
-		print("Expression levels (absolute value of difference): {}".format(self.best_expression_ad))
+			print('Protein Sequence: {}\n'.format(self.peptide_seq))
+			print("Optimized sequence (square difference): {}".format(self.optimmized_sd))
+			print("Expression levels (square difference): {}\n".format(self.best_expression_sd))
+			print("Optimized sequence (absolute value of difference): {}".format(self.optimmized_ad))
+			print("Expression levels (absolute value of difference): {}".format(self.best_expression_ad))
 
-	def seq_detect(self):
-		print('Attempting to detect sequence')
-		if all(c in "ATGC" for c in string):
-			print('DNA Sequence Detected')
+	def seq_detect(self,seq):
+
+		if all(c.lower() in "atgc" for c in seq):
+			print(f"{bcolors.WARNING}DNA sequence detected{bcolors.ENDC}")
 			self._seqIsDNA = True
 			self._seqIsProtein = False
 			return 'DNA'
 		else:
-			print('Protein Sequence Detected')
+			print(f"{bcolors.WARNING}Protein sequence detected{bcolors.ENDC}")
 			self._seqIsDNA = False
 			self._seqIsProtein = True
 			return 'Protein'
