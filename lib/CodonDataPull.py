@@ -1,6 +1,27 @@
 import sqlite3
 import os
 
+def fetch_species_for_UI(db_file):
+
+  curs = connect_to_db(db_file)
+  query = '''
+          SELECT * FROM ORGANISMS
+          '''
+
+  curs.execute(query)
+  result = curs.fetchall()
+
+  print(result[:5])
+  print(type(result[0]))
+  speciesList = []
+  
+  for species in result:
+    speciesList.append({'id': species[0],
+                        'name':species[4]})
+
+
+  return speciesList
+
 def connect_to_db(db_file):
 
     # FOR THIS PURPOSES OF THIS TESTING CODE< THE DB IS MADE IN MEMORY

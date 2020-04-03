@@ -60,13 +60,30 @@ export default class Landing  extends React.Component{
 								 spacing={6}
 								 >
 								   <Grid item>
-								   	<LandingCard buttonText="Optimize" image_link='https://image.flaticon.com/icons/png/512/17/17883.png' heading='Optimize' body='Use our multi-species codon optimization tool to perfect your DNA sequence.'/>
+								   	<LandingCard buttonText="Optimize" 
+								   	  image_link='https://image.flaticon.com/icons/png/512/17/17883.png' 
+								   	  heading='Optimize' 
+								   	  body='Use our multi-species codon optimization tool to perfect your DNA sequence.'
+								   	  path="optimize"
+								   	/>
 								   </Grid>
 								   <Grid item>
-								   	<LandingCard buttonText="About" image_link='https://cdn1.iconfinder.com/data/icons/ios-11-glyphs/30/about-512.png' heading='About the Engine' body='Learn about the math, biology, and algorithms behind our unique tool.'/>
+								   	<LandingCard 
+								   	  buttonText="About" 
+								   	  image_link='https://cdn1.iconfinder.com/data/icons/ios-11-glyphs/30/about-512.png' 
+								   	  heading='About the Engine' 
+								   	  body='Learn about the math, biology, and algorithms behind our unique tool.'
+								   	  path=""
+								   	  />
 								   </Grid>
 								   <Grid item>
-								   	<LandingCard buttonText="Dev Tools" image_link='https://anyline.com/wp-content/uploads/2019/07/web-api-icon.png' heading='API & Dev Tools' body='Developer? Try out our open and free API and learn how you can use it in custom apps.'/>
+								   	<LandingCard 
+								   	  buttonText="Dev Tools" 
+								   	  image_link='https://anyline.com/wp-content/uploads/2019/07/web-api-icon.png' 
+								   	  heading='API & Dev Tools' 
+								   	  body='Try out our open and free API. Learn how you can use it in custom apps.'
+								   	  path=""
+								   	  />
 								   </Grid>
 							  </Grid>
 	  				      </Grid>

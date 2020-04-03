@@ -12,6 +12,8 @@ import { useOverShadowStyles } from '../Styles/over';
 // Import Color Palette
 import ColorPalette from '../Resources/ColorPalette'
 
+const base_url='http://localhost:3000/'
+
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   root: {
     margin: 'auto',
@@ -94,7 +96,7 @@ const LandingCard = (props) => {
             props.body
           }
         />
-        <Button className={buttonStyles}>{props.buttonText}</Button>
+        <Button className={buttonStyles} href={base_url + props.path}>{props.buttonText}</Button>
       </CardContent>
     </Card>
   );

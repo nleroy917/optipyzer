@@ -3,6 +3,9 @@ from lib.CodonDataPull import *
 from lib.codon_optimizer import CodonOptimizer
 import sys
 
+# import sqlite
+import sqlite3
+
 # import flask
 from flask import Flask
 from flask import jsonify
@@ -77,6 +80,13 @@ def optimize_pro():
 	return jsonify(return_package)
 
 
+# Route to optimize Protein sequence
+@app.route('/fetch/species', methods=['GET'])
+def fetch_species():
+
+	speciesList = fetch_species_for_UI(DB_NAME)
+
+	return jsonify(speciesList)
 
 
 # RUN API
