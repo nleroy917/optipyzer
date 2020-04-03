@@ -1,25 +1,35 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+
+// Import the React Router Components
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+
+// Import Custom Pages
+import Landing from './Pages/Landing'
+import Optimize from './Pages/Optimize'
+import Results from './Pages/Results'
+import About from './Pages/About'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route path="/optimize/" component={Optimize}>
+          </Route>
+          <Route path="/about/" component={About}>
+          </Route>
+          <Route path="/results/" component={Results}>
+          </Route>
+          <Route path="/" exact component={Landing}>
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
