@@ -5,7 +5,7 @@ const ColorPalette = {
 	accent: '#A9E5BB',
 	black: '#000000',
 	formBackground: '#dfffef',
-	textInput: '#ec007e'
+	textInput: '#222d62'
 
 }
 

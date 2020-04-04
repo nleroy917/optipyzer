@@ -5,20 +5,19 @@ def fetch_species_for_UI(db_file):
 
   curs = connect_to_db(db_file)
   query = '''
-          SELECT * FROM ORGANISMS
+          SELECT * FROM ORGANISMS GROUP BY SPECIES
           '''
 
   curs.execute(query)
   result = curs.fetchall()
-
   print(result[:5])
-  print(type(result[0]))
+
+  names=[]
   speciesList = []
-  
+
   for species in result:
     speciesList.append({'id': species[0],
                         'name':species[4]})
-
 
   return speciesList
 
