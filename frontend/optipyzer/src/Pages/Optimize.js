@@ -15,6 +15,7 @@ import Loader from '../Components/Loader'
 import SequenceInput from '../Components/SequenceInput'
 import SpeciesSelect from '../Components/SpeciesSelect'
 import TypeSelect from '../Components/TypeSelect'
+import WeightSelector from '../Components/WeightSelector'
 
 // import css
 import './css/Optimize.css';
@@ -56,6 +57,7 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   		align: 'center'
   	},
   	minWidth: '40vw',
+    maxWidth: '40vw',
   	alignItems: 'left'
   },
 
@@ -75,6 +77,7 @@ const Optimize = (props) => {
   const [seq, setSeq] = useState(null);
   const [species,setSpecies] = useState(null);
   const [type, setType] = useState(null);
+  const [weights, setWeights] = useState({});
 
   useEffect(() => {
   	fetchSpecies()
@@ -93,7 +96,11 @@ const Optimize = (props) => {
   }
 
   const handleSubmit = async () => {
-    const response = await axios.post(`${API_URL}/fetch/species`)
+    //const response = await axios.post(`${API_URL}/fetch/species`)
+    console.log(seq)
+    console.log(species)
+    console.log(type)
+    console.log(weights)
   }
 
   if(speciesList){
@@ -135,6 +142,29 @@ const Optimize = (props) => {
       		  	     <Grid item lg={10} xl={10}>
                      <SpeciesSelect speciesList={speciesList} setSpecies={setSpecies}/>
       					   </Grid>
+                   <Grid item lg={10} xl={10}>
+                     {(species && Object.entries(species).length !== 0) ? 
+                      <Typography>
+                         Species Weights
+                      </Typography>
+                      :
+                      ' '
+                     }
+                     {species ? 
+                      species.map((species,index) => {
+                      return(
+                        <div>
+                          <WeightSelector
+                            key={index}
+                            weights={weights} 
+                            setWeights={setWeights} 
+                            name={species.name} 
+                            id={species.id}
+                          />
+                        </div>
+                        );
+                      }) : ' '}
+                   </Grid>
                    <Grid item lg={10} xl={10}>
                     <Button variant="outlined" color="secondary" onClick={handleSubmit}>
                       Optimize Sequence
