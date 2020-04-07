@@ -92,7 +92,7 @@ const Optimize = (props) => {
 
   }
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const response = await axios.post(`${API_URL}/fetch/species`)
   }
 
