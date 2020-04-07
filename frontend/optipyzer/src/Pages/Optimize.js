@@ -65,7 +65,18 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   	align: 'left'
   },
   formTitle: {
-  	color: `${ColorPalette.textInput}`
+  	color: `${ColorPalette.textInput}`,
+    textAlign: 'left',
+    fontWeight: '300'
+  },
+  formSection : {
+    fontWeight: '400',
+    textAlign: 'left',
+    padding: '5px'
+  },
+  hr: {
+    borderTop: '1px',
+    borderColor: '#dedede'
   }
 }));
 
@@ -77,15 +88,20 @@ const Optimize = (props) => {
   const [seq, setSeq] = useState(null);
   const [species,setSpecies] = useState(null);
   const [type, setType] = useState(null);
-  const [weights, setWeights] = useState({});
+  const [weights, setWeights] = useState(null);
 
   useEffect(() => {
-  	fetchSpecies()
-  },[])
+    if(!speciesList){
+  	   fetchSpecies()
+     }
+    if(weights) {
+      //fixWeights()
+    }
+
+  },[species])
 
   const fetchSpecies = async () => {
-
-  	const response = await axios.get(`${API_URL}/fetch/species`)
+  	const response = await axios.get(`${API_URL}fetch/species`)
 
     if(response.status === 200) {
           //console.log(response)
@@ -95,12 +111,45 @@ const Optimize = (props) => {
 
   }
 
+  const fixWeights = () => {
+      console.log('Fix Weights\n-=-=-=---=-=-=--=--=--=')
+      //console.log(species)
+      //console.log(weights)
+      for(var id in weights) {
+
+        var cnt = 0
+        for(var index in species ) {
+
+          var spec = species[index]
+          console.log(spec)
+
+          if(spec.id == id){
+            console.log(`Found ${id} in ${spec}`)
+            // break - we found it
+            cnt += 1
+            break
+          }
+
+          }
+
+
+        }
+      }
+
   const handleSubmit = async () => {
     //const response = await axios.post(`${API_URL}/fetch/species`)
     console.log(seq)
     console.log(species)
     console.log(type)
     console.log(weights)
+
+    // if(seq===null){
+    //   alert('Sequence is required!')
+    // }else if(species===null){
+    //   alert('At least 1 species is required!')
+    // }else if(type===null) {
+    //   alert('Sequence type is required!')
+    // }
   }
 
   if(speciesList){
@@ -129,7 +178,7 @@ const Optimize = (props) => {
     						  spacing={2}
     					    >
       				    <Grid item lg={10} xl={10}>
-      				      <Typography variant="h3" className={styles.formTitle}>
+      				      <Typography variant="h4" className={styles.formTitle}>
       				        Optimize Sequence
       				      </Typography>
       				    </Grid>
@@ -140,20 +189,32 @@ const Optimize = (props) => {
                     <SequenceInput seqType={type} setSeq={setSeq}/>
       	  	       </Grid>
       		  	     <Grid item lg={10} xl={10}>
-                     <SpeciesSelect speciesList={speciesList} setSpecies={setSpecies}/>
+                     <SpeciesSelect 
+                     speciesList={speciesList} 
+                     setSpecies={setSpecies}
+                     weights={weights}
+                     setWeights={setWeights}
+                     species={species}
+                     />
       					   </Grid>
                    <Grid item lg={10} xl={10}>
-                     {(species && Object.entries(species).length !== 0) ? 
-                      <Typography>
-                         Species Weights
-                      </Typography>
+                     {(species && Object.entries(species).length !== 0) ?
+                      <div>
+                        <br></br>
+                          <div  className={styles.formSection}>
+                            <Typography variant="h6">
+                               Species Weights
+                            </Typography>
+                            <hr className={styles.hr}></hr>
+                        </div>
+                      </div>
                       :
                       ' '
                      }
                      {species ? 
                       species.map((species,index) => {
                       return(
-                        <div>
+                        <div key={index}>
                           <WeightSelector
                             key={index}
                             weights={weights} 

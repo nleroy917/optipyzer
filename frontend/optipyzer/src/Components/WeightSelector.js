@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 
 // import material ui
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,13 +8,22 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles({
   slider: {
     width: '100%',
+    textAlign:'left'
   },
+  speciesName: {
+  	fontWeight: '200'
+  }
 });
 
 const defaultVal = 1
 
 const WeightSelector = (props) => {
-
+	
+	useEffect(() => {
+		//console.log(`Weight Selector props.weights:`)
+		//console.log(props.weights)
+		props.setWeights({...props.weights, [props.id]: 1})
+	},[])
 
 	const styles = useStyles()
 
@@ -24,18 +33,18 @@ const WeightSelector = (props) => {
 
 	return (
 		<div className={styles.slider}>
+		 <Typography className={styles.speciesName}>
             {props.name}
+         </Typography>
 		  <Slider
-	        defaultValue={1}
+	        defaultValue={defaultVal}
 	        getAriaValueText={valuetext}
-	        aria-labelledby="discrete-slider"
 	        valueLabelDisplay="auto"
 	        step={1}
-	        marks
 	        min={1}
 	        max={10}
 	        onChange={(event,value) => {
-	        	console.log(value)
+	        	//console.log(value)
 	        	props.setWeights({...props.weights, [props.id]: value})
 	        }}
       	  />

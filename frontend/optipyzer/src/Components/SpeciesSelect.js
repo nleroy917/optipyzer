@@ -43,10 +43,12 @@ const SpeciesSelect = (props) => {
 
   	const styles = useStyles();
 
+
 	return(
 		<Autocomplete
-          onChange={(event,value) => {
+        onChange={(event,value) => {
           	props.setSpecies(value)
+            //fixWeights(event,value)
                     }}
 	      multiple
 	      id="species"

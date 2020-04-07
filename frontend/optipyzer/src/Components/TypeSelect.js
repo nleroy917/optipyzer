@@ -17,7 +17,6 @@ const TypeSelect = (props) => {
 	return(
 		<div>
 		  <FormControl component="fieldset">
-			<FormLabel component="legend">Sequence Type</FormLabel>
 				<RadioGroup row aria-label="Sequence Type" name="seqType" defualtvalue="dna" onChange={handleChange}>
 		          <FormControlLabel value="dna" control={<Radio />} label="DNA" />
 		          <FormControlLabel value="protein" control={<Radio />} label="Protein" />
