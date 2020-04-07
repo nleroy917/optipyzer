@@ -41,7 +41,6 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     marginLeft: 'auto',
     marginRight: 'auto',
     marginTop: spacing(-3),
-    height: 0,
     paddingBottom: '48%',
     borderRadius: spacing(2),
     backgroundColor: '#fff',

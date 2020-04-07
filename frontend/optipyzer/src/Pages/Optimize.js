@@ -4,18 +4,17 @@ import React, { useState, useEffect } from 'react';
 // import material ui
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import Chip from '@material-ui/core/Chip';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import CircularProgress from '@material-ui/core/CircularProgress';
 
 // import custom components
 import Loader from '../Components/Loader'
+import SequenceInput from '../Components/SequenceInput'
+import SpeciesSelect from '../Components/SpeciesSelect'
+import TypeSelect from '../Components/TypeSelect'
 
 // import css
 import './css/Optimize.css';
@@ -37,11 +36,6 @@ const theme = createMuiTheme({
     }
   },
 )
-
-const speciesList = [{name:'E.Coli', id: 1 }, 
-                     {name:'Campilobacter', id: 2 }, 
-                     {name:'Helobacter', id: 3 }, 
-                     {name:'Bacillus Subtilus', id: 4 }]
 
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   root: {
@@ -65,9 +59,6 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   	alignItems: 'left'
   },
 
-  formTextField: {
-  	width: '100%'
-  },
   form: {
   	align: 'left'
   },
@@ -77,8 +68,14 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 }));
 
 const Optimize = (props) => {
+
   const styles = useStyles();
+
   const [speciesList, setSpeciesList] = useState(null);
+  const [seq, setSeq] = useState(null);
+  const [species,setSpecies] = useState(null);
+  const [type, setType] = useState(null);
+
   useEffect(() => {
   	fetchSpecies()
   },[])
@@ -88,12 +85,17 @@ const Optimize = (props) => {
   	const response = await axios.get(`${API_URL}/fetch/species`)
 
     if(response.status === 200) {
-          console.log(response)
+          //console.log(response)
           const data = await response.data
           setSpeciesList(data)
     }
 
   }
+
+  const handleSubmit = () => {
+    const response = await axios.post(`${API_URL}/fetch/species`)
+  }
+
   if(speciesList){
   return(
   	<div>
@@ -112,50 +114,33 @@ const Optimize = (props) => {
 	  	        <MuiThemeProvider theme={theme}>
 		  	      	<form className="form">
 		  	          <Grid
-						  container
-						  direction="column"
-						  justify="center"
-						  alignItems="stretch"
-						  alignContent="center"
-						  spacing={2}
-					    >
-					    <Grid item lg={10} xl={10}>
-					      <Typography variant="h3" className={styles.formTitle}>
-					        Optimize Sequence
-					      </Typography>
-					    </Grid>
-					    <Grid item lg={10} xl={10}>
-			  	          <TextField 
-			  	            variant="outlined" 
-			  	            id="seq" 
-			  	            label="Sequence" 
-			  	            multiline="true"
-			  	            required="true"
-			  	            fullWidth
-			  	            className={styles.formTextField}
-			  	          />
-		  	          	</Grid>
-			  	          <Grid item lg={10} xl={10}>
-				  	          <Autocomplete
-						        multiple
-						        id="species"
-						        options={speciesList}
-						        getOptionLabel={(option) => option.name}
-						        filterSelectedOptions
-						        renderInput={(params) => (
-						          <TextField
-						            className={styles.formTextField}
-						            {...params}
-						            variant="outlined"
-						            label="Select Species"
-						            placeholder="Select Species"
-				  	            required="true"
-				  	            fullWidth
-						          />
-						        )}
-						      />
-						      </Grid>
-					      </Grid>
+    						  container
+    						  direction="column"
+    						  justify="center"
+    						  alignItems="stretch"
+    						  alignContent="center"
+    						  spacing={2}
+    					    >
+      				    <Grid item lg={10} xl={10}>
+      				      <Typography variant="h3" className={styles.formTitle}>
+      				        Optimize Sequence
+      				      </Typography>
+      				    </Grid>
+                  <Grid item lg={10} xl={10}>
+                    <TypeSelect setType={setType}/>
+                  </Grid>
+      				    <Grid item lg={10} xl={10}>
+                    <SequenceInput seqType={type} setSeq={setSeq}/>
+      	  	       </Grid>
+      		  	     <Grid item lg={10} xl={10}>
+                     <SpeciesSelect speciesList={speciesList} setSpecies={setSpecies}/>
+      					   </Grid>
+                   <Grid item lg={10} xl={10}>
+                    <Button variant="outlined" color="secondary" onClick={handleSubmit}>
+                      Optimize Sequence
+                    </Button>
+                   </Grid>
+					       </Grid>
 		  	        </form>
 	  	        </MuiThemeProvider>
   	        </Container>
