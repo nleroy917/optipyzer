@@ -5,12 +5,11 @@ def fetch_species_for_UI(db_file):
 
   curs = connect_to_db(db_file)
   query = '''
-          SELECT * FROM ORGANISMS GROUP BY SPECIES
+          SELECT * FROM autocomplete_data GROUP BY SPECIES
           '''
 
   curs.execute(query)
   result = curs.fetchall()
-  print(result[:5])
 
   names=[]
   speciesList = []

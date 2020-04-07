@@ -149,8 +149,8 @@ const Optimize = (props) => {
 						            variant="outlined"
 						            label="Select Species"
 						            placeholder="Select Species"
-				  	            	required="true"
-				  	            	fullWidth
+				  	            required="true"
+				  	            fullWidth
 						          />
 						        )}
 						      />
