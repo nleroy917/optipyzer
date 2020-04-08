@@ -95,7 +95,7 @@ const Optimize = (props) => {
   	   fetchSpecies()
      }
     if(weights) {
-      //fixWeights()
+      fixWeights()
     }
 
   },[species])
@@ -112,28 +112,35 @@ const Optimize = (props) => {
   }
 
   const fixWeights = () => {
-      console.log('Fix Weights\n-=-=-=---=-=-=--=--=--=')
-      //console.log(species)
-      //console.log(weights)
+
+      //console.log('Fixing Weights')
+      // Extract all id's from weights
+      const weights_ids = []
+      for(var wt_id in weights) {
+        weights_ids.push(wt_id)
+      }
+
+      // Extract all id's from species
+      const species_ids = []
+      for(var i in species) {
+        var spec = species[i]
+        species_ids.push(spec.id.toString()) // spec.id is an int
+        if(!(weights_ids.includes(spec.id.toString()))) {
+          weights[spec.id.toString()] = 1
+        }
+      }
+
+      // Iterate through weights - if an id in weights isnt in the array, delete it
+      // Note that each id in weights is a string
       for(var id in weights) {
 
-        var cnt = 0
-        for(var index in species ) {
-
-          var spec = species[index]
-          console.log(spec)
-
-          if(spec.id == id){
-            console.log(`Found ${id} in ${spec}`)
-            // break - we found it
-            cnt += 1
-            break
-          }
-
-          }
-
-
+        if(!(species_ids.includes(id))){
+          //console.log(`Found extraneous id in weights: ${id}... deleteing`)
+          delete weights[id]
         }
+      }
+
+      setWeights(weights)
       }
 
   const handleSubmit = async () => {
