@@ -237,6 +237,19 @@ def get_weights(organism_list):
 
     return weights
 
+def species_from_id(DB_NAME,org_id):
+
+    curs = connect_to_db(DB_NAME)
+    # generate query using the previously generated codon string
+    query = '''SELECT * FROM organisms
+                WHERE org_id = ?'''
+
+    # execute the query using the organism id passed
+    curs.execute(query, [org_id])
+    result = curs.fetchall()
+
+    return result[0]
+
 
 # Testing code
 if __name__ == '__main__':

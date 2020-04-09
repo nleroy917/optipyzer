@@ -19,6 +19,12 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 	formTextField: {
 	  	width: '100%'
 	  },
+	  paperContainer: {
+	  	padding: '10px'
+	  },
+	  paper: {
+	  	background: 'rgba(143,161,251,0.37)'
+	  }
 
   }));
 
@@ -27,17 +33,19 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   	const styles = useStyles()
 
   	return(
-  		<div className={styles.padding}>
+  		<div>
   			<Paper
-  			  elevation={10}
+  			  elevation={3}
+  			  className={styles.paper}
   			>
+  			<div className={styles.paperContainer}>
   		<Grid 
   		    container 
   	        direction="row">
 		  <Grid item ls={11} xs={11}>
 	   		  <TextField
 	   		  defaultValue={props.seq}
-	            variant="outlined" 
+	            variant="standard" 
 	            id="seq" 
 	            label={props.label}
 	            multiline={true}
@@ -54,6 +62,7 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 	           />
 	           </Grid>
 	           </Grid>
+	           </div>
   			</Paper>
   		</div>
   		);

@@ -82,7 +82,7 @@ def optimize_pro():
 	return jsonify(return_package)
 
 
-# Route to optimize Protein sequence
+# Route to get all species from database for UI
 @app.route('/fetch/species', methods=['GET'])
 def fetch_species():
 
@@ -90,6 +90,18 @@ def fetch_species():
 
 	return jsonify(speciesList)
 
+# Route to get species from id
+@app.route('/fetch/species/<org_id>', methods=['GET'])
+def id_to_species(org_id):
+
+	species = species_from_id(DB_NAME,org_id)
+	return_package = {
+	  'name': species[4],
+	  'id': species[0],
+	  'seq_type': species[5]
+	}
+
+	return jsonify(return_package)
 
 # RUN API
 if __name__ == '__main__':

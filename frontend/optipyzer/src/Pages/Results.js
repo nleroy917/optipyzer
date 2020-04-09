@@ -16,6 +16,11 @@ import SequenceResults from '../Components/SequenceResults'
 // Import Color Palette
 import ColorPalette from '../Resources/ColorPalette'
 
+// import axios
+const axios = require('axios').default;
+
+const API_URL = 'http://127.0.0.1:5000/'
+
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   formPaper: {
   	background: '#FFF', //`${ColorPalette.formBackground}`,
@@ -33,7 +38,26 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     textAlign: 'Left',
     fontWeight: '300',
     padding:'0'
-  }
+  },
+    formSubTitle: {
+    	textAlign: 'left',
+    	color: `${ColorPalette.primary}`,
+    	fontWeight: '400',
+    	padding:'0'
+    },
+    formSubSubTitle: {
+    	textAlign: 'left',
+    	color: 'rgba(0,0,0,0.54)',
+    	fontWeight: '300',
+    	padding:'0px'
+    },
+    paperContainer: {
+	  	padding: '10px'
+	  },
+	  expProf: {
+	  	textAlign: 'left',
+	  	paddingLeft: '30px'
+	  }
   }));
 
 
@@ -42,10 +66,74 @@ const Results = (props) => {
 	const styles = useStyles();
 
 	const [data,setData] = useState(props.location.state.data);
+	//const [sdFixed,setSDFixed] = useState(props.location.state.data);
+	//const [sdFixed,setSDFixed] = useState(props.location.state.data);
+	const [expressionSD,setExpressionSD] = useState(props.location.state.data.best_expression_sd)
+	const [expressionAD,setExpressionAD] = useState(props.location.state.data.best_expression_ad)
 
 	useEffect(() => {
-		console.log(props.location.state.data)
+		fixExpression(expressionSD,setExpressionSD)
+		fixExpression(expressionAD,setExpressionAD)
 	},[])
+
+	const fixExpression = async (expression,setExp) => {
+
+		const exp_new = {}
+		var sum = 0
+
+		for(var id in expression) {
+			sum += expression[id]
+		}
+
+		for(var id in expression) {
+
+			let response = await axios.get(`${API_URL}fetch/species/${id}`)
+
+	    	if(response.status === 200) {
+	          //console.log(response)
+	          let data =  await response.data
+	          exp_new[data.name] = expression[id]/sum*100
+			}
+		}
+
+		setExp(exp_new)
+	}
+
+
+
+	const renderExpressionProfile = (expression) => {
+
+		const names = []
+
+		for(var name in expression) {
+			names.push(name)
+		}
+
+		return(
+			<div>
+			 {names.map((name) => {
+			 	return(
+			 		<div className={styles.expProf}>
+			 		  {`${name}: ${Math.round(expression[name],4)}% `}
+			 		</div>
+			 		);
+			 })}
+			</div>
+			);
+	}
+
+	const id_to_species = async (id) => {
+
+		let response = await axios.get(`${API_URL}fetch/species/${id}`)
+
+    	if(response.status === 200) {
+          //console.log(response)
+          let data =  await response.data
+          return data.name
+          
+    }
+
+	}
 
 	return (
 		<div>
@@ -68,7 +156,7 @@ const Results = (props) => {
 				  direction="column"
 				  justify="center"
 				  alignItems="stretch"
-				  spacing={10}
+				  spacing={2}
 				  style={{minWidth: '100%'}}
 			    >
 			      <Grid item>
@@ -79,12 +167,108 @@ const Results = (props) => {
 			         >
 			          Results
 			        </Typography>
+			        <hr></hr>
 			      </Grid>
-			      <Grid item xs={12} lg={12}>
+			      <Grid item>
+			        <Typography 
+			           variant="h5" 
+			           className={styles.formSubTitle}
+
+			         >
+			          Optimized Sequence
+			        </Typography>
+			      </Grid>
+			      <Grid item>
 			        <SequenceResults
 			          label="Sequence (Squared Difference)"
 			          seq={data.optimmized_sd}
 			        />
+			      </Grid>
+			      <Grid item>
+			        <SequenceResults
+			          label="Sequence (Absolute Difference)"
+			          seq={data.optimmized_ad}
+			        />
+			      </Grid>
+			      <Grid item>
+			        <Typography 
+			           variant="h5" 
+			           className={styles.formSubTitle}
+			         >
+			          Translated Sequence
+			        </Typography>
+			      </Grid>
+			      <Grid item>
+			        <SequenceResults
+			          label="Peptide Sequence"
+			          seq={data.peptide_seq}
+			        />
+			      </Grid>
+			      <Grid item>
+			        <Typography 
+			           variant="h5" 
+			           className={styles.formSubTitle}
+			         >
+			          Meta-Data
+			        </Typography>
+			      </Grid>
+			      <Grid item>
+			        <Paper
+			          style={{background: 'rgba(143,161,251,0.37)'}}
+			        >
+			        <div className={styles.paperContainer}>
+				    <Grid
+					  container
+					  direction="row"
+					  justify="flex-start"
+					  alignItems="center"
+					  spacing={10}
+					  style={{minWidth: '100%'}}
+				    >
+				    <Grid item>
+						<Grid
+						  container
+						  direction="column"
+						  justify="flex-start"
+						  alignItems="center"
+						  spacing={1}
+						  style={{minWidth: '100%'}}
+					    >
+					      <Grid item>
+					        <Typography 
+					           variant="h6" 
+					           className={styles.formSubSubTitle}
+					         >
+					          Expression Profile - SD
+					        </Typography>
+					      </Grid>
+					      <Grid item>
+					      <Typography 
+					        variant="body1"
+					      >
+					       {renderExpressionProfile(expressionSD)}
+					       </Typography>
+					      </Grid>
+					      <Grid item>
+					        <Typography 
+					           variant="h6" 
+					           className={styles.formSubSubTitle}
+					         >
+					          Expression Profile - AD
+					        </Typography>
+					      </Grid>
+					      <Grid item>
+					      <Typography 
+					        variant="body1"
+					      >
+					       {renderExpressionProfile(expressionAD)}
+					       </Typography>
+					      </Grid>
+					    </Grid>
+				    </Grid>
+				    </Grid>
+				    </div>
+				    </Paper>
 			      </Grid>
 			    </Grid>
 	  	      </Paper>

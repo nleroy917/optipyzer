@@ -1,5 +1,5 @@
 // import core React
-import React from 'react';
+import React, { useState } from 'react';
 
 // import material ui
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,14 +17,28 @@ const useStyles = makeStyles(() => ({
 
 const SequenceInput = (props) => {
 
-    const styles = useStyles();
+  const [error,setError] = useState(false);
+  const [tempSeq,setTempSeq] = useState(props.seq)
+  const styles = useStyles();
 
 	return(
 	  <ClickAwayListener
 	    onClickAway={() => {
+         //console.log(tempSeq)
+         if(!(tempSeq)){
+          setError(false)
+          return 
+         }
+         if(tempSeq.length % 3 !== 0){
+          setError(true)
+         } else {
+          setError(false)
+         }
 	    	 }}
 	  >
-  	   <TextField 
+  	   <TextField
+            error={error}
+            helperText={error ? 'Sequence must be divisible by 3':''}
             variant="outlined" 
             id="seq" 
             label="Sequence" 
@@ -32,7 +46,10 @@ const SequenceInput = (props) => {
             required={true}
             fullWidth
             className={styles.formTextField}
-            onChange={(event) => {props.setSeq(event.target.value)}}
+            onChange={(event) => {
+              props.setSeq(event.target.value)
+              setTempSeq(event.target.value)
+            }}
           />
         </ClickAwayListener>
 		);
