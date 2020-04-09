@@ -50,6 +50,8 @@ def optimize_dna():
 		'best_expression_ad': optipyzer.best_expression_ad
 	}
 
+	print(return_package)
+
 	return jsonify(return_package)
 
 

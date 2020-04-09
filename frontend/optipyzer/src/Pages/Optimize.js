@@ -1,5 +1,6 @@
 // import core React
 import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 
 // import material ui
 import { makeStyles } from '@material-ui/core/styles';
@@ -50,7 +51,7 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   },
 
   formPaper: {
-  	background: `${ColorPalette.formBackground}`,
+  	background: '#FFF', //`${ColorPalette.formBackground}`,
   	padding: '30px',
   	[breakpoints.only('xs')]: {
   		minWidth: '80vw',
@@ -62,11 +63,11 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   },
 
   form: {
-  	align: 'left'
+  	alignItems: 'left'
   },
   formTitle: {
   	color: `${ColorPalette.textInput}`,
-    textAlign: 'left',
+    textAlign: 'center',
     fontWeight: '300'
   },
   formSection : {
@@ -83,6 +84,8 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 const Optimize = (props) => {
 
   const styles = useStyles();
+
+  let history = useHistory();
 
   const [speciesList, setSpeciesList] = useState(null);
   const [seq, setSeq] = useState(null);
@@ -101,11 +104,11 @@ const Optimize = (props) => {
   },[species])
 
   const fetchSpecies = async () => {
-  	const response = await axios.get(`${API_URL}fetch/species`)
+  	let response = await axios.get(`${API_URL}fetch/species`)
 
     if(response.status === 200) {
           //console.log(response)
-          const data = await response.data
+          let data = await response.data
           setSpeciesList(data)
     }
 
@@ -144,19 +147,39 @@ const Optimize = (props) => {
       }
 
   const handleSubmit = async () => {
-    //const response = await axios.post(`${API_URL}/fetch/species`)
-    console.log(seq)
-    console.log(species)
-    console.log(type)
-    console.log(weights)
+    // console.log(seq)
+    // console.log(species)
+    // console.log(type)
+    // console.log(weights)
 
-    // if(seq===null){
-    //   alert('Sequence is required!')
-    // }else if(species===null){
-    //   alert('At least 1 species is required!')
-    // }else if(type===null) {
-    //   alert('Sequence type is required!')
-    // }
+    if(seq===null){
+      alert('Sequence is required!')
+    }else if(species===null){
+      alert('At least 1 species is required!')
+    }else if(type===null) {
+      alert('Sequence type is required!')
+    }
+
+    let org_list = []
+
+    for(var index in species) {
+      var spec = species[index]
+      org_list.push(spec.id.toString())
+    }
+
+    let response = await axios.post(`${API_URL}/optimize/${type}`,{
+                                        seq: seq,
+                                        org_list: org_list,
+                                        weights: weights}
+                                        );
+    if(response.status === 200) {
+      let data = await response.data
+
+      history.push({
+        pathname: '/results',
+        state: { data: data }})
+    }
+
   }
 
   if(speciesList){
