@@ -4,6 +4,7 @@ import React from 'react';
 import './css/Landing.css';
 
 // Load Core Material UI Elements
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -12,23 +13,25 @@ import Typography from '@material-ui/core/Typography';
 // Import Custom Components
 import LandingCard from '../Components/LandingCard';
 
+const useStyles = makeStyles(({ breakpoints, spacing }) => ({
+	landingText: {
+		textAlign: 'justify',
+		textJustify: 'inter-character',
+		[breakpoints.only('xs')]: {
+  		textAlign: 'justify',
+  	    textJustify: 'inter-character',
+  	    alignContent: 'center'
+	}
+}
+
+}));
+
 const BASE_URL = process.env.REACT_APP_BASE_URL
 
-export default class Landing  extends React.Component{
+const Landing = () => {
 
-		  constructor(props) {
-    		super(props);
+	const styles = useStyles()
 
-    		this.state = {
-
-    		};
-  		}
-
-  		componentDidMount() {
-
-  		}
-
-  		render() {
   			return (
   				  <Container
   				   fixed
@@ -40,17 +43,32 @@ export default class Landing  extends React.Component{
 						 justify="center"
 						 alignItems="center"
 						 alignContent="center"
-						 style={{ minHeight: '100vh', maxWidth: '100%',margin:'0' }}
+						 style={{ minHeight: '100vh', maxWidth: '100%',margin:'0'}}
 						 spacing={10}
 						 >
 	  				      <Grid item xs={12} s={12} md={6} lg={5}>
-							<Typography align="left" variant="h1" gutterBottom>
+							<Typography 
+							  align="left" 
+							  variant="h1" 
+							  gutterBottom
+							  className={styles.landingText}
+							>
 							  Optipyzer
 							</Typography>
-							<Typography align="left" variant="body2" gutterBottom>
+							<Typography 
+							  align="left" 
+							  variant="body2" 
+							  gutterBottom
+							  className={styles.landingText}
+							>
 							  A multi-species codon optimization engine designed for the modern biologist. Bringing new advancements to today's molecular biology and gene expression capabilties.
 							</Typography>
-							<Typography align="left" variant="body2" gutterBottom>
+							<Typography 
+							  align="left" 
+							  variant="body2" 
+							  gutterBottom
+							  className={styles.landingText}
+							>
 							  Optipyze your gene today to get the most out of your gBlocks and Recombinant DNA platforms.
 							</Typography>
 	  				      </Grid>
@@ -93,5 +111,6 @@ export default class Landing  extends React.Component{
 	  				    </Grid>
   				  </Container>
   				);
-  		}
-}
+  }
+
+  export default Landing
