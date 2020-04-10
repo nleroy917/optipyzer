@@ -18,6 +18,14 @@ CORS(app)
 DB_NAME = 'codon_usage_data.db'
 
 # Testing route/main route
+@app.route('/')
+def api_base_test():
+
+	return_string = '''<h1>Optipyzer API</h1>'''
+
+	return return_string
+
+# Testing route/main route
 @app.route('/test')
 def api_base_test():
 
