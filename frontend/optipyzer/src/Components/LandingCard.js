@@ -80,6 +80,7 @@ const LandingCard = (props) => {
   } = useBlogTextInfoContentStyles();
   const shadowStyles = useOverShadowStyles();
   return (
+    <div className='container justify-content-center'>
     <Card className={cx(styles.root, shadowStyles.root)}>
       <CardMedia
         className={styles.media}
@@ -98,6 +99,7 @@ const LandingCard = (props) => {
         <Button className={buttonStyles} href={BASE_URL + props.path}>{props.buttonText}</Button>
       </CardContent>
     </Card>
+    </div>
   );
 };
 

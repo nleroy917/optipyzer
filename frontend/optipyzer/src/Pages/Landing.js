@@ -36,6 +36,8 @@ const Landing = () => {
   				  <Container
   				   fixed
   				  >
+  				  <div className='container justify-content-center'>
+  				  <div className="justify-content-center">
   				  <br></br>
 	  				    <Grid   
 	  				     container
@@ -109,6 +111,8 @@ const Landing = () => {
 							  </Grid>
 	  				      </Grid>
 	  				    </Grid>
+	  				  </div>
+	  				  </div>
   				  </Container>
   				);
   }
