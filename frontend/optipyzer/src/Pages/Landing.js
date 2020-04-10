@@ -30,13 +30,17 @@ export default class Landing  extends React.Component{
 
   		render() {
   			return (
-  				  <Container>
+  				  <Container
+  				   fixed
+  				  >
+  				  <br></br>
 	  				    <Grid   
 	  				     container
 						 direction="row"
 						 justify="center"
 						 alignItems="center"
-						 style={{ minHeight: '100vh', maxWidth: '100%' }}
+						 alignContent="center"
+						 style={{ minHeight: '100vh', maxWidth: '100%',margin:'0' }}
 						 spacing={10}
 						 >
 	  				      <Grid item xs={12} s={12} md={6} lg={5}>
@@ -54,9 +58,9 @@ export default class Landing  extends React.Component{
 		  				      <Grid   
 			  				     container
 								 direction="column"
-								 justify="center"
+								 justify="flex-start"
 								 alignItems="center"
-								 spacing={6}
+								 spacing={10}
 								 >
 								   <Grid item>
 								   	<LandingCard buttonText="Optimize" 
