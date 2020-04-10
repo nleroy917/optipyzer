@@ -12,7 +12,7 @@ import { useOverShadowStyles } from '../Styles/over';
 // Import Color Palette
 import ColorPalette from '../Resources/ColorPalette'
 
-const base_url='http://localhost:3000/'
+const BASE_URL = process.env.REACT_APP_BASE_URL
 
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   root: {
@@ -95,7 +95,7 @@ const LandingCard = (props) => {
             props.body
           }
         />
-        <Button className={buttonStyles} href={base_url + props.path}>{props.buttonText}</Button>
+        <Button className={buttonStyles} href={BASE_URL + props.path}>{props.buttonText}</Button>
       </CardContent>
     </Card>
   );

@@ -12,6 +12,8 @@ import Typography from '@material-ui/core/Typography';
 // Import Custom Components
 import LandingCard from '../Components/LandingCard';
 
+const BASE_URL = process.env.REACT_APP_BASE_URL
+
 export default class Landing  extends React.Component{
 
 		  constructor(props) {
