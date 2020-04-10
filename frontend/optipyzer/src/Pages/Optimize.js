@@ -185,14 +185,13 @@ const Optimize = (props) => {
 
   if(speciesList){
   return(
-  	<div>
-  	  <Container>
-  	    <Grid
+  	<div className="container justify-content-center">
+  	 <Grid
 		  container
 		  direction="column"
 		  justify="center"
 		  alignItems="center"
-		  style={{ minHeight: '100vh', maxWidth: '100%' }}
+		  style={{ minHeight: '100vh'  }}
 		  spacing={10}
 	    >
 	    <Grid item xs={12} lg={12}>
@@ -201,12 +200,12 @@ const Optimize = (props) => {
 	  	        <MuiThemeProvider theme={theme}>
 		  	      	<form className="form">
 		  	          <Grid
-    						  container
-    						  direction="column"
-    						  justify="center"
-    						  alignItems="stretch"
-    						  alignContent="center"
-    						  spacing={2}
+    						    container
+    						    direction="column"
+    						    justify="center"
+    						    alignItems="stretch"
+    						    alignContent="center"
+    						    spacing={2}
     					    >
       				    <Grid item lg={10} xl={10}>
       				      <Typography variant="h4" className={styles.formTitle}>
@@ -269,8 +268,7 @@ const Optimize = (props) => {
   	      </Paper>
   	      </Grid>
   	    </Grid>
-  	  </Container>
-  	</div>
+      </div>
   	);} else {
   	return(<Loader/>);
 

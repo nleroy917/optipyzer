@@ -14,6 +14,15 @@ import Typography from '@material-ui/core/Typography';
 import LandingCard from '../Components/LandingCard';
 
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
+	landingTitle: {
+		textAlign: 'justify',
+		textJustify: 'inter-character',
+		[breakpoints.only('xs')]: {
+  		textAlign: 'justify',
+  	    textJustify: 'inter-character',
+  	    alignContent: 'center',
+  	    fontSize: '6em'
+	}},
 	landingText: {
 		textAlign: 'justify',
 		textJustify: 'inter-character',
@@ -33,27 +42,24 @@ const Landing = () => {
 	const styles = useStyles()
 
   			return (
-  				  <Container
-  				   fixed
-  				  >
-  				  <div className='container justify-content-center'>
-  				  <div className="justify-content-center">
-  				  <br></br>
+  				  <div className="container justify-content-center">
+  				     <br></br>
+  				     <br></br>
 	  				    <Grid   
 	  				     container
 						 direction="row"
-						 justify="center"
+						 justify="between"
 						 alignItems="center"
 						 alignContent="center"
-						 style={{ minHeight: '100vh', maxWidth: '100%',margin:'0'}}
+						 style={{ minHeight: '100vh'}}
 						 spacing={10}
 						 >
-	  				      <Grid item xs={12} s={12} md={6} lg={5}>
+	  				      <Grid item xs={12} md={6} lg={5}>
 							<Typography 
 							  align="left" 
 							  variant="h1" 
 							  gutterBottom
-							  className={styles.landingText}
+							  className={styles.landingTitle}
 							>
 							  Optipyzer
 							</Typography>
@@ -63,18 +69,10 @@ const Landing = () => {
 							  gutterBottom
 							  className={styles.landingText}
 							>
-							  A multi-species codon optimization engine designed for the modern biologist. Bringing new advancements to today's molecular biology and gene expression capabilties.
-							</Typography>
-							<Typography 
-							  align="left" 
-							  variant="body2" 
-							  gutterBottom
-							  className={styles.landingText}
-							>
-							  Optipyze your gene today to get the most out of your gBlocks and Recombinant DNA platforms.
+							  A multi-species codon optimization engine designed for the modern biologist. Bringing new advancements to today's molecular biology and gene expression capabilties. Optipyze your gene today to get the most out of your gBlocks and Recombinant DNA platforms.
 							</Typography>
 	  				      </Grid>
-	  				      <Grid item xs={12} s={12} md={6} lg={7}>
+	  				      <Grid item xs={12} md={6} lg={7}>
 		  				      <Grid   
 			  				     container
 								 direction="column"
@@ -112,8 +110,6 @@ const Landing = () => {
 	  				      </Grid>
 	  				    </Grid>
 	  				  </div>
-	  				  </div>
-  				  </Container>
   				);
   }
 
