@@ -66,10 +66,9 @@ const Landing = () => {
 							<Typography 
 							  align="left" 
 							  variant="body2" 
-							  gutterBottom
 							  className={styles.landingText}
 							>
-							  A multi-species codon optimization engine designed for the modern biologist. Bringing new advancements to today's molecular biology and gene expression capabilties. Optipyze your gene today to get the most out of your gBlocks and Recombinant DNA platforms.
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices vulputate nunc, et porta nunc pretium eu. Phasellus iaculis quis erat eu tempus. Vivamus ultrices nibh sit amet elit congue, et scelerisque ligula pharetra. Proin varius orci velit, et rhoncus urna fermentum eu. Integer dictum, sem vitae vehicula maximus, lorem neque aliquet lectus, a tincidunt turpis turpis eget arcu. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vivamus convallis et urna a semper. Ut at lorem id dui gravida fermentum et sed erat. In dignissim ligula quis purus rutrum, eget imperdiet felis porta. Etiam a fringilla quam, nec pulvinar risus.
 							</Typography>
 	  				      </Grid>
 	  				      <Grid item xs={12} md={6} lg={7}>
