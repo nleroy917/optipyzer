@@ -19,7 +19,7 @@ DB_NAME = 'codon_usage_data.db'
 
 # Testing route/main route
 @app.route('/')
-def api_base_test():
+def api_base():
 
 	return_string = '''<h1>Optipyzer API</h1>'''
 
