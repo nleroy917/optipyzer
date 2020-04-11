@@ -2,6 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
 
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile
+} from "react-device-detect";
+
 // import material ui
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -10,6 +17,8 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 
 // import custom components
 import Loader from '../Components/Loader'
@@ -17,6 +26,11 @@ import SequenceInput from '../Components/SequenceInput'
 import SpeciesSelect from '../Components/SpeciesSelect'
 import TypeSelect from '../Components/TypeSelect'
 import WeightSelector from '../Components/WeightSelector'
+
+// import navbar
+import NavBar from '../Components/NavBar';
+import NavBarMobile from '../Components/NavBarMobile';
+
 
 // import css
 import './css/Optimize.css';
@@ -41,16 +55,19 @@ const theme = createMuiTheme({
 )
 
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
-  root: {
-    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    border: 0,
-    borderRadius: 3,
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-    color: 'white',
-    height: 48,
-    padding: '0 30px',
+  nav: {
+    background:'transparent',
+    boxShadow:'none',
+    alignItems:'space between'
   },
-
+  navItem: {
+    marginRight:'30px',
+    marginLeft:'30px',
+    '&:hover': {
+          //borderBottom: 'solid 2px #04ffdf'
+          overlay: 'none'
+  }
+},
   formPaper: {
   	background: '#FFF', //`${ColorPalette.formBackground}`,
   	padding: '30px',
@@ -95,6 +112,7 @@ const Optimize = (props) => {
   const [weights, setWeights] = useState(null);
 
   useEffect(() => {
+
     if(!speciesList){
   	   fetchSpecies()
      }
@@ -185,7 +203,15 @@ const Optimize = (props) => {
 
   if(speciesList){
   return(
-  	<div className="container justify-content-center">
+  	<div className="optimize-body">
+    <Container>
+        <BrowserView>
+          <NavBar/>
+        </BrowserView>
+        <MobileView>
+          <NavBarMobile />
+        </MobileView>
+        <br></br>
   	 <Grid
 		  container
 		  direction="column"
@@ -257,7 +283,7 @@ const Optimize = (props) => {
                       }) : ' '}
                    </Grid>
                    <Grid item lg={10} xl={10}>
-                    <Button variant="outlined" color="secondary" onClick={handleSubmit}>
+                    <Button variant="outlined" onClick={handleSubmit}>
                       Optimize Sequence
                     </Button>
                    </Grid>
@@ -268,9 +294,24 @@ const Optimize = (props) => {
   	      </Paper>
   	      </Grid>
   	    </Grid>
+        </Container>
       </div>
   	);} else {
-  	return(<Loader/>);
+
+    // Get Loader
+  	return(
+      <Grid
+        container
+        justify="center"
+        direction="column"
+        alignItems="center"
+        style={{minHieght:'100vh'}}
+      >
+       <Grid item>
+        <Loader/>
+       </Grid>
+      </Grid>
+      );
 
   }
 }

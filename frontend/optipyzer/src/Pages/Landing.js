@@ -1,5 +1,5 @@
 // Load Core React Modules + Cookies + CSS
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import { useHistory } from "react-router-dom";
 import {
@@ -30,6 +30,11 @@ import LoremIpsum from '../Resources/LoremIpsum'
 import ColorPalette from '../Resources/ColorPalette'
 
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
+
+	body: {
+			 backgroundImage: 'url("../../Resources/Artboard 2.png");',
+			  backgroundSize: 'cover;'
+	},
 
 	landingTitle: {
 		textAlign: 'left',
@@ -70,6 +75,7 @@ const Landing = () => {
 	const styles = useStyles()
 
   			return (
+  				  <div className={styles.body}>
   				  <div className="container justify-content-center">
   				   <Container>
   				    <BrowserView>
@@ -119,6 +125,7 @@ const Landing = () => {
   				    </Grid>
   				    </MuiThemeProvider>
   				    </Container>
+	  			  </div>
 	  			  </div>
   				);
   }

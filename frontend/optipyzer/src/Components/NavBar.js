@@ -25,6 +25,7 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 		marginRight:'30px',
 		marginLeft:'30px',
 		'&:hover': {
+			opacity: '0.7',
        		//borderBottom: 'solid 2px #04ffdf'
        		overlay: 'none'
 	}
@@ -33,7 +34,7 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 		marginRight:'5px',
 		marginLeft:'30px',
 		'&:hover': {
-       		//opacity: '0.7',
+       		opacity: '0.7',
        		//borderBottom: 'solid 2px #04ffdf'
        		overlay: 'none'
 	}
@@ -42,7 +43,7 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 		marginRight:'30px',
 		marginLeft:'5px',
 		'&:hover': {
-       		//opacity: '0.7',
+       		opacity: '0.7',
        		//borderBottom: 'solid 2px #04ffdf'
        		overlay: 'none'
 	}
@@ -50,8 +51,7 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 	navUnderline: {
 		'&:hover': {
        		//opacity: '0.7',
-       		opacity: '0.7',
-       		borderBottom: 'solid 1px #04ffdf'
+       		borderBottom: 'solid 2px #88d2db'
 	}
 	}
 
@@ -66,6 +66,17 @@ const NavBar = (props) => {
 	return(
 		<AppBar position="static" className={styles.nav}>
 		  <Toolbar>
+		    <Box 
+		      className={styles.navUnderline}
+		      onClick={() => {history.push('/')}}
+		    >
+		      <Button 
+		        //variant="outlined" 
+		        className={styles.navItem}  
+		        color="inherit">
+		        Home
+		      </Button>
+		    </Box>
 		    <Box 
 		      className={styles.navUnderline}
 		      onClick={() => {history.push('/optimize')}}

@@ -230,7 +230,7 @@ const Results = (props) => {
 						  container
 						  direction="column"
 						  justify="flex-start"
-						  alignItems="center"
+						  alignItems="start"
 						  spacing={1}
 						  style={{minWidth: '100%'}}
 					    >
