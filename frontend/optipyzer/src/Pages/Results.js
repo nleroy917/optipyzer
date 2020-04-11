@@ -1,5 +1,16 @@
 // Import core React
 import React, {useState, useEffect} from 'react';
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile
+} from "react-device-detect";
+
+// import navbar
+import NavBar from '../Components/NavBar';
+import NavBarMobile from '../Components/NavBarMobile';
+
 
 // Import Material UI Components
 import { makeStyles } from '@material-ui/core/styles';
@@ -15,6 +26,9 @@ import SequenceResults from '../Components/SequenceResults'
 
 // Import Color Palette
 import ColorPalette from '../Resources/ColorPalette'
+
+// import css
+import './css/Results.css';
 
 // import axios
 const axios = require('axios').default;
@@ -136,8 +150,15 @@ const Results = (props) => {
 	}
 
 	return (
-		<div>
-		  <Container>
+		<div className="results-body">
+		<Container>
+			<BrowserView>
+		      <NavBar/>
+		    </BrowserView>
+		    <MobileView>
+		      <NavBarMobile />
+		    </MobileView>
+		    <br></br>
 		    <Grid
 			  container
 			  direction="column"
