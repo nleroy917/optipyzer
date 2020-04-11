@@ -6,6 +6,7 @@ const ColorPalette = {
 	black: '#000000',
 	formBackground: '#dfffef',
 	textInput: '#222d62',
+	white: '#FFF'
 
 }
 

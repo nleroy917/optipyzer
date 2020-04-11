@@ -13,6 +13,7 @@
     "axios": "^0.19.2",
     "material-ui": "^0.20.2",
     "react": "^16.13.1",
+    "react-device-detect": "^1.11.14",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
