@@ -32,11 +32,16 @@ import ColorPalette from '../Resources/ColorPalette'
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 
 	landingTitle: {
-		textAlign: 'left'
+		textAlign: 'left',
+		[breakpoints.only('xs')]: {
+	  		fontSize: '5em'
+  		},
+		//paddingRight: '50px'
 	},
 	landingBody: {
 		textAlign: 'justify;',
-  		textJustify: 'inter-word;'
+  		textJustify: 'inter-word;',
+  	 	//paddingRight: '50px'
 	},
 	button: {
 	  [breakpoints.only('xs')]: {
@@ -66,13 +71,13 @@ const Landing = () => {
 
   			return (
   				  <div className="container justify-content-center">
+  				   <Container>
   				    <BrowserView>
   				      <NavBar/>
   				    </BrowserView>
   				    <MobileView>
   				      <NavBarMobile />
   				    </MobileView>
-  				    <Container>
   				    <MuiThemeProvider theme={theme}>
   				    <Grid
   				      container
