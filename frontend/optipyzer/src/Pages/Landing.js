@@ -45,7 +45,7 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 	},
 	button: {
 	  [breakpoints.only('xs')]: {
-	  	marginLeft: '30vw'
+	  	//marginLeft: '30vw'
   		},
 	}
 
