@@ -1,4 +1,6 @@
 .about-body {
-	 background-image: url("../../Resources/Background.png");
+	background-image: url("../../Resources/Background.png");
   	background-size: cover;
+  	transition: opacity 0.5s;
+  	opacity: 1;
 }

@@ -12,7 +12,8 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   		textJustify: 'inter-word;',
 	},
 	aboutHeader: {
-		textAlign: 'left'
+		textAlign: 'left',
+		fontWeight: '400'
 	}
   }))
 
@@ -23,8 +24,8 @@ const AboutSection = (props) => {
 	return (
 		<div>
 		    <Typography
-		      variant="h1"
-		      className={styles.aboutBody}
+		      variant="h2"
+		      className={styles.aboutHeader}
 		    >
 		      {props.title}
 		    </Typography>
@@ -33,10 +34,10 @@ const AboutSection = (props) => {
 		    direction="row"
 		    justify="flex-start"
 		    alignItems="stretch"
-		    spacing={4}
+		    spacing={3}
 		    style={{height:'100%'}}
 		  >
-		    <Grid item xs={12} lg={8}>
+		    <Grid item xs={12} lg={7}>
 		    <Typography
 		      variant="body1"
 		      className={styles.aboutBody}
@@ -51,10 +52,8 @@ const AboutSection = (props) => {
 		      {props.body2}
 		    </Typography>
 		    </Grid>
-		    <Grid item xs={12} lg={4}>
-		      <Paper elevation={20}>
-		      	(Animation here)
-		      </Paper>
+		    <Grid item xs={12} lg={5}>
+		    	{props.content}
 		    </Grid>
 		  </Grid>
 		</div>

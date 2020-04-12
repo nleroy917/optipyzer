@@ -224,7 +224,7 @@ const Optimize = (props) => {
   	      <Paper 
             className={styles.formPaper} 
             elevation={24}
-            //square={true}
+            square={true}
           >
   	        <Container>
 	  	        <MuiThemeProvider theme={theme}>

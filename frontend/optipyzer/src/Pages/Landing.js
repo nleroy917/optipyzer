@@ -10,8 +10,9 @@ import {
 } from "react-device-detect";
 
 
-//import Cookies from 'universal-cookie';
+//import css and external styling
 import './css/Landing.css';
+import FadeIn from 'react-fade-in';
 
 // Load Core Material UI Elements
 import { makeStyles } from '@material-ui/core/styles';
@@ -58,6 +59,7 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   footer: {
     textAlign: 'left',
     opacity: '0.4',
+    fontSize: 'small',
     //borderTop: 'solid 1px white',
     //borderBottom: 'solid 1px white',
     // fontWeight: '200',
@@ -97,6 +99,10 @@ const Landing = () => {
   				    <MobileView>
   				      <NavBarMobile />
   				    </MobileView>
+                <FadeIn
+                  delay={100}
+                  transitionDuration={1000}
+                >
     				    <MuiThemeProvider theme={theme}>
       				    <Grid
       				      container
@@ -155,11 +161,12 @@ const Landing = () => {
                         <a href="https://github.com/NLeRoy917" style={{color: 'white'}}>GitHub</a>
                       </Grid>
                       <Grid item>
-                        Thanks :)
+                        © 2020
                       </Grid>
                     </Grid>
                   </Box>
                 </footer>
+                </FadeIn>
   				    </Container>
 	  			  </div>
 	  			  </div>
