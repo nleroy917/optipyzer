@@ -138,9 +138,10 @@ def get_codon_usage_data(org_id):
 			'codon_usage': codon_usage
 		}
 	except:
-		'error': {
+		return_package = {'error': {
 			'message': "Codon Usage table unavailable for species - perhaps not enough data is available.",
 			'code': 404
+			}
 			}
 
 
