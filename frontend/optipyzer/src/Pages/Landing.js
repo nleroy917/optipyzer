@@ -36,11 +36,6 @@ import ColorPalette from '../Resources/ColorPalette'
 
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 
-	body: {
-			 backgroundImage: 'url("../../Resources/Artboard 2.png");',
-			  backgroundSize: 'cover;'
-	},
-
 	landingTitle: {
 		textAlign: 'left',
     textShadow: '3px 3px #000000;',
@@ -95,8 +90,7 @@ const Landing = () => {
 	const styles = useStyles()
 
   			return (
-  				  <div className={styles.body}>
-  				  <div className="container justify-content-center">
+          <div>
   				   <Container>
   				    <BrowserView>
   				      <NavBar/>
@@ -182,7 +176,6 @@ const Landing = () => {
                 </MuiThemeProvider>
                 </FadeIn>
   				    </Container>
-	  			  </div>
 	  			  </div>
   				);
   }

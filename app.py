@@ -11,6 +11,7 @@ from flask import Flask
 from flask import jsonify
 from flask import request
 from flask import render_template
+from flask import Response
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
@@ -43,24 +44,27 @@ def optimize_dna():
 	weights_cleaned = {}
 	for org in data['weights']:
 		weights_cleaned[int(org)] = float(data['weights'][org])
+	try:
+		optipyzer = CodonOptimizer(DB_NAME)
+		optipyzer.set_organisms(organism_list,weights_cleaned)
+		optipyzer.optimize(seq,seq_type='dna')
 
-	optipyzer = CodonOptimizer(DB_NAME)
-	optipyzer.set_organisms(organism_list,weights_cleaned)
-	optipyzer.optimize(seq,seq_type='dna')
+		return_package = {
+			'seq_type': 'DNA',
+			'peptide_seq': optipyzer.peptide_seq,
+			'stop_codon': optipyzer.stop_codon,
+			'optimmized_sd': optipyzer.optimmized_sd,
+			'best_expression_sd': optipyzer.best_expression_sd,
+			'optimmized_ad': optipyzer.optimmized_ad,
+			'best_expression_ad': optipyzer.best_expression_ad
+		}
+	except:
+		return_package={
+			'error': "The optimization could not be complete. Verify your sequence!"
+		}
+		return jsonify(return_package), 404
 
-	return_package = {
-		'seq_type': 'DNA',
-		'peptide_seq': optipyzer.peptide_seq,
-		'stop_codon': optipyzer.stop_codon,
-		'optimmized_sd': optipyzer.optimmized_sd,
-		'best_expression_sd': optipyzer.best_expression_sd,
-		'optimmized_ad': optipyzer.optimmized_ad,
-		'best_expression_ad': optipyzer.best_expression_ad
-	}
-
-	print(return_package)
-
-	return jsonify(return_package)
+	return jsonify(return_package), 200
 
 
 # Route to optimize Protein sequence
@@ -73,21 +77,27 @@ def optimize_pro():
 	for org in data['weights']:
 		weights_cleaned[int(org)] = float(data['weights'][org])
 
-	optipyzer = CodonOptimizer(DB_NAME)
-	optipyzer.set_organisms(organism_list,weights)
-	optipyzer.optimize(seq,seq_type='protein')
+	try:
+		optipyzer = CodonOptimizer(DB_NAME)
+		optipyzer.set_organisms(organism_list,weights_cleaned)
+		optipyzer.optimize(seq,seq_type='protein')
 
-	return_package = {
-		'seq_type': 'Protein',
-		'peptide_seq': optipyzer.peptide_seq,
-		'stop_codon': optipyzer.stop_codon,
-		'optimmized_sd': optipyzer.optimmized_sd,
-		'best_expression_sd': optipyzer.best_expression_sd,
-		'optimmized_ad': optipyzer.optimmized_ad,
-		'best_expression_ad': optipyzer.best_expression_ad
-	}
+		return_package = {
+			'seq_type': 'DNA',
+			'peptide_seq': optipyzer.peptide_seq,
+			'stop_codon': optipyzer.stop_codon,
+			'optimmized_sd': optipyzer.optimmized_sd,
+			'best_expression_sd': optipyzer.best_expression_sd,
+			'optimmized_ad': optipyzer.optimmized_ad,
+			'best_expression_ad': optipyzer.best_expression_ad
+		}
+	except:
+		return_package={
+			'error': "The optimization could not be complete. Verify your sequence!"
+		}
+		return jsonify(return_package), 404
 
-	return jsonify(return_package)
+	return jsonify(return_package), 200
 
 
 # Route to get all species from database for UI
@@ -110,6 +120,44 @@ def id_to_species(org_id):
 	}
 
 	return jsonify(return_package)
+
+# Route to get species from id
+@app.route('/search/species/<name>', methods=['GET'])
+def search_for_name(name):
+
+	status_code = 200
+	curs = connect_to_db(DB_NAME)
+	query = '''SELECT org_id, species, taxid, GC_perc
+           FROM organisms
+           WHERE species LIKE ?'''
+
+	curs.execute(query,['%'+name+'%'])
+	results = curs.fetchall()
+
+	return_package = {'search_query': name, 
+				  'organisms': [],
+				  'num_results':len(results),
+				  }
+
+	for org in results:
+  		return_package['organisms'].append({
+  		'id': org[0],
+  		'species_name': org[1],
+  		'taxid': org[2],
+  		'GC_perc': org[3]
+  		})
+
+	if len(results) == 0:
+		status_code = 404
+		return_package = {
+			'error': {
+				'message': "No organism name of {} was found".format(name),
+				'code': 404
+			}
+		}
+
+
+	return jsonify(return_package), status_code
 
 # RUN API
 if __name__ == '__main__':
