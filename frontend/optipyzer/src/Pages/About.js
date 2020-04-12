@@ -69,7 +69,7 @@ const About = () => {
 			  direction="column"
 			  justify="flexStart"
 			  alignItems="flexStart"
-			  spacing={10}
+			  spacing={8}
 			  style={{minHeight: '100vh'}}
 
 			>

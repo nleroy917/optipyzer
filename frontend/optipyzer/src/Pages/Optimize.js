@@ -8,6 +8,7 @@ import {
   isBrowser,
   isMobile
 } from "react-device-detect";
+import FadeIn from 'react-fade-in';
 
 // import material ui
 import { makeStyles } from '@material-ui/core/styles';
@@ -212,6 +213,10 @@ const Optimize = (props) => {
           <NavBarMobile />
         </MobileView>
         <br></br>
+    <FadeIn
+      delay={100}
+      transitionDuration={1000}
+    >
   	 <Grid
 		  container
 		  direction="column"
@@ -298,6 +303,7 @@ const Optimize = (props) => {
   	      </Paper>
   	      </Grid>
   	    </Grid>
+        </FadeIn>
         </Container>
       </div>
   	);} else {

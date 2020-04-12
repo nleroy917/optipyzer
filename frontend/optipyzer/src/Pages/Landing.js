@@ -22,6 +22,9 @@ import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import TwitterIcon from '@material-ui/icons/Twitter';
+import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import GitHubIcon from '@material-ui/icons/GitHub';
 
 // Import Custom Components
 import NavBar from '../Components/NavBar';
@@ -40,6 +43,7 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 
 	landingTitle: {
 		textAlign: 'left',
+    textShadow: '3px 3px #000000;',
 		[breakpoints.only('xs')]: {
 	  		fontSize: '5em'
   		},
@@ -48,6 +52,7 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 	landingBody: {
 		textAlign: 'justify;',
   		textJustify: 'inter-word;',
+      //textShadow: '2px 2px #000000;'
   	 	//paddingRight: '50px'
 	},
 	button: {
@@ -66,7 +71,7 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     // bottom:'0',
     // zIndex: '9999;',
     // backgroundColor: 'rgba(0, 0, 0, 0.3);',
-    padding:'20px'
+    padding:'40px'
   }
 
 
@@ -140,7 +145,6 @@ const Landing = () => {
         				        Lets Optimize
         				      </Button>
       				    </Grid>
-    				    </MuiThemeProvider>
                 <footer
                   className={styles.footer}
                 >
@@ -155,17 +159,27 @@ const Landing = () => {
                         Made with ❤ by Nathan LeRoy
                       </Grid>
                       <Grid item>
-                        <a href="https://twitter.com/NathanJLeRoy" style={{color: 'white'}}>Twitter</a>
+                        <a href="https://twitter.com/NathanJLeRoy" style={{color: 'white'}}>
+                          <TwitterIcon color="primary" style={{padding:'4px'}}/>
+                          Twitter
+                        </a>
                       </Grid>
                       <Grid item>
-                        <a href="https://github.com/NLeRoy917" style={{color: 'white'}}>GitHub</a>
+                        <a href="https://github.com/NLeRoy917" style={{color: 'white'}}>
+                          <GitHubIcon color="primary" style={{padding:'4px'}}/>
+                          GitHub                       
+                        </a>
                       </Grid>
                       <Grid item>
-                        © 2020
+                        <a href="https://www.linkedin.com/in/nathan-leroy-04b35b105/" style={{color: 'white'}}>
+                          <LinkedInIcon color="primary" style={{padding:'4px'}}/>
+                          Linked In
+                        </a>
                       </Grid>
                     </Grid>
                   </Box>
                 </footer>
+                </MuiThemeProvider>
                 </FadeIn>
   				    </Container>
 	  			  </div>
