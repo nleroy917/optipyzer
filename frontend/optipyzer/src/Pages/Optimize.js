@@ -217,11 +217,15 @@ const Optimize = (props) => {
 		  direction="column"
 		  justify="center"
 		  alignItems="center"
-		  style={{ minHeight: '100vh'  }}
+		  style={{ minHeight: '90vh'  }}
 		  spacing={10}
 	    >
 	    <Grid item xs={12} lg={12}>
-  	      <Paper className={styles.formPaper} elevation={24}>
+  	      <Paper 
+            className={styles.formPaper} 
+            elevation={24}
+            //square={true}
+          >
   	        <Container>
 	  	        <MuiThemeProvider theme={theme}>
 		  	      	<form className="form">

@@ -16,6 +16,7 @@ import Button from '@material-ui/core/Button';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import InfoIcon from '@material-ui/icons/Info';
 import BuildIcon from '@material-ui/icons/Build';
+import HomeIcon from '@material-ui/icons/Home';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 
 //import custom components
@@ -66,6 +67,13 @@ const NavBarMobile = (props) => {
 	  <MuiThemeProvider theme={theme}>
 		<AppBar position="static" className={styles.nav}>
 		  <Toolbar>
+		    <Box 
+		      onClick={() => {history.push('/')}}
+		    >
+		      <IconButton>
+		        <HomeIcon color="primary"/>
+		      </IconButton>
+		    </Box>
 		    <Box 
 		      onClick={() => {history.push('/optimize')}}
 		    >

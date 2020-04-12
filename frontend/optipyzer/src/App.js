@@ -13,12 +13,15 @@ import Landing from './Pages/Landing'
 import Optimize from './Pages/Optimize'
 import Results from './Pages/Results'
 import About from './Pages/About'
+import Dev from './Pages/Dev'
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Switch>
+          <Route path="/dev/" component={Dev}>
+          </Route>
           <Route path="/optimize/" component={Optimize}>
           </Route>
           <Route path="/about/" component={About}>
