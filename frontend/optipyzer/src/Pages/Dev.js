@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 import './css/Dev.css';
 import FadeIn from 'react-fade-in';
@@ -6,17 +6,13 @@ import FadeIn from 'react-fade-in';
 import {
   BrowserView,
   MobileView,
-  isBrowser,
-  isMobile
 } from "react-device-detect";
 
-import AboutSection from '../Components/AboutSection';
 
 
 // import material ui
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
@@ -24,8 +20,6 @@ import Typography from '@material-ui/core/Typography';
 import NavBar from '../Components/NavBar';
 import NavBarMobile from '../Components/NavBarMobile';
 
-
-import LoremIpsum from '../Resources/LoremIpsum';
 
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 

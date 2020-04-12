@@ -11,7 +11,6 @@ from flask import Flask
 from flask import jsonify
 from flask import request
 from flask import render_template
-from flask import Response
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
@@ -60,7 +59,10 @@ def optimize_dna():
 		}
 	except:
 		return_package={
-			'error': "The optimization could not be complete. Verify your sequence!"
+			'error': {
+			'message': "The optimization could not be complete. Verify your sequence!",
+			'code': 404
+			}
 		}
 		return jsonify(return_package), 404
 
@@ -93,7 +95,10 @@ def optimize_pro():
 		}
 	except:
 		return_package={
-			'error': "The optimization could not be complete. Verify your sequence!"
+			'error': {
+			'message': "The optimization could not be complete. Verify your sequence!",
+			'code': 404
+			}
 		}
 		return jsonify(return_package), 404
 
@@ -118,6 +123,26 @@ def id_to_species(org_id):
 	  'id': species[0],
 	  'seq_type': species[5]
 	}
+
+	return jsonify(return_package)
+
+# Get codon usage data for species
+@app.route('/fetch/species/<org_id>/codons', methods=['GET'])
+def get_codon_usage_data(org_id):
+
+	curs = connect_to_db(DB_NAME)
+	try:
+		counts, codon_usage = calc_codon_usage(org_id,curs)
+		return_package = {
+			'counts': counts,
+			'codon_usage': codon_usage
+		}
+	except:
+		'error': {
+			'message': "Codon Usage table unavailable for species - perhaps not enough data is available.",
+			'code': 404
+			}
+
 
 	return jsonify(return_package)
 

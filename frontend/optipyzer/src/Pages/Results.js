@@ -3,8 +3,6 @@ import React, {useState, useEffect} from 'react';
 import {
   BrowserView,
   MobileView,
-  isBrowser,
-  isMobile
 } from "react-device-detect";
 
 // import navbar
@@ -16,10 +14,8 @@ import NavBarMobile from '../Components/NavBarMobile';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 // Import Custom Components
 import SequenceResults from '../Components/SequenceResults'
@@ -136,18 +132,6 @@ const Results = (props) => {
 			);
 	}
 
-	const id_to_species = async (id) => {
-
-		let response = await axios.get(`${API_URL}fetch/species/${id}`)
-
-    	if(response.status === 200) {
-          //console.log(response)
-          let data =  await response.data
-          return data.name
-          
-    }
-
-	}
 
 	return (
 		<div className="results-body">

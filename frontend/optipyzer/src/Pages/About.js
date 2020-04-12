@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 import './css/About.css';
 import FadeIn from 'react-fade-in';
@@ -6,14 +6,11 @@ import FadeIn from 'react-fade-in';
 import {
   BrowserView,
   MobileView,
-  isBrowser,
-  isMobile
 } from "react-device-detect";
 
 // import material ui
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
 // import custom components
@@ -35,7 +32,10 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 	devImg: {
 		height: '200px',
 		padding: '10px',
-		borderRadius: '50%'
+		borderRadius: '50%',
+		[breakpoints.only('xs')]: {
+	  		height: '45vw'
+	  	}
 	},
 	animation: {
 		width: '300px',
@@ -67,8 +67,8 @@ const About = () => {
 			<Grid
 			  container
 			  direction="column"
-			  justify="flexStart"
-			  alignItems="flexStart"
+			  justify="flex-start"
+			  alignItems="flex-start"
 			  spacing={8}
 			  style={{minHeight: '100vh'}}
 
@@ -79,9 +79,9 @@ const About = () => {
 			    title="Developers"
 			    content={
 			    	<div>
-			    	<span style={{display: 'inline;'}}>
-			    	  <img className={styles.devImg} src={caleigh} />
-			    	  <img className={styles.devImg} src={nathan} />
+			    	<span style={{display: 'inline'}}>
+			    	  <img alt="Caleigh Roleck" className={styles.devImg} src={caleigh} />
+			    	  <img alt="Nathan LeRoy" className={styles.devImg} src={nathan} />
 			    	  </span>
 			    	</div>
 			    }
@@ -91,10 +91,10 @@ const About = () => {
 			  <AboutSection 
 			    body1={LoremIpsum.medium}
 			    body2={LoremIpsum.medium}
-			    title="The Engine"
+			    title="Codon Optimzation At A Glance"
 			    content={
 			    	<div>
-			    	    <img src={translation_gif} className={styles.animation}/>
+			    	    <img alt="Translation of DNA" src={translation_gif} className={styles.animation}/>
 			    	</div>
 			    }
 			  />
@@ -103,7 +103,7 @@ const About = () => {
 			  <AboutSection 
 			    body1={LoremIpsum.medium}
 			    body2={LoremIpsum.medium}
-			    title="Section Title#3"
+			    title="The Engine"
 			  />
 			</Grid>
 			</Grid>

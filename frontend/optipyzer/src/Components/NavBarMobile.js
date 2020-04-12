@@ -11,21 +11,16 @@ import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import Button from '@material-ui/core/Button';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import InfoIcon from '@material-ui/icons/Info';
 import BuildIcon from '@material-ui/icons/Build';
 import HomeIcon from '@material-ui/icons/Home';
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 
-//import custom components
-import MyIcon from '../Components/MyIcon'
 
 // Import ColorPalette
 import ColorPalette from '../Resources/ColorPalette'
 
-const BASE_URL = process.env.REACT_APP_BASE_URL
 
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 	nav: {

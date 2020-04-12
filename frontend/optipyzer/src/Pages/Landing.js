@@ -1,12 +1,10 @@
 // Load Core React Modules + Cookies + CSS
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import { useHistory } from "react-router-dom";
 import {
   BrowserView,
   MobileView,
-  isBrowser,
-  isMobile
 } from "react-device-detect";
 
 
@@ -31,7 +29,6 @@ import NavBar from '../Components/NavBar';
 import NavBarMobile from '../Components/NavBarMobile';
 
 // Import Resources
-import LoremIpsum from '../Resources/LoremIpsum'
 import ColorPalette from '../Resources/ColorPalette'
 
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
@@ -82,7 +79,6 @@ const theme = createMuiTheme({
   },
 )
 
-const BASE_URL = process.env.REACT_APP_BASE_URL
 
 const Landing = () => {
 

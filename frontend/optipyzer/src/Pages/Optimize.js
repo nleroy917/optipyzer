@@ -5,8 +5,6 @@ import { useHistory } from "react-router-dom";
 import {
   BrowserView,
   MobileView,
-  isBrowser,
-  isMobile
 } from "react-device-detect";
 import FadeIn from 'react-fade-in';
 
@@ -18,8 +16,6 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 
 // import custom components
 import Loader from '../Components/Loader'
@@ -43,7 +39,6 @@ import ColorPalette from '../Resources/ColorPalette'
 const axios = require('axios').default;
 
 const API_URL = process.env.REACT_APP_API_URL
-const BASE_URL = process.env.REACT_APP_BASE_URL
 
 // Or Create your Own theme:
 const theme = createMuiTheme({
@@ -315,10 +310,12 @@ const Optimize = (props) => {
         justify="center"
         direction="column"
         alignItems="center"
-        style={{minHieght:'100vh'}}
+        style={{minHeight:'100vh'}}
       >
        <Grid item>
-        <Loader/>
+        <Loader
+          size={300}
+        />
        </Grid>
       </Grid>
       );
