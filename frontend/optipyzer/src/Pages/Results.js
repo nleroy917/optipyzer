@@ -4,6 +4,7 @@ import {
   BrowserView,
   MobileView,
 } from "react-device-detect";
+import { useHistory } from "react-router-dom";
 
 // import navbar
 import NavBar from '../Components/NavBar';
@@ -12,10 +13,16 @@ import NavBarMobile from '../Components/NavBarMobile';
 
 // Import Material UI Components
 import { makeStyles } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+
+// Import React95 Components
+import Alert from '@react95/core/Alert'
+
 
 // Import Custom Components
 import SequenceResults from '../Components/SequenceResults'
@@ -30,6 +37,16 @@ import './css/Results.css';
 const axios = require('axios').default;
 
 const API_URL = process.env.REACT_APP_API_URL
+
+// Or Create your Own theme:
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+        main: ColorPalette.white
+      }
+    }
+  },
+)
 
 const useStyles = makeStyles(({ breakpoints, spacing }) => ({
   formPaper: {
@@ -64,18 +81,24 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
     paperContainer: {
 	  	padding: '10px'
 	  },
-	  expProf: {
+	expProf: {
 	  	textAlign: 'left',
 	  	paddingLeft: '30px'
-	  }
+	  },
+	windows95: {
+		fontFamily: 'MS Sans Serif',
+		background: 'rgb(195, 199, 203)'
+	}
   }));
 
 
 const Results = (props) => {
 
+	const history = useHistory();
 	const styles = useStyles();
 
 	const [data,setData] = useState(props.location.state.data);
+	const [status, setStatus] = useState(props.location.state.status);
 	//const [sdFixed,setSDFixed] = useState(props.location.state.data);
 	//const [sdFixed,setSDFixed] = useState(props.location.state.data);
 	const [expressionSD,setExpressionSD] = useState(props.location.state.data.best_expression_sd)
@@ -132,8 +155,8 @@ const Results = (props) => {
 			);
 	}
 
-
-	return (
+	if(status === 200) {
+		return (
 		<div className="results-body">
 		<Container>
 			<BrowserView>
@@ -281,7 +304,41 @@ const Results = (props) => {
 	  	    </Grid>
 		  </Container>
 		</div>
-		);
+		)}
+
+		else{
+		return(
+		<div className="results-body">
+		  <MuiThemeProvider theme={theme}>
+	  	  <Grid
+	        container
+	        direction="column"
+	        justify="center"
+	        alignItems="center"
+	        style={{minHeight:'100vh'}}
+	        spacing={5}
+	      >
+	        <Grid item>
+	          <Typography
+	            variant="h2"
+	            style={{fontWeight: '200'}}
+	          >
+	      		404: An Error Occured... :(
+	          </Typography>
+	        </Grid>
+	        <Grid item>
+	          <Button
+	            variant="outlined"
+	            color="primary"
+	            onClick={() => {history.push('./optimize')}}
+	          >
+	          Try Again?
+	          </Button>
+	        </Grid>
+	      </Grid>
+	      </MuiThemeProvider>
+		</div>
+		)}
 }
 
 export default Results

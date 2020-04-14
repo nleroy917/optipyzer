@@ -64,6 +64,7 @@ def optimize_dna():
 			'code': 404
 			}
 		}
+
 		return jsonify(return_package), 404
 
 	return jsonify(return_package), 200
@@ -100,6 +101,7 @@ def optimize_pro():
 			'code': 404
 			}
 		}
+
 		return jsonify(return_package), 404
 
 	return jsonify(return_package), 200
@@ -142,8 +144,7 @@ def get_codon_usage_data(org_id):
 			'message': "Codon Usage table unavailable for species - perhaps not enough data is available.",
 			'code': 404
 			}
-			}
-
+		}
 
 	return jsonify(return_package)
 
@@ -181,7 +182,6 @@ def search_for_name(name):
 				'code': 404
 			}
 		}
-
 
 	return jsonify(return_package), status_code
 

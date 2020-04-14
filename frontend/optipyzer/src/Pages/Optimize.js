@@ -182,18 +182,31 @@ const Optimize = (props) => {
       org_list.push(spec.id.toString())
     }
 
-    let response = await axios.post(`${API_URL}/optimize/${type}`,{
+    try {
+
+      let response = await axios.post(`${API_URL}/optimize/${type}`,{
                                         seq: seq,
                                         org_list: org_list,
                                         weights: weights}
                                         );
-    if(response.status === 200) {
       let data = await response.data
+      console.log(data)
+      let status = await response.status
 
       history.push({
         pathname: '/results',
-        state: { data: data }})
+        state: { data: data,
+                 status: status }})
+    } catch {
+
+      history.push({
+        pathname: '/results',
+        state: { data: {},
+                 status: 404 }})
     }
+
+
+    
 
   }
 
