@@ -21,5 +21,5 @@ codon_usage = Optipyzer.pull_codons(organism.id)
 
 # optimize dna sequence for specific organism
 seq = 'ATGCTGATCGTAGCTAGCTGACTGTAGCTGACTGAC'
-Optipyzer.optimize(seq,organism)
+sequence = Optipyzer.optimize(seq,organism)
 ```
