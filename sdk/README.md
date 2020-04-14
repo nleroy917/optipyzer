@@ -4,8 +4,9 @@ This is the Software Developer Kit for the Optipyzer engine. It privides an API 
 # Installation
 ```pip install optipyzer```
 
-#Usage
-```import optipyzer
+# Usage
+```
+import optipyzer
 
 # initalize API
 Optipyzer = optipyzer.api()
