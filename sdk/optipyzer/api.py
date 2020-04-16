@@ -29,7 +29,7 @@ class api():
 		"""
 		init Optipyzer API object
 		"""
-
+		#self.api_base = 'http://127.0.0.1:5000/'
 		self.api_base = 'https://optipyzer-api.herokuapp.com/'
 		self.timeout = timeout
 		self.sleep_time = sleep_time
@@ -133,7 +133,7 @@ class api():
 
 		try:
 
-			data = json.loads(response)
+			data = response.json()
 
 			optimization = Optimization()
 			optimization.seq_type = data['seq_type']
@@ -154,7 +154,7 @@ class api():
 
 		path = '/fetch/species/{}/codons'.format(organism.org_id)
 		response = self._make_request(path)
-		data = json.loads(response)
+		data = response.json()
 		codon_usage = CodonUsage()
 		codon_usage.counts = data['counts']
 		codon_usage.codon_usage = data['codon_usage']

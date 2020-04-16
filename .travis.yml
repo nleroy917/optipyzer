@@ -5,10 +5,9 @@ matrix:
       language: node_js
       node_js:
       - "stable"
-      before_script:
-      - npm install
       script:
       - cd frontend/optipyzer
+      - npm install
       - npm run build
 
 
