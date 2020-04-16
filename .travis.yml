@@ -8,6 +8,7 @@ matrix:
       script:
       - cd frontend/optipyzer
       - npm install
+      - CI=false
       - npm run build
 
 

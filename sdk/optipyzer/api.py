@@ -24,7 +24,7 @@ class api():
     }
 	_SLEEP_MIN = 0.2  # Enforce minimum wait time between API calls (seconds)
 
-	def __init__(self, timeout=5, sleep_time=0.5):
+	def __init__(self, timeout=10, sleep_time=0.5):
 
 		"""
 		init Optipyzer API object
