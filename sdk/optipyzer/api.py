@@ -30,7 +30,7 @@ class api():
 		init Optipyzer API object
 		"""
 
-		self.api_base = 'http://127.0.0.1:5000/'
+		self.api_base = 'https://optipyzer-api.herokuapp.com/'
 		self.timeout = timeout
 		self.sleep_time = sleep_time
 
