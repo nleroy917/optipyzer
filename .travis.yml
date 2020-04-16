@@ -8,7 +8,7 @@ matrix:
       before_script:
       - npm install
       script:
-      - cd fronted/optipyzer
+      - cd frontend/optipyzer
       - npm run build
 
 
@@ -24,4 +24,4 @@ matrix:
       # command to run tests
       script:
         - cd sdk/optipyzer
-        - api.py
+        - python3 api.py
