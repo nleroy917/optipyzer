@@ -35,6 +35,7 @@ def api_base_test():
 # Route to optimize DNA sequence
 @app.route('/optimize/dna', methods=['POST'])
 def optimize_dna():
+	
 	data = request.get_json()
 	seq = data['seq']
 	organism_list = [int(x) for x in data['org_list']]
