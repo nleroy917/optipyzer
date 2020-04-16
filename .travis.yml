@@ -1,27 +1,27 @@
 matrix:
   include:
+    -
+      ### TEST FRONT END ###
+      language: node_js
+      node_js:
+      - "stable"
+      before_script:
+      - npm install
+      script:
+      - cd fronted/optipyzer
+      - npm run build
 
-    ### TEST FRONT END ###
-    language: node_js
-    node_js:
-    - "stable"
-    before_script:
-    - npm install
-    script:
-    - cd fronted/optipyzer
-    - npm run build
 
+    -
+      ### TEST API ###
+      language: python
+      python:
+        - "3.7"
 
-
-    ### TEST API ###
-    language: python
-    python:
-      - "3.7"
-
-    # command to install dependencies
-    install:
-      - pip install -r requirements.txt
-    # command to run tests
-    script:
-      - cd sdk/optipyzer
-      - api.py
+      # command to install dependencies
+      install:
+        - pip install -r requirements.txt
+      # command to run tests
+      script:
+        - cd sdk/optipyzer
+        - api.py
