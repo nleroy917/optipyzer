@@ -1,6 +1,8 @@
 class CodonUsage():
 
 	def __init__(self):
-		pass
+		self.counts = None
+		self.codon_usage = None
+		
 
 	
