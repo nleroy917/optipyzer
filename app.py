@@ -21,9 +21,7 @@ DB_NAME = 'codon_usage_data.db'
 @app.route('/')
 def api_base():
 
-	return_string = '''<h1>Optipyzer API</h1>'''
-
-	return return_string
+	return render_template('api_landing.html')
 
 # Testing route/main route
 @app.route('/test')
@@ -154,9 +152,9 @@ def search_for_name(name):
 
 	status_code = 200
 	curs = connect_to_db(DB_NAME)
-	query = '''SELECT org_id, species, taxid, GC_perc
-           FROM organisms
-           WHERE species LIKE ?'''
+	query = '''SELECT *
+           	   FROM organisms
+           	   WHERE species LIKE ?'''
 
 	curs.execute(query,['%'+name+'%'])
 	results = curs.fetchall()
@@ -168,10 +166,19 @@ def search_for_name(name):
 
 	for org in results:
   		return_package['organisms'].append({
-  		'id': org[0],
-  		'species_name': org[1],
-  		'taxid': org[2],
-  		'GC_perc': org[3]
+  		'org_id': org[0],
+		'division': org[1],
+		'assembly': org[2],
+		'taxid': org[3],
+		'species': org[4],
+		'organelle': org[5],
+		'translation_table': org[6],
+		'num_CDS': org[7],
+		'num_codons': org[8],
+		'GC_perc': org[9],
+		'GC1_perc': org[10],
+		'GC2_perc': org[11], 
+		'GC3_perc': org[12]
   		})
 
 	if len(results) == 0:
