@@ -56,7 +56,7 @@ class api():
 
 		# Enforce rate limiting
 		time.sleep(max(self._SLEEP_MIN, self.sleep_time))
-		return response.text if response else None
+		return response if response else None
 
 
 	def search(self,name):
@@ -64,7 +64,7 @@ class api():
 		path = '/search/species/{}'.format(name)
 		response = self._make_request(path)
 		try:
-			organisms = json.loads(response)['organisms']
+			organisms = response.json()['organisms']
 
 		except TypeError as e:
 			print('Empty response returned...')
