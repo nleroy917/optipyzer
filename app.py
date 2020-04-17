@@ -152,14 +152,16 @@ def get_codon_usage_data(org_id):
 @app.route('/search/species/<name>', methods=['GET'])
 def search_for_name(name):
 
+	num_results = request.args.get('num_results')
 	status_code = 200
+
 	curs = connect_to_db(DB_NAME)
 	query = '''SELECT *
            	   FROM organisms
            	   WHERE species LIKE ?'''
 
 	curs.execute(query,['%'+name+'%'])
-	results = curs.fetchall()
+	results = curs.fetchall()[:num_results]
 
 	return_package = {'search_query': name, 
 				  'organisms': [],
