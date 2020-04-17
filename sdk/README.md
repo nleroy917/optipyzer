@@ -6,7 +6,7 @@ This is the Software Developer Kit for the Optipyzer engine. It privides an API 
 pip install optipyzer
 ```
 
-# Usage
+# Quick Start
 ```python
 import optipyzer
 
@@ -29,3 +29,6 @@ codon_usage2 = optipyzer.pull_codons(org2)
 seq = 'ATGGCTACTGCATGCTTAGCATGCATGACT'
 optimized = optipyzer.optimize(seq,org_list=[org1,org2],weights=[1,2])
 ```
+
+# More Information
+For a more detailed tutorial, please visit the [dev tools page](https://optipyzer.herokuapp.com)
