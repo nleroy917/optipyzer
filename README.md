@@ -6,10 +6,15 @@
 A fast, effective, and flexible codon optimization tool. Built with Python, the algorithm can codon-optimize your g blocks for multiple species at once, giving preference to one or more espression systems at a time. The algorithm utilizes the most recent codon usage data available to dynamically generate an optimal sequence for you in seconds.
 
 # Web Application
-The optmziation engine is supported by a web-based UI built with React. The current production build can be found [here](https://optipyzer.herokuapp.com). In addition, information about how the algorithms work and more dev tool information can be found on the site.
+![Optipyzer Header](https://github.com/NLeRoy917/optipyzer/blob/master/static/imgs/header_img.png)
+The optmziation engine is supported by a web-based UI built with React. The current production build can be found [here](https://optipyzer.herokuapp.com). In addition, information about how the algorithms work and more dev tool information can be found on the site. 
+
+The web application has the same functionality as the python installation. The user can input either a DNA or Protein sequence, select as many species as they wish, and set a weighting between 1 and 10 for those species to optimize their sequence against. The application will return the full data set including metadata associated with the query.
 
 # Python Installation
-```pip install optipyzer```
+```sh
+pip install optipyzer
+```
 
 # Usage
 ```python
