@@ -11,7 +11,7 @@ with open('requirements.txt') as f:
 
 setuptools.setup(
     name='optipyzer',
-    version=0.3,
+    version=0.22,
     description='Codon optimize DNA and Protein sequences for multiple species.',
     long_description=long_description,
     long_description_content_type='text/markdown',
