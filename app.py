@@ -158,10 +158,12 @@ def search_for_name(name):
 	curs = connect_to_db(DB_NAME)
 	query = '''SELECT *
            	   FROM organisms
-           	   WHERE species LIKE ?'''
+           	   WHERE species LIKE ?
+           	   LIMIT {}'''.format(num_results)
 
 	curs.execute(query,['%'+name+'%'])
-	results = curs.fetchall()[:num_results]
+
+	results = curs.fetchall()
 
 	return_package = {'search_query': name, 
 				  'organisms': [],
