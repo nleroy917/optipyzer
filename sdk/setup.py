@@ -11,7 +11,7 @@ with open('requirements.txt') as f:
 
 setuptools.setup(
     name='optipyzer',
-    version=0.1,
+    version=0.3,
     description='Codon optimize DNA and Protein sequences for multiple species.',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -20,12 +20,12 @@ setuptools.setup(
     author_email='NLeRoy917@gmail.com',
     url='https://github.com/NLeRoy917/optipyzer',
     keywords='codon optimization dna protein biology bioinformatics',
-    packages=setuptools.find_packages()
+    packages=setuptools.find_packages(),
     install_requires=requirements,
     classifiers=[
         'Topic :: Software Development :: Libraries',
         'Operating System :: OS Independent',
-        'License :: OSI Approved :: Apache License, Version 2.0',
+        'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
     ]

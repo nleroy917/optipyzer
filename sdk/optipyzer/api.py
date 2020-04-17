@@ -5,10 +5,18 @@ import requests
 import json
 import time
 
-from organism import Organism
-from codon_optimizer import CodonOptimizer
-from codon_usage import CodonUsage
-from optimization import Optimization
+try:
+	from optipyzer.organism import Organism
+	from optipyzer.codon_optimizer import CodonOptimizer
+	from optipyzer.codon_usage import CodonUsage
+	from optipyzer.optimization import Optimization
+
+except:
+	from organism import Organism
+	from codon_optimizer import CodonOptimizer
+	from codon_usage import CodonUsage
+	from optimization import Optimization
+
 
 class api():
 
@@ -24,7 +32,7 @@ class api():
     }
 	_SLEEP_MIN = 0.2  # Enforce minimum wait time between API calls (seconds)
 
-	def __init__(self, timeout=10, sleep_time=0.5):
+	def __init__(self, timeout=1000, sleep_time=0.5):
 
 		"""
 		init Optipyzer API object
@@ -44,10 +52,10 @@ class api():
 		response = None
 
 		try:
-			response = self._session.request(method, uri,
-											timeout=self.timeout,
-											params=params_,
-											data=json.dumps(body_))
+			response = self._session.request(method,uri,
+									params=params_,
+									data=json.dumps(body_))
+
 		except requests.Timeout as e:
 			print("Timeout raised and caught:\n{e}".format(e=e))
 
@@ -59,15 +67,29 @@ class api():
 		return response if response else None
 
 
-	def search(self,name):
+	def search(self,name,num_results=20):
+
+		if num_results > 50:
+			print('Warning: num_results must not be greater than 50 ... Setting to 50')
+			N = 50
+		elif num_results <= 0:
+			print('Warning: num_results must be between 0 and 50 ... setting to 20')
+			N = 20
+		else:
+			N = num_results
 
 		path = '/search/species/{}'.format(name)
-		response = self._make_request(path)
+		response = self._make_request(path,params_ = {'num_results': N})
+
 		try:
 			organisms = response.json()['organisms']
 
 		except TypeError as e:
 			print('Empty response returned...')
+			return []
+
+		except AttributeError as e:
+			print('No organisms found containing {}'.format(name))
 			return []
 
 		org_list = []
@@ -164,7 +186,13 @@ class api():
 
 if __name__ == '__main__':
 
+	# test code goes here
 	optipyzer = api()
+	results = optipyzer.search('coli', num_results=2)
+
+	for org in results:
+		org.info()
+		print()
 
 
 
