@@ -1,0 +1,27 @@
+
+
+GET: {
+    host: "https://optipyzer.herokuapp.com/search/"
+    query: "Campylobacter Coli BIGS00",
+}
+
+
+
+
+{
+    "num_results": 1,
+    "organisms": [
+        {
+            "GC_perc": 32.66,
+            "assembly": "GCF_000314185.1",
+            "num_codons": 453335,
+            "org_id": 1237,
+            "organelle": "genomic",
+            "species": "Campylobacter coli BIGS0009",
+            "taxid": 1247734,
+            "translation_table": 11
+        }
+    ],
+    search_query: "Campylobacter Coli BIGS00"
+}
+

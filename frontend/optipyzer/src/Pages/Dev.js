@@ -26,6 +26,8 @@ import NavBarMobile from '../Components/NavBarMobile';
 import CodeBlock from '../Components/CodeBlock'
 import PythonCode from '../Resources/PythonCode'
 
+import animation from "../Resources/CodonOptimizationMatte_01.gif"
+
 // import color palette
 import ColorPalette from '../Resources/ColorPalette'
 
@@ -108,6 +110,13 @@ const Dev = () => {
 		        >
 		        For some, a web-based user interface isn't enough. As someone who works as a biologist full time, I am well aware of how scientists are pushing the limits of bioinformatics everyday. If you need a more powerful tool to do large-scale multi-species codon optimization, then you are in luck. We provide a set of developer tools and a standard library that can seemlessly interface the exact same cloud API utilized by the site. Now you can write automated programs and functions perfectly tailored to your needs and throughput.
 		        </Typography>
+		        <Button
+		         variant="outlined"
+		         href="#install"
+		         color="primary"
+		        >
+		          Learn More
+		        </Button>
 		       </Grid>
 		       <Grid
 		         item
@@ -115,13 +124,7 @@ const Dev = () => {
 		         lg={7}
 		         //className={styles.gridItem}
 		        >
-			      <Button
-			        variant="outlined"
-			        color="primary"
-			        href="#install"
-			      >
-			        Learn More
-			      </Button>
+		        <img src={animation} style={{width: 500}}/>
 		      </Grid>
 		    </Grid>
 		    <Grid
