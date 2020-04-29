@@ -17,7 +17,7 @@ import Grid from '@material-ui/core/Grid';
 import AboutSection from '../Components/AboutSection';
 import caleigh from "../Resources/caleigh_profile.jpeg"
 import nathan from "../Resources/headshot_new.png"
-import translation_gif from '../Resources/temp_engine.gif'
+import translation_gif from '../Resources/CodonSwap_01.gif'
 
 // import navbar
 import NavBar from '../Components/NavBar';
@@ -38,8 +38,8 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 	  	}
 	},
 	animation: {
-		width: '300px',
-		height: '250px',
+		width: '400px',
+		height: '100%',
 		padding: '10px',
 	}
 

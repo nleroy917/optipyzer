@@ -3,9 +3,6 @@ from lib.CodonDataPull import *
 from lib.codon_optimizer import CodonOptimizer
 import sys
 
-# import sqlite
-import sqlite3
-
 # import flask
 from flask import Flask
 from flask import jsonify

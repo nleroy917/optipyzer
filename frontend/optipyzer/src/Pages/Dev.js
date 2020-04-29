@@ -26,7 +26,7 @@ import NavBarMobile from '../Components/NavBarMobile';
 import CodeBlock from '../Components/CodeBlock'
 import PythonCode from '../Resources/PythonCode'
 
-import animation from "../Resources/CodonOptimizationMatte_01.gif"
+import animation from "../Resources/CodonOptimization_02.gif"
 
 // import color palette
 import ColorPalette from '../Resources/ColorPalette'
