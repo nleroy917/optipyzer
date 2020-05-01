@@ -6,6 +6,8 @@ import FadeIn from 'react-fade-in';
 import {
   BrowserView,
   MobileView,
+  isMobile,
+  isBrowser
 } from "react-device-detect";
 
 
@@ -124,7 +126,7 @@ const Dev = () => {
 		         lg={7}
 		         //className={styles.gridItem}
 		        >
-		        <img src={animation} style={{width: 500}}/>
+				{isBrowser ? <img src={animation} style={{width: 500}}/> : ''}
 		      </Grid>
 		    </Grid>
 		    <Grid
