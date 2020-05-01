@@ -16,7 +16,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const SequenceInput = (props) => {
-
+  const type = props.seqType
   const [error,setError] = useState(false);
   const [tempSeq,setTempSeq] = useState(props.seq)
   const styles = useStyles();
@@ -24,6 +24,11 @@ const SequenceInput = (props) => {
 	return(
 	  <ClickAwayListener
 	    onClickAway={() => {
+         // if the sequence is protein, no need to check length
+         if(type === 'protein'){
+           setError(false)
+           return
+         }
          //console.log(tempSeq)
          if(!(tempSeq)){
           setError(false)
