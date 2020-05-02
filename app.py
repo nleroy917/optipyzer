@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 # import custom libraries
 from lib.CodonDataPull import *
 from lib.codon_optimizer import CodonOptimizer
@@ -107,7 +109,7 @@ def optimize_pro():
 @app.route('/fetch/species', methods=['GET'])
 def fetch_species():
 
-	# fetch species list
+	# fetch species list with categories
 	speciesList = fetch_species_for_UI(DB_NAME)
 
 	return jsonify(speciesList)

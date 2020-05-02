@@ -16,7 +16,8 @@ def fetch_species_for_UI(db_file):
 
   for species in result:
     speciesList.append({'id': species[0],
-                        'name':species[4]})
+                        'name': species[4],
+                        'type': species[13]})
 
   return speciesList
 

@@ -52,7 +52,22 @@ const SpeciesSelect = (props) => {
                     }}
 	      multiple
 	      id="species"
-	      options={props.speciesList}
+	      options={props.speciesList.sort((a,b) => {
+
+			  if (a.type === 'popular') {
+				var aval = 1
+			  } else {
+				var aval = 0
+			  }
+
+			  if (b.type === 'popular') {
+				  var bval = 1
+			  } else {
+				  var bval = 0
+			  }
+
+			  return (bval - aval)})}
+		  groupBy={(option) => option.type}
 	      getOptionLabel={(option) => option.name}
 	      filterSelectedOptions
 	      renderInput={(params) => (
