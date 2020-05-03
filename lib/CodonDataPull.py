@@ -1,5 +1,4 @@
 import sqlite3
-import os
 
 def fetch_species_for_UI(db_file):
 
@@ -11,7 +10,6 @@ def fetch_species_for_UI(db_file):
   curs.execute(query)
   result = curs.fetchall()
 
-  names=[]
   speciesList = []
 
   for species in result:
