@@ -32,7 +32,7 @@ const AboutSection = (props) => {
 		    container
 		    direction="row"
 		    justify="flex-start"
-		    alignItems="stretch"
+		    alignItems="center"
 		    spacing={3}
 		    style={{height:'100%'}}
 		  >
@@ -49,6 +49,13 @@ const AboutSection = (props) => {
 		      className={styles.aboutBody}
 		    >
 		      {props.body2}
+		    </Typography>
+			<br></br>
+		    <Typography
+		      variant="body1"
+		      className={styles.aboutBody}
+		    >
+		      {props.body3}
 		    </Typography>
 		    </Grid>
 		    <Grid item xs={12} lg={5}>

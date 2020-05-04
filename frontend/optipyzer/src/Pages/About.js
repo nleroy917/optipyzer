@@ -17,7 +17,7 @@ import Grid from '@material-ui/core/Grid';
 import AboutSection from '../Components/AboutSection';
 import caleigh from "../Resources/caleigh_profile.jpeg"
 import nathan from "../Resources/headshot_new.png"
-import translation_gif from '../Resources/CodonSwap_01.gif'
+import optimization_gif from '../Resources/CodonSwap_01.gif'
 
 // import navbar
 import NavBar from '../Components/NavBar';
@@ -31,16 +31,25 @@ const useStyles = makeStyles(({ breakpoints, spacing }) => ({
 
 	devImg: {
 		height: '200px',
-		padding: '10px',
+		margin: '10px',
 		borderRadius: '50%',
+		border: 'solid white 1px',
 		[breakpoints.only('xs')]: {
 	  		height: '45vw'
-	  	}
+		  },
+		'&:hover':{
+			opacity: '0.9',
+			transform: 'translate(1px,1px)'
+		},
+		'&:active': {
+			transform: 'translate(2px,2px)'
+		}
 	},
 	animation: {
-		width: '400px',
-		height: '100%',
+		width: '100%',
+		height: '300px',
 		padding: '10px',
+		objectFit: 'cover'
 	}
 
 
@@ -80,31 +89,44 @@ const About = () => {
 			    content={
 			    	<div>
 			    	<span style={{display: 'inline'}}>
-			    	  <img alt="Caleigh Roleck" className={styles.devImg} src={caleigh} />
-			    	  <img alt="Nathan LeRoy" className={styles.devImg} src={nathan} />
+			    	  <a href="https://www.linkedin.com/in/caleigh-roleck-2a50b6125/"><img alt="Caleigh Roleck" className={styles.devImg} src={caleigh} /></a>
+			    	  <a href="https://www.linkedin.com/in/nathanjleroy/"><img alt="Nathan LeRoy" className={styles.devImg} src={nathan} /></a>
 			    	  </span>
 			    	</div>
 			    }
 			  />
 			</Grid>
 			<Grid item>
-			  <AboutSection 
-			    body1={LoremIpsum.medium}
-			    body2={LoremIpsum.medium}
-			    title="Codon Optimzation At A Glance"
+			  <AboutSection
+			  	body1={AboutContent.codonUsage1}
+			    body2={AboutContent.codonUsage2}
+				body3={AboutContent.codonUsage3}
+			    title="Codon Optimization"
 			    content={
 			    	<div>
-			    	    <img alt="Translation of DNA" src={translation_gif} className={styles.animation}/>
+			    	    <img alt="Translation of DNA" src={optimization_gif} className={styles.animation}/>
 			    	</div>
 			    }
 			  />
 			</Grid>
 			<Grid item>
 			  <AboutSection 
-			    body1={LoremIpsum.medium}
-			    body2={LoremIpsum.medium}
+			    body1={AboutContent.engine1}
+			    body2={AboutContent.engine2}
 			    title="The Engine"
 			  />
+			</Grid>
+			<Grid item>
+				<AboutSection
+					title="Data Sources and Citations"
+					body1="This project utilizes a data-dump from George Washington University High-performance Integrated Virtual Environment (HIVE) collaborative. It houses codon preference data from more than 130,000 organisms. This data was organized into a local server database from which Optipyzer calculates it's custome usage statistics for multi-species codon optimization of sequences."
+					body2={
+					<ol style={{listStyleType: ''}}>
+						<li style={{marginTop: 15 , textAlign: 'left'}}>Athey, J.; Alexaki, A.; Osipova, E.; Rostovtsev, A.; Santana-Quintero, L. V.; Katneni, U.; Simonyan, V.; Kimchi-Sarfaty, C. A New and Updated Resource for Codon Usage Tables. BMC Bioinformatics 2017, 18 (1), 391. <a href="https://doi.org/10.1186/s12859-017-1793-7">https://doi.org/10.1186/s12859-017-1793-7.</a></li>
+						<li style={{marginTop: 15, textAlign: 'left'}}>Alexaki, A.; Kames, J.; Holcomb, D. D.; Athey, J.; Santana-Quintero, L. V.; Lam, P. V. N.; Hamasaki-Katagiri, N.; Osipova, E.; Simonyan, V.; Bar, H.; Komar, A. A.; Kimchi-Sarfaty, C. Codon and Codon-Pair Usage Tables (CoCoPUTs): Facilitating Genetic Variation Analyses and Recombinant Gene Design. J. Mol. Biol. 2019, 431 (13), 2434–2441. <a href="https://doi.org/10.1016/j.jmb.2019.04.021">https://doi.org/10.1016/j.jmb.2019.04.021.</a></li>
+						<li style={{marginTop: 15, textAlign: 'left'}}>Hershberg, R.; Petrov, D. A. Selection on Codon Bias. Annu. Rev. Genet. 2008, 42, 287–299. <a href="https://doi.org/10.1146/annurev.genet.42.110807.091442">https://doi.org/10.1146/annurev.genet.42.110807.091442.</a></li>
+					</ol>}
+				/>
 			</Grid>
 			</Grid>
 			</FadeIn>
