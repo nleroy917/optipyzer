@@ -37,6 +37,27 @@ def optimize_dna():
 
 	data = request.get_json()
 	seq = data['seq']
+	if len(seq) % 3 != 0:
+		return_package={
+			'error': {
+			'message': "Sequence must be divisible by 3",
+			'code': 400},
+			'seq':seq
+			}
+		return jsonify(return_package), 400
+
+	# Check for invalid sequence
+	for base in seq:
+		if base not in "ATGC":
+			return_package={
+			'error': {
+			'message': "Invalid base found in query: {}".format(base),
+			'code': 400},
+			'seq':seq,
+			'invalid_base': base
+			}
+			return jsonify(return_package), 400
+
 	organism_list = [int(x) for x in data['org_list']]
 	weights_cleaned = {}
 	for org in data['weights']:
@@ -73,6 +94,17 @@ def optimize_dna():
 def optimize_pro():
 	data = request.get_json()
 	seq = data['seq']
+	for res in seq:
+		if res not in "DTSEPGACVMILYFHKRWQN":
+			return_package={
+			'error': {
+			'message': "Invalid residue found in query: {}".format(res),
+			'code': 400},
+			'seq':seq,
+			'invalid_residue': res
+			}
+			return jsonify(return_package), 400
+
 	organism_list = [int(x) for x in data['org_list']]
 	weights_cleaned = {}
 	for org in data['weights']:
@@ -139,7 +171,8 @@ def get_codon_usage_data(org_id):
 			'codon_usage': codon_usage
 		}
 	except:
-		return_package = {'error': {
+		return_package = {
+			'error': {
 			'message': "Codon Usage table unavailable for species - perhaps not enough data is available.",
 			'code': 404
 			}
@@ -154,13 +187,25 @@ def search_for_name(name):
 	num_results = request.args.get('num_results')
 	status_code = 200
 
+	if not num_results:
+		status_code = 400
+		return_package = {
+			'error': {
+				'message': "num_results parameter missing",
+				'code': 400
+			}
+		}
+
+		return jsonify(return_package), status_code
+
+
 	curs = connect_to_db(DB_NAME)
 	query = '''SELECT *
            	   FROM organisms
            	   WHERE species LIKE ?
-           	   LIMIT {}'''.format(num_results)
+           	   LIMIT ?'''
 
-	curs.execute(query,['%'+name+'%'])
+	curs.execute(query,['%'+name+'%',num_results])
 
 	results = curs.fetchall()
 

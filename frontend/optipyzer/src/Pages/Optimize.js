@@ -182,32 +182,28 @@ const Optimize = (props) => {
       org_list.push(spec.id.toString())
     }
 
-    try {
-
-      let response = await axios.post(`${API_URL}/optimize/${type}`,{
+    axios.post(`${API_URL}optimize/${type}`,{
                                         seq: seq,
                                         org_list: org_list,
                                         weights: weights}
-                                        );
-      let data = await response.data
-      console.log(data)
-      let status = await response.status
-
+                                        )
+    .then((response) => {
       history.push({
         pathname: '/results',
-        state: { data: data,
-                 status: status }})
-    } catch {
-
+        state: { data: response.data,
+                 status: response.status }})
+    })
+    .catch((error) => {
+      //console.log(error.response.data)
       history.push({
         pathname: '/results',
-        state: { data: {},
-                 status: 404 }})
-    }
-
-
-    
-
+        state: {
+          data: error.response.data,
+          status: error.response.status
+        }
+      })
+    })
+      
   }
 
   if(speciesList){

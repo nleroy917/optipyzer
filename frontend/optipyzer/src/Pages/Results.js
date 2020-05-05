@@ -188,6 +188,13 @@ const Results = (props) => {
 				  style={{minWidth: '100%'}}
 			    >
 			      <Grid item>
+				  	<Grid container
+					  direction="row"
+					  justify="space-between"
+					  alignItems="center"
+					  style={{width: '100%'}}
+					  >
+					  <Grid item>
 			        <Typography 
 			           variant="h4" 
 			           className={styles.formTitle}
@@ -195,6 +202,17 @@ const Results = (props) => {
 			         >
 			          Results
 			        </Typography>
+					</Grid>
+					<Grid item>
+						<Button
+							variant="outlined"
+							color="primary"
+							onClick={() => {history.push('./optimize')}}
+						>
+							Optimize Another?
+						</Button>
+					</Grid>
+					</Grid>
 			        <hr></hr>
 			      </Grid>
 			      <Grid item>
@@ -304,9 +322,7 @@ const Results = (props) => {
 	  	    </Grid>
 		  </Container>
 		</div>
-		)}
-
-		else{
+		)} else {
 		return(
 		<div className="results-body">
 		  <MuiThemeProvider theme={theme}>
@@ -322,9 +338,13 @@ const Results = (props) => {
 	          <Typography
 	            variant="h2"
 	            style={{fontWeight: '200'}}
+				gutterBottom
 	          >
-	      		404: An Error Occured... :(
+	      		Error Occured :( {status}
 	          </Typography>
+			  <Typography variant="h6">
+					{data.error.message}
+			  </Typography>
 	        </Grid>
 	        <Grid item>
 	          <Button
