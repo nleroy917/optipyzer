@@ -120,7 +120,7 @@ const Landing = () => {
         				        variant="body1"
         				        className={styles.landingBody}
         				      >
-        				        A fast, effective, and flexible codon optimization tool. Built with Python, the algorithm can codon-optimize your g blocks for multiple species at once, giving preference to one or more espression systems at a time. The algorithm utilizes the most recent codon usage data available to dynamically generate an optimal sequence for you in seconds.
+        				        A fast, effective, and flexible codon optimization tool. Built with Python, the algorithm can codon-optimize your g blocks for multiple species at once, giving preference to one or more expression systems at a time. The algorithm utilizes the most recent codon usage data available to dynamically generate an optimal sequence for you in seconds.
         				      </Typography>
         				    </Grid>
         				    <br></br>
@@ -146,24 +146,14 @@ const Landing = () => {
                       alignItems="center"
                     >
                       <Grid item>
-                        Made with ❤ by Nathan LeRoy
+                        Made by Nathan LeRoy
                       </Grid>
                       <Grid item>
-                        <a href="https://twitter.com/NathanJLeRoy" style={{color: 'white'}}>
-                          <TwitterIcon color="primary" style={{padding:'4px'}}/>
-                          Twitter
-                        </a>
                       </Grid>
                       <Grid item>
                         <a href="https://github.com/NLeRoy917" style={{color: 'white'}}>
                           <GitHubIcon color="primary" style={{padding:'4px'}}/>
                           GitHub                       
-                        </a>
-                      </Grid>
-                      <Grid item>
-                        <a href="https://www.linkedin.com/in/nathan-leroy-04b35b105/" style={{color: 'white'}}>
-                          <LinkedInIcon color="primary" style={{padding:'4px'}}/>
-                          Linked In
                         </a>
                       </Grid>
                     </Grid>
