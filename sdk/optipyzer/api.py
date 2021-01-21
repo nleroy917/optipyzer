@@ -32,13 +32,15 @@ class api():
     }
 	_SLEEP_MIN = 0.2  # Enforce minimum wait time between API calls (seconds)
 
-	def __init__(self, timeout=1000, sleep_time=0.5):
+	def __init__(self, local=False, timeout=1000, sleep_time=0.5):
 
 		"""
 		init Optipyzer API object
 		"""
-		#self.api_base = 'http://127.0.0.1:5000/'
-		self.api_base = 'https://optipyzer-api.herokuapp.com/'
+		if local:
+			self.api_base = 'http://127.0.0.1:5000'
+		else:
+			self.api_base = 'https://optipyzer-api.herokuapp.com'
 		self.timeout = timeout
 		self.sleep_time = sleep_time
 
@@ -124,7 +126,7 @@ class api():
 
 		return org_list
 
-	def optimize(self,seq,org_list,weights,seq_type='dna'):
+	def optimize(self, seq, org_list, weights, seq_type='dna'):
 
 		if len(org_list) != len(weights):
 			raise ValueError('Lengths of org_list and weights must be the same!')
@@ -148,15 +150,11 @@ class api():
 			'seq': seq.lower(),
 			'org_list': orgs,
 			'weights': weights_clean
-
 		}
-		response = self._make_request(path,method='POST',body_ =body)
-
+		response = self._make_request(path, method='POST', body_ =body)
 
 		try:
-
 			data = response.json()
-
 			optimization = Optimization()
 			optimization.seq_type = data['seq_type']
 			optimization.peptide_seq = data['peptide_seq']
@@ -187,12 +185,26 @@ class api():
 if __name__ == '__main__':
 
 	# test code goes here
-	optipyzer = api()
-	results = optipyzer.search('coli', num_results=2)
+	op = api(local=True)
+	# search for e coli
+	results = op.search(name='Escherichia Coli')
+	org1 = results[0]
+	org1.info()
 
-	for org in results:
-		org.info()
-		print()
+	# search for campylbacter
+	results = op.search(name='Campylobacter')
+	org2 = results[0]
+	org2.info()
+
+	# pull codon usage for those organisms
+	codon_usage1 = op.pull_codons(org1)
+	codon_usage2 = op.pull_codons(org2)
+
+	# optimize a sequence to those organisms, weight campylobascter twice as much
+	seq = 'ATGGCATGCATGCGT'
+	optimized = op.optimize(seq, org_list=[org1,org2], weights=[1,2])
+ 
+	print(optimized)
 
 
 
