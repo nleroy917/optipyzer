@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 ![Travis-CI](https://travis-ci.org/NLeRoy917/optipyzer.svg?branch=master)
 
-A fast, effective, and flexible codon optimization tool. Built with Python, the algorithm can codon-optimize your g blocks for multiple species at once, giving preference to one or more espression systems at a time. The algorithm utilizes the most recent codon usage data available to dynamically generate an optimal sequence for you in seconds.
+A fast, effective, and flexible codon optimization tool. Built with Python, the algorithm can codon-optimize your g blocks for multiple species at once, giving preference to one or more expression systems at a time. The algorithm utilizes the most recent codon usage data available to dynamically generate an optimal sequence for you in seconds.
 
 # Web Application
 ![Optipyzer Header](https://github.com/NLeRoy917/optipyzer/blob/master/static/imgs/header_img.png)
@@ -28,6 +28,44 @@ results = optipyzer.search(name='Escherichia Coli')
 org1 = results[0]
 
 # search for campylbacter
+results = optipyzer.search(name='Campylobacter')
+org2 = results[0]
+
+# pull codon usage for those organisms
+codon_usage1 = optipyzer.pull_codons(org1)
+codon_usage2 = optipyzer.pull_codons(org2)
+
+# optimize a sequence to those organisms, weight campylobascter twice as much
+seq = 'ATGGCTACTGCATGCTTAGCATGCATGACT'
+optimized = optipyzer.optimize(seq,org_list=[org1,org2],weights=[1,2])
+```
+
+# Run Local Server with Docker
+Some users might be interested in optimizing sequences confidentially. That is, using a locally run server and not making HTTP requests to the public API. In addition, this increases speed and supports high-throughput workflows.
+
+Because of this, a docker container was prepared to spin up the server locally. The docker container will run the flask server off your local machine and you can now use this to optimize sequences.
+
+***(i.e. The server now runs on localhost:5000)***
+
+## To spin up:
+```sh
+docker build -t server .
+docker run -p 5000:5000 server
+```
+
+## Using the local server
+Simply specify you want to run the optimizer locally when initializing an Optipyzer object in your scripts and your local server will then be used:
+```python
+import optipyzer
+
+# initalize API
+optipyzer = optipyzer.api(local=True) # <---- Specify here you want to use local server
+
+# search for e coli
+results = optipyzer.search(name='Escherichia Coli')
+org1 = results[0]
+
+# search for campylobacter
 results = optipyzer.search(name='Campylobacter')
 org2 = results[0]
 

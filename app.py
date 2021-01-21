@@ -22,15 +22,6 @@ def api_base():
 
 	return render_template('api_landing.html')
 
-# Testing route/main route
-@app.route('/test')
-def api_base_test():
-
-	return_string = '''\nBARNABAS A BUM FR\n'''
-
-	return return_string
-
-
 # Route to optimize DNA sequence
 @app.route('/optimize/dna', methods=['POST'])
 def optimize_dna():
@@ -48,7 +39,7 @@ def optimize_dna():
 
 	# Check for invalid sequence
 	for base in seq:
-		if base not in "ATGC":
+		if base.lower() not in "atgc":
 			return_package={
 			'error': {
 			'message': "Invalid base found in query: {}".format(base),
