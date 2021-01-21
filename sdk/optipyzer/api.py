@@ -185,7 +185,7 @@ class api():
 if __name__ == '__main__':
 
 	# test code goes here
-	op = api(local=True)
+	op = api()
 	# search for e coli
 	results = op.search(name='Escherichia Coli')
 	org1 = results[0]
