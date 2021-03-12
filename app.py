@@ -86,10 +86,10 @@ def optimize_pro():
 	data = request.get_json()
 	seq = data['seq']
 	for res in seq:
-		if res not in "DTSEPGACVMILYFHKRWQN":
+		if res.upper() not in "DTSEPGACVMILYFHKRWQN":
 			return_package={
 			'error': {
-			'message': "Invalid residue found in query: {}".format(res),
+			'message': "Invalid residue found in query: {}".format(res.upper()),
 			'code': 400},
 			'seq':seq,
 			'invalid_residue': res

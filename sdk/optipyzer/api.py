@@ -66,7 +66,7 @@ class api():
 
 		# Enforce rate limiting
 		time.sleep(max(self._SLEEP_MIN, self.sleep_time))
-		return response if response else None
+		return response
 
 
 	def search(self,name,num_results=20):
@@ -152,23 +152,21 @@ class api():
 			'weights': weights_clean
 		}
 		response = self._make_request(path, method='POST', body_ =body)
+		data = response.json()
+		if response.status_code == 400:
+			print('Invalid request. Reason: {}'.format(data['error']['message']))
+			return None
 
-		try:
-			data = response.json()
-			optimization = Optimization()
-			optimization.seq_type = data['seq_type']
-			optimization.peptide_seq = data['peptide_seq']
-			optimization.stop_codon = data['stop_codon']
-			optimization.optimmized_sd = data['optimmized_sd']
-			optimization.best_expression_sd = data['best_expression_sd']
-			optimization.optimmized_ad = data['optimmized_ad']
-			optimization.best_expression_ad = data['best_expression_ad']
-
-		except TypeError as e:
-			print('Empty response returned...')
-			return Optimization()
-
-		return optimization
+		elif response.status_code == 200:
+  			optimization = Optimization()
+  			optimization.seq_type = data['seq_type']
+  			optimization.peptide_seq = data['peptide_seq']
+  			optimization.stop_codon = data['stop_codon']
+  			optimization.optimmized_sd = data['optimmized_sd']
+  			optimization.best_expression_sd = data['best_expression_sd']
+  			optimization.optimmized_ad = data['optimmized_ad']
+  			optimization.best_expression_ad = data['best_expression_ad']
+	  		return optimization	
 
 	def pull_codons(self,organism):
 
@@ -185,26 +183,25 @@ class api():
 if __name__ == '__main__':
 
 	# test code goes here
-	op = api()
+	op = api(local=True)
 	# search for e coli
 	results = op.search(name='Escherichia Coli')
 	org1 = results[0]
-	org1.info()
+	# org1.info()
 
 	# search for campylbacter
 	results = op.search(name='Campylobacter')
 	org2 = results[0]
-	org2.info()
+	# org2.info()
 
 	# pull codon usage for those organisms
 	codon_usage1 = op.pull_codons(org1)
 	codon_usage2 = op.pull_codons(org2)
 
 	# optimize a sequence to those organisms, weight campylobascter twice as much
-	seq = 'ATGGCATGCATGCGT'
-	optimized = op.optimize(seq, org_list=[org1,org2], weights=[1,2])
- 
-	print(optimized)
+	seq = 'MFYKLILNGKTLKGETTTEAVDAYTAEKRF'
+	optimmized = op.optimize(seq, org_list=[org1,org2], weights=[1,2], seq_type="protein")
+	print(optimmized.optimmized_sd)
 
 
 
