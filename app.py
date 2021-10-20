@@ -3,6 +3,7 @@
 # import custom libraries
 from lib.CodonDataPull import *
 from lib.codon_optimizer import CodonOptimizer
+from lib.utils import Utils
 import sys
 
 # import flask
@@ -15,6 +16,7 @@ app = Flask(__name__)
 CORS(app)
 
 DB_NAME = 'codon_usage_data.db'
+util = Utils()
 
 # Testing route/main route
 @app.route('/')
@@ -53,10 +55,11 @@ def optimize_dna():
 	weights_cleaned = {}
 	for org in data['weights']:
 		weights_cleaned[int(org)] = float(data['weights'][org])
+  
 	try:
 		optipyzer = CodonOptimizer(DB_NAME)
 		optipyzer.set_organisms(organism_list,weights_cleaned)
-		optipyzer.optimize(seq,seq_type='dna')
+		optipyzer.optimize(seq, seq_type='dna')
 
 		return_package = {
 			'seq_type': 'DNA',
@@ -71,11 +74,11 @@ def optimize_dna():
 		return_package={
 			'error': {
 			'message': "The optimization could not be complete. Verify your sequence!",
-			'code': 404
+			'code': 400
 			}
 		}
 
-		return jsonify(return_package), 404
+		return jsonify(return_package), 400
 
 	return jsonify(return_package), 200
 
@@ -88,11 +91,11 @@ def optimize_pro():
 	for res in seq:
 		if res.upper() not in "DTSEPGACVMILYFHKRWQN":
 			return_package={
-			'error': {
-			'message': "Invalid residue found in query: {}".format(res.upper()),
-			'code': 400},
-			'seq':seq,
-			'invalid_residue': res
+			    'error': {
+			    'message': "Invalid residue found in query: {}".format(res.upper()),
+			    'code': 400},
+			    'seq': seq,
+			    'invalid_residue': res
 			}
 			return jsonify(return_package), 400
 
@@ -100,30 +103,31 @@ def optimize_pro():
 	weights_cleaned = {}
 	for org in data['weights']:
 		weights_cleaned[int(org)] = float(data['weights'][org])
+	# print(organism_list, weights_cleaned, flush=True)
+	seq_dna = util.aa_to_dna(seq)
+	optipyzer = CodonOptimizer(DB_NAME)
+	optipyzer.set_organisms(organism_list,weights_cleaned)
+	optipyzer.optimize(seq_dna,seq_type='dna')
+ 
+	return_package = {
+		'seq_type': 'Protein',
+		'peptide_seq': optipyzer.peptide_seq,
+		'stop_codon': optipyzer.stop_codon,
+		'optimmized_sd': optipyzer.optimmized_sd,
+		'best_expression_sd': optipyzer.best_expression_sd,
+		'optimmized_ad': optipyzer.optimmized_ad,
+		'best_expression_ad': optipyzer.best_expression_ad
+	}
+	# except Exception as e:
+	# 	print(str(e), flush=True)
+	# 	return_package={
+	# 		'error': {
+	# 		'message': "The optimization could not be complete. Verify your sequence! Error: {}".format(str(e)),
+	# 		'code': 400
+	# 		}
+	# 	}
 
-	try:
-		optipyzer = CodonOptimizer(DB_NAME)
-		optipyzer.set_organisms(organism_list,weights_cleaned)
-		optipyzer.optimize(seq,seq_type='protein')
-
-		return_package = {
-			'seq_type': 'DNA',
-			'peptide_seq': optipyzer.peptide_seq,
-			'stop_codon': optipyzer.stop_codon,
-			'optimmized_sd': optipyzer.optimmized_sd,
-			'best_expression_sd': optipyzer.best_expression_sd,
-			'optimmized_ad': optipyzer.optimmized_ad,
-			'best_expression_ad': optipyzer.best_expression_ad
-		}
-	except:
-		return_package={
-			'error': {
-			'message': "The optimization could not be complete. Verify your sequence!",
-			'code': 404
-			}
-		}
-
-		return jsonify(return_package), 404
+		# return jsonify(return_package), 400
 
 	return jsonify(return_package), 200
 
@@ -165,7 +169,7 @@ def get_codon_usage_data(org_id):
 		return_package = {
 			'error': {
 			'message': "Codon Usage table unavailable for species - perhaps not enough data is available.",
-			'code': 404
+			'code': 400
 			}
 		}
 

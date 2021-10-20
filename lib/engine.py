@@ -121,7 +121,8 @@ def remove_prohibited_codons(query, prohibited_codons, var_thresh=0.1):
                 # of acceptable codons
                 # prohibited codons' preferences are set to 0
                 for codon in query[species][residue]:
-                    if codon not in prohibited_codons[residue]:
+                    # print(acceptable_codon_sum, flush=True)
+                    if codon not in prohibited_codons[residue] and acceptable_codon_sum != 0:
                         query[species][residue][codon] = query[species][residue][codon] / acceptable_codon_sum
                     else:
                         query[species][residue][codon] = 0

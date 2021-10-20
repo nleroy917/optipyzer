@@ -1,0 +1,2 @@
+import { FieldValues, UseFormProps, UseFormReturn } from '../types';
+export declare function createFormControl<TFieldValues extends FieldValues = FieldValues, TContext extends object = object>(props?: UseFormProps<TFieldValues, TContext>): Omit<UseFormReturn<TFieldValues, TContext>, 'formState'>;
