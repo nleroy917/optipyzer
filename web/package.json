@@ -14,8 +14,7 @@
     "format": "prettier -w src",
     "release": "standard-version",
     "push-release": "git push --follow-tags origin main",
-    "postbuild": "next-sitemap",
-    "prepare": "husky install"
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@tailwindcss/forms": "^0.3.4",
