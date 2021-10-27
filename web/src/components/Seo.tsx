@@ -30,7 +30,7 @@ export default function Seo(props: SeoProps) {
       <meta property="og:type" content="website"></meta>
       <meta property="og:title" content="Optipyzer.com"></meta>
       <meta property="og:url" content="https://optipyzer.vercel.app"></meta>
-      <meta property="og:image" content="images/landing.png"></meta>
+      <meta property="og:image" content="/images/landing.png"></meta>
       <meta property="og:description" content="A fast, effective, and flexible codon optimization tool. Built with Python, the algorithm can codon-optimize DNA or protein sequences for multiple species at once, giving preference to one or more expression systems at a time."></meta>
 
       {/* Twitter */}
