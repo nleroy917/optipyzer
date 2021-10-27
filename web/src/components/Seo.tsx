@@ -9,7 +9,13 @@ export default function Seo(props: SeoProps) {
 
   return (
     <Head>
+      <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta 
+        name="description" 
+        content="A fast, effective, and flexible codon optimization tool. Built with Python, the algorithm can codon-optimize DNA or protein sequences for multiple species at once, giving preference to one or more expression systems at a time."></meta>
       <title>{props.title}</title>
+
       {/* Favicons */}
       {favicons.map((linkProps) => (
         <link key={linkProps.href} {...linkProps} />
@@ -19,6 +25,21 @@ export default function Seo(props: SeoProps) {
         name='msapplication-TileImage'
         content='/favicon/ms-icon-144x144.png'
       />
+
+      {/* Open Graph (OG) */}
+      <meta property="og:type" content="website"></meta>
+      <meta property="og:title" content="Optipyzer.com"></meta>
+      <meta property="og:url" content="https://optipyzer.vercel.app"></meta>
+      <meta property="og:image" content="public/images/landing.png"></meta>
+      <meta property="og:description" content="A fast, effective, and flexible codon optimization tool. Built with Python, the algorithm can codon-optimize DNA or protein sequences for multiple species at once, giving preference to one or more expression systems at a time."></meta>
+
+      {/* Twitter */}
+      <meta name="twitter:card" content="summary"></meta>
+      <meta name="twitter:creator" content="@NathanJLeRoy"></meta>
+      <meta name="twitter:description" content="A fast, effective, and flexible codon optimization tool. Built with Python, the algorithm can codon-optimize DNA or protein sequences for multiple species at once, giving preference to one or more expression systems at a time."></meta>
+      <meta name="twitter:title" content="Optipyzer.com"></meta>
+      <meta name="twitter:image" content="public/images/landing.png"></meta>
+      <meta name="twitter:image:alt" content="optipyzer landing page"></meta>
     </Head>
   );
 }
