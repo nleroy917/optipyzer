@@ -179,28 +179,15 @@ def get_codon_usage_data(org_id):
 @app.route('/search/species/<name>', methods=['GET'])
 def search_for_name(name):
 
-	num_results = request.args.get('num_results')
 	status_code = 200
 
-	if not num_results:
-		status_code = 400
-		return_package = {
-			'error': {
-				'message': "num_results parameter missing",
-				'code': 400
-			}
-		}
-
-		return jsonify(return_package), status_code
-
-
 	curs = connect_to_db(DB_NAME)
+
 	query = '''SELECT *
            	   FROM organisms
-           	   WHERE species LIKE ?
-           	   LIMIT ?'''
+           	   WHERE species LIKE ?'''
 
-	curs.execute(query,['%'+name+'%',num_results])
+	curs.execute(query, ['%'+name+'%'])
 
 	results = curs.fetchall()
 
