@@ -1,4 +1,6 @@
-export const species_TEST = [
+import { Species } from "@/.."
+
+export const species_popular: Species[] = [
   {"id":122771,"name":"African Clawed Frog (Xenopus laevis)","type":"popular"},
   {"id":121713,"name":"Bakers Yeast (Saccharomyces cerevisiae S288C)","type":"popular"},
   {"id":122001,"name":"Caenorhabditis elegans","type":"popular"},

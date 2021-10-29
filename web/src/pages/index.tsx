@@ -3,6 +3,8 @@ import * as React from 'react';
 
 import Seo from '@/components/Seo';
 
+import landing_card from '../../public/images/query_result.png'
+
 export default function HomePage() {
   
   const router = useRouter()
@@ -14,7 +16,7 @@ export default function HomePage() {
       <main className="flex flex-col items-center justify-center h-screen">
         <div className="px-4 md:max-w-screen-lg">
           <h1 className="py-4 mb-4 text-6xl font-bold text-blue-600 md:text-8xl">Optipyzer</h1>
-          <p className="mb-8 text-sm md:text-base">
+          <p className="mb-8 text-sm md:text-base md:w-7/12">
             A fast, effective, and flexible codon optimization tool. Built with Python, the algorithm can codon-optimize DNA or protein sequences for multiple species at once, giving preference to one or more expression systems at a time. The algorithm utilizes the most recent codon usage data available to dynamically generate an optimal sequence for you in seconds.
           </p>
           <div className="flex flex-row items-center justify-center my-4 md:justify-start">
@@ -29,6 +31,15 @@ export default function HomePage() {
               About
             </button>
           </div>
+        </div>
+        <div className="fixed hidden mr-4 lg:block lg:top-48 lg:right-12 pb-14" style={{zIndex: -1}}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              width="650"
+              className="z-0 transform skew-y-12 shadow-xl opacity-40"
+              src={landing_card.src}
+              alt="Query result example."
+            />
         </div>
       </main>
       <footer className="bottom-0 w-full px-4 -translate-y-16">

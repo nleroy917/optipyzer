@@ -1,11 +1,11 @@
-import { FC } from 'react';
+import debounce from "debounce-promise";
+import { FC, useMemo } from 'react';
 import { Dispatch, SetStateAction } from 'react';
-import Select, { components, CSSObjectWithLabel, MultiValue, Theme} from 'react-select';
+import { components, CSSObjectWithLabel, MultiValue, Theme} from 'react-select';
+import AsyncSelect from 'react-select/async';
 
 import { Species } from '@/..';
-
-// import { species } from "../data/species"
-import {species_TEST} from "../data/species_TEST"
+import { fetchSpecies } from '@/utils/speciesSelection';
 
 // eslint-disable-next-line
 const Input = (props: any) => (
@@ -15,17 +15,34 @@ const Input = (props: any) => (
   />
 )
 
-interface Props {
+interface SelectorProps {
   setSpecies: Dispatch<SetStateAction<Species[]>>,
   setWeights: Dispatch<SetStateAction<{[id: number]: number}>>,
   species: Species[],
   weights: {[id: number]: number}
 }
 
-const SpeciesSelector: FC<Props> = (props) => {
+const SpeciesSelector: FC<SelectorProps> = (props) => {
+
+  // declare debounced function
+  const debouncedFetchSpecies = useMemo(() => debounce(fetchSpecies, 500), [])
+
+  // render option label
+  const renderSpeciesOptionLabel = ({ label }: ({ label: string})) => {
+    return (
+      <div className="text-sm">
+        {label}
+      </div>
+    )
+  }
+
   return (
     <>
-      <Select
+      <AsyncSelect
+        // async options
+        defaultOptions={true}
+        loadOptions={debouncedFetchSpecies}
+        
         // override styling of
         // multiselect component
         // to be in line with the
@@ -50,14 +67,11 @@ const SpeciesSelector: FC<Props> = (props) => {
           })
         }}
         className="w-full mb-2 shadow-md"
-        options={species_TEST.map((s: Species) => ({
-          value: s.id,
-          label: s.name
-        }))}
         value={props.species.map((s: Species) => ({
           value: s.id,
           label: s.name
         }))}
+        placeholder={"Search for species"}
         components={{ Input: Input }}
         isMulti
         onChange={(selection: MultiValue<{value: number, label: string}>) => {
@@ -81,6 +95,7 @@ const SpeciesSelector: FC<Props> = (props) => {
             }
           })       
         }}
+        formatOptionLabel={renderSpeciesOptionLabel}
       />
     </>
   )
