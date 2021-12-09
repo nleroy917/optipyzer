@@ -3,30 +3,63 @@ import * as React from 'react';
 
 import Seo from '@/components/Seo';
 
+import github_logo from '../../public/images/github.png'
+import paper from '../../public/images/paper.png'
 import landing_card from '../../public/images/query_result.png'
 
 export default function HomePage() {
   
+  // instantiate router
   const router = useRouter()
 
   return (
     <>
       {/* <Seo templateTitle='Home' /> */}
       <Seo title="Optipyzer"/>
+
+      {/** BODY */}
       <main className="flex flex-col items-center justify-center h-screen">
-        <div className="px-4 md:max-w-screen-lg">
-          <h1 className="py-4 mb-4 text-6xl font-bold text-blue-600 md:text-8xl">Optipyzer</h1>
-          <p className="mb-8 text-sm md:text-base md:w-7/12">
+        <div className="px-4 lg:max-w-screen-lg sm:max-w-screen-sm md:max-w-screen-sm">
+          <div className="flex flex-row items-center justify-center md:justify-start">
+            <button 
+              onClick={() => router.push("https://github.com/nleroy917/optipyzer")} 
+              className="flex flex-row items-center px-2 py-1 mr-1 font-bold transition-all bg-blue-200 border-2 border-black rounded-lg cursor-pointer justify-evenly w-28 hover:bg-blue-300"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                width="20px"
+                src={github_logo.src}
+                alt="GitHub logo"
+              />
+              <span className="px-1 text-sm">GitHub</span>
+            </button>
+            <button
+              disabled={true}
+              onClick={() => router.push("https://github.com/nleroy917/optipyzer")} 
+              className="flex flex-row items-center w-32 px-2 py-1 mr-1 font-bold transition-all border-2 border-black rounded-lg cursor-pointer justify-evenly hover:bg-gray-100"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                width="20px"
+                src={paper.src}
+                alt="GitHub logo"
+              />
+              <span className="px-1 text-sm">Publication</span>
+            </button>
+          </div>
+          <h1 className="py-4 mb-4 text-6xl font-bold text-center text-blue-600 md:text-left md:text-8xl">Optipyzer</h1>
+          <p className="mb-8 text-sm text-center md:text-left md:text-base md:w-7/12">
             A fast, effective, and flexible codon optimization tool. Built with Python, the algorithm can codon-optimize DNA or protein sequences for multiple species at once, giving preference to one or more expression systems at a time. The algorithm utilizes the most recent codon usage data available to dynamically generate an optimal sequence for you in seconds.
           </p>
           <div className="flex flex-row items-center justify-center my-4 md:justify-start">
-            <button className="px-8 py-2 mr-2 text-lg font-bold text-white transition-all bg-blue-600 border-2 border-white rounded-lg hover:bg-white hover:border-blue-600 hover:text-blue-600"
+            <button className="px-8 py-2 mr-2 text-lg font-bold text-white transition-all bg-blue-600 border-2 border-white rounded-lg hover:bg-blue-700"
             onClick={() => router.push("/optimize")}
             >
               Optimize
             </button>
-            <button className="px-8 py-2 mr-2 text-lg font-bold text-blue-600 transition-all border-2 border-blue-600 rounded-lg hover:bg-blue-600 hover:text-white hover:border-white"
-            onClick={() => router.push("https://github.com/nleroy917/optipyzer")}
+            <button 
+              className="px-8 py-2 mr-2 text-lg font-bold text-blue-600 transition-all border-2 border-blue-600 rounded-lg hover:bg-gray-100"
+              onClick={() => router.push("https://github.com/nleroy917/optipyzer")}
             >
               About
             </button>
@@ -42,16 +75,19 @@ export default function HomePage() {
             />
         </div>
       </main>
-      <footer className="bottom-0 w-full px-4 -translate-y-16">
-        <div className="flex flex-row items-center text-gray-400 justify-evenly">
-          <p>
-            Made by Nathan LeRoy and Caleigh Roleck
+
+      
+      {/** FOOTER */}
+      <footer className="bottom-0 w-full px-4 -translate-y-20">
+        <div className="flex flex-col items-center justify-center text-xs text-gray-400 md:flex-row md:justify-evenly md:text-base">
+          <p className="my-1">
+            © 2021
           </p>
-          <a href="https://github.com/NLeRoy917/optipyzer">
+          <a href="https://github.com/NLeRoy917/optipyzer" className="my-1">
             Source
           </a>
-          <p>
-            © 2021
+          <p className="my-1">
+            Made by Nathan LeRoy and Caleigh Roleck
           </p>
         </div>
       </footer>
