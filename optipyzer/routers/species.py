@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from ..request_models import species_name
+from ..response_models import SearchResult
 from ..db.interfaces import calc_codon_usage, get_autocomplete_organisms, get_species_by_id, search_for_species
 
 router = APIRouter(
@@ -14,13 +15,19 @@ async def get_species_list():
         'organisms': orgs
     }
 
-@router.get("/search")
+@router.get("/search", response_model=SearchResult)
 async def search_species(name: str = species_name, limit: int = None):
     """Search for a species"""
     if limit is not None:
-        return search_for_species(name)[:limit]
+        results = search_for_species(name)[:limit]
     else:
-        return search_for_species(name)
+        results = search_for_species(name)
+    
+    return {
+        'num_results': len(results),
+        'organisms': results,
+        'search_query': name
+    }
 
 @router.get("/{id}")
 async def get_organism(id: str):

@@ -65,7 +65,7 @@ export const fetchSpecies = (searchString: string) => {
 
     return new Promise((resolve, reject) => {
         // fetch from API
-        axios.get<SearchResult>(`${process.env.NEXT_PUBLIC_API_URL}/search/species/${searchString}`)
+        axios.get<SearchResult>(`${process.env.NEXT_PUBLIC_API_URL}/species/search/?name=${searchString}`)
         .then((res: AxiosResponse<SearchResult>) => {
 
             // map results
