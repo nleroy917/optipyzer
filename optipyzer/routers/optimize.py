@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends
 
 from optipyzer.optimization import codon_optimize
 from optipyzer.request_models import OptimizeQuery
+from optipyzer.response_models import OptimizationResult
 
 from ..dependencies import verify_dna, verify_protein
 
@@ -9,7 +10,7 @@ router = APIRouter(
     prefix="/optimize"
 )
 
-@router.post("/dna")
+@router.post("/dna", response_model=OptimizationResult)
 def optimize_dna(query: OptimizeQuery = Depends(verify_dna)):
     """Codon optimize a DNA sequence given a list of organism weights"""
     # map to list of organisms
@@ -26,7 +27,7 @@ def optimize_dna(query: OptimizeQuery = Depends(verify_dna)):
 
     return result
 
-@router.post("/protein")
+@router.post("/protein", response_model=OptimizationResult)
 def optimize_protein(query: OptimizeQuery = Depends(verify_protein)):
     """Codon optimize a protein sequence given a list of organism weights"""
     # map to list of organisms

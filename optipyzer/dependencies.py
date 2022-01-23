@@ -1,9 +1,13 @@
-from pickletools import optimize
 from fastapi import HTTPException
 
+from .const import VALID_AMINO_ACIDS
+from .utils import clean_seq
 from .request_models import OptimizeQuery
 
 def verify_dna(query: OptimizeQuery):
+    # clean seqeunce
+    query.seq = clean_seq(query.seq)
+
     # verify that the sequeryuence length
     # is divisible by 3 (codons)
     if len(query.seq) % 3 != 0:
@@ -18,9 +22,12 @@ def verify_dna(query: OptimizeQuery):
     return query
 
 def verify_protein(query: OptimizeQuery):
+    # clean seqeunce
+    query.seq = clean_seq(query.seq)
+
     # verify each residue is valid
     for aa, i in zip(query.seq, range(len(query.seq))):
-        if aa.upper() not in "DTSEPGACVMILYFHKRWqueryN":
-            raise(400, f"Invalid residue '{aa}' in query at position: {i}")
+        if aa.upper() not in VALID_AMINO_ACIDS:
+            raise HTTPException(400, f"Invalid residue '{aa}' in query at position: {i}")
     
     return query
