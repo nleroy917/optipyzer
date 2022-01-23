@@ -1,7 +1,9 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+
+from optipyzer.dependencies import verify_org_id
 
 from ..request_models import species_name
-from ..response_models import SearchResult
+from ..response_models import CodonUsage, SearchResult
 from ..db.interfaces import calc_codon_usage, get_autocomplete_organisms, get_species_by_id, search_for_species
 
 router = APIRouter(
@@ -22,25 +24,25 @@ async def search_species(name: str = species_name, limit: int = None):
         results = search_for_species(name)[:limit]
     else:
         results = search_for_species(name)
-    
+
     return {
         'num_results': len(results),
         'organisms': results,
         'search_query': name
     }
 
-@router.get("/{id}")
-async def get_organism(id: str):
-    org = get_species_by_id(id)
+@router.get("/{org_id}")
+async def get_organism(org_id: str = Depends(verify_org_id)):
+    org = get_species_by_id(org_id)
     return {
         'organism': org,
-        'id': id
+        'id': org_id
     }
 
-@router.get("/{id}/codons")
-async def get_organism_codon_usage(id: str):
-    org = get_species_by_id(id)
-    counts, codon_usage = calc_codon_usage(id)
+@router.get("/{org_id}/codons", response_model=CodonUsage)
+async def get_organism_codon_usage(org_id: str = Depends(verify_org_id)):
+    org = get_species_by_id(org_id)
+    counts, codon_usage = calc_codon_usage(org_id)
     return {
         'organism': org,
         'counts': counts,
