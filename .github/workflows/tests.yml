@@ -1,7 +1,3 @@
-pytest ./tests --verbose
-
-name: Tests
-
 on:
   pull_request:
   push:
