@@ -1,0 +1,2 @@
+class OptiypyzerException(Exception):
+    pass

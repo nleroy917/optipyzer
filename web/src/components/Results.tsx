@@ -37,19 +37,19 @@ const Results: FC<Props> = (props) => {
         {/*Optimized seq AD */}
         <div className="flex flex-row items-end mb-1">
           <p className="text-lg font-bold">Optimized Sequence AD:</p>
-          <CopyToClipboard content={result.optimmized_ad} />
+          <CopyToClipboard content={result.optimized_ad} />
         </div>
         <div className="p-2 mb-2 font-normal break-all bg-white border-2 border-blue-600 rounded-lg">
-          <p className="text-sm">{result.optimmized_ad}</p>
+          <p className="text-sm">{result.optimized_ad}</p>
         </div>
 
         {/*Optimized seq SD */}
         <div className="flex flex-row items-end mb-1">
           <p className="text-lg font-bold">Optimized Sequence SD:</p>
-          <CopyToClipboard content={result.optimmized_sd} />
+          <CopyToClipboard content={result.optimized_sd} />
         </div>
         <div className="p-2 mb-2 font-normal break-all bg-white border-2 border-blue-600 rounded-lg">
-          <p className="text-sm">{result.optimmized_sd}</p>
+          <p className="text-sm">{result.optimized_sd}</p>
         </div>
 
         {/*Peptide seq */}

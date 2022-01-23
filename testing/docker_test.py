@@ -18,4 +18,4 @@ codon_usage2 = optipyzer.pull_codons(org2)
 # optimize a sequence to those organisms, weight campylobascter twice as much
 seq = 'ATGGCTACTGCATGCTTAGCATGCATGACT'
 optimized = optipyzer.optimize(seq,org_list=[org1,org2],weights=[1,2])
-print(optimized.optimmized_ad)
+print(optimized.optimized_ad)
