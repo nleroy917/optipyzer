@@ -1,4 +1,4 @@
-VERSION = "0.1.0"
+VERSION = "0.3.2"
 LICENSE = "Apache 2.0"
 
 SLEEP_MIN = 0.2  # Enforce minimum wait time between API calls (seconds)

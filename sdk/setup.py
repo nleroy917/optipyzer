@@ -1,4 +1,5 @@
 import setuptools
+from optipyzer.const import VERSION
 
 # create long desc.
 with open("README.md", "r") as fh:
@@ -11,7 +12,7 @@ with open('requirements.txt') as f:
 
 setuptools.setup(
     name='optipyzer',
-    version=0.24,
+    version=VERSION,
     description='Codon optimize DNA and Protein sequences for multiple species.',
     long_description=long_description,
     long_description_content_type='text/markdown',
