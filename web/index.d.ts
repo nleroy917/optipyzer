@@ -17,8 +17,8 @@ export interface QueryResult {
   best_expression_sd: {
     [id: string]: number;
   };
-  optimmized_ad: string;
-  optimmized_sd: string;
+  optimized_ad: string;
+  optimized_sd: string;
   peptide_seq: string;
   seq_type: string;
   stop_codon: 0; 
