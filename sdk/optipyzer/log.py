@@ -1,7 +1,7 @@
 import logging
 
 # init a logger
-_LOGGER = logging.getLogger(__name__)
+_LOGGER = logging.getLogger("optipyzer")
 _LOGGER.setLevel(logging.DEBUG)
 
 # generate a console-level logger

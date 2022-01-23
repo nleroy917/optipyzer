@@ -10,3 +10,9 @@ SESSION_HDRS = {
 	'User-Agent': 'https://github.com/NLeRoy917/optipyzer.com',
 	'Content-Type': 'application/json'
 }
+
+VALID_AMINO_ACIDS = "ARNDCQEGHILKMFPSTWYV"
+VALID_SEQ_TYPES = [
+    'dna',
+    'protein'
+]

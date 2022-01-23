@@ -1,10 +1,16 @@
+from typing import Dict
 import requests
 import time
+from const import LOCAL_SERVER_BASE, PUBLIC_SERVER_BASE, SESSION_HDRS, SLEEP_MIN
+from log import _LOGGER
+from helpers import verify_dna, verify_protein
 
-from .logging import _LOGGER
-from .const import LOCAL_SERVER_BASE, PUBLIC_SERVER_BASE, SESSION_HDRS, SLEEP_MIN
-
+# return types
 from requests import Response
+from models import SearchResult
+from const import VALID_SEQ_TYPES
+from optipyzer.response_models import CodonUsage, OptimizationResult
+
 
 class api():
 	"""Python interface for the Optipyzer web API."""
@@ -59,7 +65,7 @@ class api():
 
 		return response
 
-	def search(self, name: str, limit: int = 50):
+	def search(self, name: str, limit: int = 50) -> SearchResult:
 		"""Search for an organism given it's name"""
 		result = self._make_request(
 			"/species/search",
@@ -71,21 +77,52 @@ class api():
 		search_results = result.json()
 		return search_results
 
-	def optimize(self, seq, org_list, weights, seq_type='dna'):
-		return
+	def optimize(self, seq: str, weights: Dict[str, int], seq_type: str = 'dna') -> OptimizationResult:
+		"""Optimize a sequence given specific organism weights"""
+		# force seq_type lower
+		seq_type = seq_type.lower()
+		if seq_type not in VALID_SEQ_TYPES:
+			raise ValueError(f"Invalid sequence type: {seq_type}")
+		
+		# validate that the sequences are valid
+		if seq_type == 'dna': verify_dna(seq)
+		else: verify_protein(seq)
 
-	def pull_codons(self,organism):
-		return
+		# make optimization request
+		result = self._make_request(
+			f"/optimize/{seq_type}",
+			method="POST",
+			body_={
+				'seq': seq,
+				'weights': weights
+			}
+		)
+		return result.json()
+
+	def pull_codons(self, org_id: str) -> CodonUsage:
+		"""Pull codon usage data for a specific organism"""
+		
 
 
 if __name__ == '__main__':
 
 	# test code goes here
 	op = api()
+
 	# search for e coli
-	results = op.search(name='Escherichia Coli')
-	org1 = results[0]
-	print(org1)
+	result = op.search(name='Escherichia Coli')
+	orgs = result['organisms']
+	print(orgs)
+
+	# optimize a sequence
+	seq = "ATGCGTACTAGTCAGTCAGACTGACTG"
+	weights = {
+	    "16815": 1,
+	    "122563": 2
+	}
+	result = op.optimize(
+		seq, weights, seq_type='dna'
+	)
 
 
 

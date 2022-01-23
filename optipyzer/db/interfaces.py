@@ -105,7 +105,7 @@ def search_for_species(name: str) -> list[Organism]:
     with SessionLocal() as db:
         return db.query(Organism).filter(Organism.species.ilike(f"%{name}%")).all()
 
-def get_species_by_id(org_id: int) -> Organism:
+def get_species_by_id(org_id: str) -> Organism:
     """return an organism object given an org_id"""
     with SessionLocal() as db:
         return db.query(Organism).get(org_id)
