@@ -43,14 +43,14 @@ optimized = optipyzer.optimize(seq,org_list=[org1,org2],weights=[1,2])
 # Run Local Server with Docker
 Some users might be interested in optimizing sequences confidentially. That is, using a locally run server and not making HTTP requests to the public API. In addition, this increases speed and supports high-throughput workflows.
 
-Because of this, a docker container was prepared to spin up the server locally. The docker container will run the flask server off your local machine and you can now use this to optimize sequences.
+Because of this, a docker container was prepared to spin up the server locally. The docker container will run the optimzation server off your local machine and you can now use this to optimize sequences.
 
-***(i.e. The server now runs on localhost:5000)***
+***(i.e. The server now runs on localhost:8000)***
 
 ## To spin up:
 ```sh
-docker build -t server .
-docker run -p 5000:5000 server
+docker build -t optipyzer .
+docker run -p 8000:8000 optipyzer
 ```
 
 ## Using the local server
