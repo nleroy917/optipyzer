@@ -1,4 +1,4 @@
-from optipyzer.exceptions import OptiypyzerException
+import re
 from .const import AMINO_ACID_LOOKUP, CODON_LOOKUP
 
 def aa_to_dna(seq: str) -> str:
@@ -27,4 +27,7 @@ def seq_detect(seq: str) -> str:
         return 'dna'
     else:
         return 'protein'
-        
+
+def clean_seq(s: str) -> str:
+    # remove all newlines and whitespace
+    return re.sub(r"\s+", "", s)

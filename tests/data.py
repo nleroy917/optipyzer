@@ -2,18 +2,25 @@
 
 # >BTBSCRYR
 TEST_DNA = """
-tgcaccaaacatgtctaaagctggaaccaaaattactttctttgaagacaaaaactttca
-aggccgccactatgacagcgattgcgactgtgcagatttccacatgtacctgagccgctg
-caactccatcagagtggaaggaggcacctgggctgtgtatgaaaggcccaattttgctgg
-gtacatgtacatcctaccccggggcgagtatcctgagtaccagcactggatgggcctcaa
-cgaccgcctcagctcctgcagggctgttcacctgtctagtggaggccagtataagcttca
-gatctttgagaaaggggattttaatggtcagatgcatgagaccacggaagactgcccttc
-catcatggagcagttccacatgcgggaggtccactcctgtaaggtgctggagggcgcctg
-gatcttctatgagctgcccaactaccgaggcaggcagtacctgctggacaagaaggagta
-ccggaagcccgtcgactggggtgcagcttccccagctgtccagtctttccgccgcattgt
-ggagtgatgatacagatgcggccaaacgctggctggccttgtcatccaaataagcattat
-aaataaaacaattggcat
+tgcaccaaacatgtctaaagctggaaccaaaattact
+ttctttgaagacaaaaactttcaaggccgccactatg
+acagcgattgcgactgtgcagatttccacatgtacct
+gagccgctgcaactccatcagagtggaaggaggcacc
+tgggctgtgtatgaaaggcccaattttgctgggtaca
+tgtacatcctaccccggggcgagtatcctgagtacca
+gcactggatgggcctcaacgaccgcctcagctcctgc
+agggctgttcacctgtctagtggaggccagtataagc
+ttcagatctttgagaaaggggattttaatggtcagat
+gcatgagaccacggaagactgcccttccatcatggag
+cagttccacatgcgggaggtccactcctgtaaggtgc
+tggagggcgcctggatcttctatgagctgcccaacta
+ccgaggcaggcagtacctgctggacaagaaggagtac
+cggaagcccgtcgactggggtgcagcttccccagctgt
+ccagtctttccgccgcattgtggagtgatgatacagat
+gcggccaaacgctggctggccttgtcatccaaataagc
+attataaataaaacaattggctg
 """
+
 # >crab_anapl ALPHA CRYSTALLIN B CHAIN (ALPHA(B)-CRYSTALLIN). 
 TEST_PEPTIDE = """
 MDITIHNPLIRRPLFSWLAPSRIFDQIFGEHLQESELLPASPSLSPFLMR
@@ -26,7 +33,15 @@ DNA_QUERY = {
   "seq": TEST_DNA,
   "weights": {
     "16815": 1, # E. Coli
-    "122563": 2 # Human
+    "122563": 2 # Human 
+  }
+}
+
+PEPTIDE_QUERY = {
+  "seq": TEST_PEPTIDE,
+  "weights": {
+    "16815": 1, # E. Coli
+    "122563": 2 # Human 
   }
 }
 
