@@ -1,8 +1,7 @@
 import sys
 sys.path.append('..')
 
-from lib.CodonDataPull import *
-from lib.codon_optimizer import CodonOptimizer
+from optipyzer.optimization import CodonOptimizer
 
 
 if __name__ == '__main__':

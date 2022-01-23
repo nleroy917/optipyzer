@@ -1,8 +1,4 @@
-import sys
-sys.path.append('..')
-
 import random
-from lib.CodonDataPull import *
 from statistics import *
 from math import *
 

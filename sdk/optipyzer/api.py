@@ -7,7 +7,7 @@ import time
 
 try:
 	from optipyzer.organism import Organism
-	from optipyzer.codon_optimizer import CodonOptimizer
+	from optipyzer.optimization import CodonOptimizer
 	from optipyzer.codon_usage import CodonUsage
 	from optipyzer.optimization import Optimization
 
