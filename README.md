@@ -1,79 +1,90 @@
 # Optipyzer
-![Heroku](http://heroku-badge.herokuapp.com/?app=optipyzer&style=flat&svg=1)
+![Heroku](https://pyheroku-badge.herokuapp.com/?app=optipyzer-api)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-![Travis-CI](https://travis-ci.org/NLeRoy917/optipyzer.svg?branch=master)
+![Vercel](https://vercelbadge.vercel.app/api/nleroy917/optipyzer)
+[![PyPI version](https://badge.fury.io/py/optipyzer.svg)](https://badge.fury.io/py/optipyzer)
 
-A fast, effective, and flexible codon optimization tool. Built with Python, the algorithm can codon-optimize your g blocks for multiple species at once, giving preference to one or more expression systems at a time. The algorithm utilizes the most recent codon usage data available to dynamically generate an optimal sequence for you in seconds.
+A fast and flexible codon optimization tool. Optipyzer is capable of codon-optimizing both DNA and peptide sequences for multiple species at once while giving prefernce to certain species. The optimizer is hosted as a publically available web server with both a [web-interface](https://optipyzer.com) and a [python programming interface](https://pypi.org/project/optipyzer/) for one-off queries or more high-throughput frameworks.
 
-# Web Application
-![Optipyzer Header](https://github.com/NLeRoy917/optipyzer/blob/master/static/imgs/header_img.png)
-The optmziation engine is supported by a web-based UI built with React. The current production build can be found [here](https://optipyzer.herokuapp.com). In addition, information about how the algorithms work and more dev tool information can be found on the site. 
+## Web Application
+The web-interface can be found at [optipyzer.com](https://optipyzer.com). The site is intended to be used for simple, one-off queries. It provides a sequence input box and a species selection tool to choose your species and designate weightings. You can search through our database and specify any species you want.
 
-The web application has the same functionality as the python installation. The user can input either a DNA or Protein sequence, select as many species as they wish, and set a weighting between 1 and 10 for those species to optimize their sequence against. The application will return the full data set including metadata associated with the query.
+## Python API
+For convenience, we have also written a small python package for an easier to use interface in high-throughput workflows. The package is a basic wrapper around our server that exposes convenience functions to interface the optimization server and make calls for you.
 
-# Python Installation
+### Install
 ```sh
 pip install optipyzer
 ```
 
-# Usage
+### Example Usage
 ```python
 import optipyzer
 
 # initalize API
-optipyzer = optipyzer.api()
+op = optipyzer.api()
 
-# search for e coli
-results = optipyzer.search(name='Escherichia Coli')
-org1 = results[0]
+# search for e. coli
+result = op.search(name='Escherichia Coli')
+orgs = result['organisms']
+print(orgs)
 
-# search for campylbacter
-results = optipyzer.search(name='Campylobacter')
-org2 = results[0]
+# pull codons for e coli
+codon_usage = op.pull_codons("16815")
+print(codon_usage)
 
-# pull codon usage for those organisms
-codon_usage1 = optipyzer.pull_codons(org1)
-codon_usage2 = optipyzer.pull_codons(org2)
-
-# optimize a sequence to those organisms, weight campylobascter twice as much
-seq = 'ATGGCTACTGCATGCTTAGCATGCATGACT'
-optimized = optipyzer.optimize(seq,org_list=[org1,org2],weights=[1,2])
+# optimize a sequence for both human
+# and bacteria
+seq = "ATGCGTACTAGTCAGTCAGACTGACTG"
+weights = {
+    "16815": 1, # e. coli
+    "122563": 2 # human
+}
+result = op.optimize(
+    seq, weights, seq_type='dna'
+)
 ```
 
-# Run Local Server with Docker
+## Local Optimization Server
 Some users might be interested in optimizing sequences confidentially. That is, using a locally run server and not making HTTP requests to the public API. In addition, this increases speed and supports high-throughput workflows.
 
-Because of this, a docker container was prepared to spin up the server locally. The docker container will run the optimzation server off your local machine and you can now use this to optimize sequences.
+Because of this, a docker container was prepared to spin up the server locally. The docker container will run the optimzation server off your local machine and you can now use this to optimize sequences instead of making calls to the public server.
 
-***(i.e. The server now runs on localhost:8000)***
+_(i.e. The server now runs on localhost:8000)_
 
-## To spin up:
+### To spin up:
 ```sh
 docker build -t optipyzer .
 docker run -p 8000:8000 optipyzer
 ```
 
-## Using the local server
+### Using the local server
 Simply specify you want to run the optimizer locally when initializing an Optipyzer object in your scripts and your local server will then be used:
 ```python
 import optipyzer
 
 # initalize API
-optipyzer = optipyzer.api(local=True) # <---- Specify here you want to use local server
+op = optipyzer.api(local=True) # <--- specify a local instance
 
-# search for e coli
-results = optipyzer.search(name='Escherichia Coli')
-org1 = results[0]
+# search for e. coli
+result = op.search(name='Escherichia Coli')
+orgs = result['organisms']
+print(orgs)
 
-# search for campylobacter
-results = optipyzer.search(name='Campylobacter')
-org2 = results[0]
+# pull codons for e coli
+codon_usage = op.pull_codons("16815")
+print(codon_usage)
 
-# pull codon usage for those organisms
-codon_usage1 = optipyzer.pull_codons(org1)
-codon_usage2 = optipyzer.pull_codons(org2)
-
-# optimize a sequence to those organisms, weight campylobascter twice as much
-seq = 'ATGGCTACTGCATGCTTAGCATGCATGACT'
-optimized = optipyzer.optimize(seq,org_list=[org1,org2],weights=[1,2])
+# optimize a sequence for both human
+# and bacteria
+seq = "ATGCGTACTAGTCAGTCAGACTGACTG"
+weights = {
+    "16815": 1, # e. coli
+    "122563": 2 # human
+}
+result = op.optimize(
+    seq, weights, seq_type='dna'
+)
 ```
+## Contributing
+Issues, PR's, and contributions are always welcome. Please reach out (or open an issue) if you would like to contribute!

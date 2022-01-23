@@ -8,24 +8,24 @@ jobs:
   build-n-publish:
     name: Build and publish Python 🐍 distributions 📦 to PyPI and TestPyPI
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./sdk
 
     steps:
     - uses: actions/checkout@master
 
     - name: Set up Python
       uses: actions/setup-python@v2
-      working-directory: sdk
       with:
         python-version: 3.x
     
     - name: Install dependencies
-      working-directory: sdk
       run: |
         python -m pip install --upgrade pip
         pip install setuptools wheel twine
 
     - name: Build and publish
-      working-directory: sdk
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
