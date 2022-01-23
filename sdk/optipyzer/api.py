@@ -9,7 +9,7 @@ from helpers import verify_dna, verify_protein
 from requests import Response
 from models import SearchResult
 from const import VALID_SEQ_TYPES
-from optipyzer.response_models import CodonUsage, OptimizationResult
+from models import CodonUsage, OptimizationResult
 
 
 class api():
@@ -101,13 +101,17 @@ class api():
 
 	def pull_codons(self, org_id: str) -> CodonUsage:
 		"""Pull codon usage data for a specific organism"""
+		result = self._make_request(
+			f"/species/{org_id}/codons",
+		)
+		return result.json()
 		
 
 
 if __name__ == '__main__':
 
 	# test code goes here
-	op = api()
+	op = api(local=True)
 
 	# search for e coli
 	result = op.search(name='Escherichia Coli')
@@ -124,6 +128,9 @@ if __name__ == '__main__':
 		seq, weights, seq_type='dna'
 	)
 
+	# pull codons for e coli
+	codon_usage = op.pull_codons("16815")
+	print(codon_usage)
 
 
 
