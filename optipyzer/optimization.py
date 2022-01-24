@@ -12,6 +12,9 @@ from .utils import seq_detect, aa_to_dna
 from .db.interfaces import calc_codon_usage
 
 def _calc_average_table(usage_data: dict, weights: dict):
+	"""
+	Small wrapper for calculating the average table
+	"""
 	if weights is not None:
 		return averaged_table(usage_data, False, weights)
 	else:
