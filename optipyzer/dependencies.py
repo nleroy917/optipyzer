@@ -5,7 +5,13 @@ from .const import VALID_AMINO_ACIDS
 from .utils import clean_seq
 from .request_models import OptimizeQuery
 
-def verify_dna(query: OptimizeQuery):
+def verify_dna(query: OptimizeQuery) -> OptimizeQuery:
+    """
+    Verify that a DNA sequence complies with the following:
+
+    1. Is divisible by 3
+    2. Contains only valid nucleotide codes (ATGC)
+    """
     # clean seqeunce
     query.seq = clean_seq(query.seq)
 
@@ -21,7 +27,14 @@ def verify_dna(query: OptimizeQuery):
             raise HTTPException(400, f"Invalid base '{base}' in query at position: {i}")
     return query
 
-def verify_protein(query: OptimizeQuery):
+def verify_protein(query: OptimizeQuery) -> OptimizeQuery:
+    """
+    Verify that a protein sequence complies with the following:
+
+    1. Contains only valid amino acids codes
+
+    (See: optipyzer/const.py for amino acid code library)
+    """
     # clean seqeunce
     query.seq = clean_seq(query.seq)
 
@@ -31,7 +44,10 @@ def verify_protein(query: OptimizeQuery):
             raise HTTPException(400, f"Invalid residue '{aa}' in query at position: {i}")
     return query
 
-def verify_org_id(org_id: str):
+def verify_org_id(org_id: str) -> str:
+    """
+    Verify that an organism id exists in the database.
+    """
     org = get_species_by_id(org_id)
     if org is None:
         raise HTTPException(404, f"Organism id '{org_id}' not found in database.")

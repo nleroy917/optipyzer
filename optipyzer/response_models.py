@@ -1,6 +1,7 @@
 from typing import Dict, List
 from pydantic import BaseModel
 
+# model for an optimization result
 class OptimizationResult(BaseModel):
     query: str
     weights: Dict[str, int]
@@ -17,7 +18,8 @@ class OptimizationResult(BaseModel):
     
     class Config:
         orm_mode = True
-        
+
+# model for organism       
 class Organism(BaseModel):
     org_id: int
     division: str
@@ -36,11 +38,13 @@ class Organism(BaseModel):
     class Config:
         orm_mode = True
 
+# model for a search result
 class SearchResult(BaseModel):
     num_results: int
     organisms: List[Organism]
     search_query: str
 
+# model for codon usage data
 class CodonUsage(BaseModel):
     organism: Organism
     counts: Dict[str, Dict[str, int]]

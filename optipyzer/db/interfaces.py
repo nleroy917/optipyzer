@@ -2,6 +2,8 @@ from .database import SessionLocal
 from .models import Organism, AutocompleteOrganism, CodonUsage
 from ..const import AA_CODON_LIBRARY
 
+# not used unless the database connection
+# is required at the endpoint level
 def _get_db():
     """Fetch database session"""
     db = SessionLocal()
@@ -19,19 +21,14 @@ def get_autocomplete_organisms():
 
 def calc_codon_usage(organism_id: int):
     """
-    Function to calculate the codon usage data for a given organism. The codon usage data
-    in this context is the percentage (characterized as a fraction) that a particular
+    Function to calculate the codon usage data for a given organism. 
+    The codon usage data in this context is the percentage that a particular
     codon is used when coding for a particular amino acid.
-    Inputs: - organism_id (int), an interger that corresponds to a particular organism
-              inside the database
-            - curs (object), a cursor object that is tied to the local database allowing
-              for database access and manipulation
-    returns: - codon_usage (dictionary of dictionaries), this dictionary of dictionaries
-               has keys that correspond to specific amino acids. Those amino acid keys
-               are associated with another dictionary that has the keys with values
-               corresponding to alll the codon triplets that code for that amino
-               acid. This sub-dictionary has decimal values that correspond to the
-               probability that the codon is used when coding for the amino acid.
+
+    Function will return a dictionary of dictionaries; All single-letter
+    amino acid codes will be keys in the dictionary, and associated with
+    each of those is another dictionary with each codon the corresponds
+    to the amino acid and the percentage that the codon is used.
     """
     # cast as int
     organism_id = int(organism_id)
@@ -77,18 +74,8 @@ def calc_codon_usage(organism_id: int):
 
 def amino_acid_usage(org_id: int, aa: str):
     """
-    function to pull the data from the local database for a particular organism
-    and amino acid. The function uses the amino acid library to get the codons
-    and create a SQL query that will pull the codon usage for one amino acid.
-    Inputs: - org_id (int), integer that corresponds to a particular organism
-            - aa (string), the 3-letter amino acid code to get data for
-            - curs (object), a cursor object that lets you connect and run queries
-                             on the database.
-    return: the result found from the SQL query properly parsed and put into a
-            correct data structure. It is a tuple that has number of times a codon
-            was found in that organisms genome while in the correct reading frame.
-            An example, if looking at Alanine (ALA), will return:
-                    (1345, 1957, 698, 4098) for GCT, GCC, GCA, and GCG respectively.
+    Pull the codon usage data for a particular organism and
+    a particular amino acid.
     """
     with SessionLocal() as db:
 
