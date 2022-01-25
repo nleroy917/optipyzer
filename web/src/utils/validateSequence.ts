@@ -6,7 +6,7 @@ export const validateSequence = (seq: string, seqType: string) => {
     // then run tests
     let isValid = true
     let message = null
-    
+
     // test dna
     if (seqType.toLowerCase() === "dna") {
         // check length
@@ -35,7 +35,7 @@ export const validateSequence = (seq: string, seqType: string) => {
     }
     
     return {
-        valid: isValid,
+        isValid: isValid,
         message: message
     }
 }
