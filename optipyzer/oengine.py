@@ -1,3 +1,12 @@
+"""
+01/24/2022:
+---
+I do not touch this file. This is the core engine written
+by Caleigh Roleck in 2019. This code here will optimize
+a sequence given weights and codon usage. It is pretty
+inpenetrable, so I leave it be and build around it.
+"""
+
 import random
 from statistics import *
 from math import *

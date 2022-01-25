@@ -118,6 +118,7 @@ export default function OptimizePage() {
         <SeqInput
           seq={seq}
           setSeq={setSeq}
+          seqType={seqType}
         />
         <button
           className="px-4 py-2 my-2 text-lg font-bold text-white transition-all bg-blue-600 border-2 border-blue-600 rounded-lg hover:bg-white hover:text-blue-600 hover:border-blue-600"
