@@ -1,6 +1,5 @@
 from .oengine import (
 	averaged_table,
-	codon_preference_priors,
 	remove_prohibited_codons,
 	find_prohibited_codons,
 	get_rca_xyz,

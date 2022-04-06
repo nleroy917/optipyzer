@@ -79,7 +79,7 @@ def remove_prohibited_codons(query, prohibited_codons, var_thresh=0.1):
         # for the residue currently iterating upon
         preference_values = {}
         # initializes the dictionary item indexed by the residue, with the value as a list of allowed codons
-        allowed_codons[inaccessible_residues[i]]: []
+        allowed_codons[inaccessible_residues[i]] = []
         # loops through each species and adds their preference for each codon to the preference_values list
         for species in query:
             for codon in query[species][inaccessible_residues[i]]:
@@ -376,7 +376,7 @@ def validate_query(query, DNA):
             if residue not in "DTSEPGACVMILYFHKRWQN":
                 print("Invalid residue {} entered at position {}. Please fix and try again.".format(residue, position))
                 exit()
-    return query,stop_pos
+    return query, stop_pos
 
 
 def optimize_sequence(random_num_table, query):
