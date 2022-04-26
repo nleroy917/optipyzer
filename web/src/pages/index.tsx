@@ -48,7 +48,7 @@ export default function HomePage() {
             <button
               disabled={true}
               onClick={() => router.push("https://github.com/nleroy917/optipyzer")} 
-              className="flex flex-row items-center w-32 px-2 py-1 mr-1 font-bold transition-all bg-gray-100 border-2 border-black rounded-lg opacity-50 cursor-pointer cursor-not-allowed justify-evenly"
+              className="flex flex-row items-center w-32 px-2 py-1 mr-1 font-bold transition-all bg-gray-100 border-2 border-black rounded-lg opacity-50 cursor-not-allowed justify-evenly"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
