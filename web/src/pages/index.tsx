@@ -1,7 +1,10 @@
+import axios, { AxiosResponse } from 'axios';
 import { useRouter } from 'next/router'
-import * as React from 'react';
+import { useEffect, useState } from 'react'
 
 import Seo from '@/components/Seo';
+
+import { ServerInfo } from '@/..';
 
 import github_logo from '../../public/images/github.png'
 import paper from '../../public/images/paper.png'
@@ -9,9 +12,18 @@ import landing_card from '../../public/images/query_result.png'
 
 export default function HomePage() {
   
-  // instantiate router
+  // instantiate router and state
   const router = useRouter()
+  const [version, setVersion] = useState<string>("0.1.0")
 
+  // fetch version on load
+  useEffect(() => {
+    axios.get<ServerInfo>("/api/version")
+    .then((res: AxiosResponse<ServerInfo>) => {
+      setVersion(res.data.version)
+    })
+  }, [])
+  
   return (
     <>
       {/* <Seo templateTitle='Home' /> */}
@@ -83,8 +95,8 @@ export default function HomePage() {
           <p className="my-1">
             © 2021
           </p>
-          <a href="https://github.com/NLeRoy917/optipyzer" className="my-1">
-            Source
+          <a href="https://github.com/NLeRoy917/optipyzer" className="my-1 hover:underline">
+           v{version}
           </a>
           <p className="my-1">
             Made by Nathan LeRoy and Caleigh Roleck
