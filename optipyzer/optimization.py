@@ -1,6 +1,5 @@
 from .oengine import (
 	averaged_table,
-	codon_preference_priors,
 	remove_prohibited_codons,
 	find_prohibited_codons,
 	get_rca_xyz,
@@ -33,7 +32,7 @@ def codon_optimize(seq: str, organism_list: list[str], weights: dict = None, seq
 	for org_id in organism_list:
 		counts[org_id], usage_data[org_id] = calc_codon_usage(org_id)
 
-	usage_data = codon_preference_priors(usage_data)
+	# usage_data = codon_preference_priors(usage_data)
 
 	query_prohibited_codons = find_prohibited_codons(usage_data)
 

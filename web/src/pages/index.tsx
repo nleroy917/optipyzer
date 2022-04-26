@@ -1,7 +1,10 @@
+import axios, { AxiosResponse } from 'axios';
 import { useRouter } from 'next/router'
-import * as React from 'react';
+import { useEffect, useState } from 'react'
 
 import Seo from '@/components/Seo';
+
+import { ServerInfo } from '@/..';
 
 import github_logo from '../../public/images/github.png'
 import paper from '../../public/images/paper.png'
@@ -9,9 +12,18 @@ import landing_card from '../../public/images/query_result.png'
 
 export default function HomePage() {
   
-  // instantiate router
+  // instantiate router and state
   const router = useRouter()
+  const [version, setVersion] = useState<string>("0.1.0")
 
+  // fetch version on load
+  useEffect(() => {
+    axios.get<ServerInfo>("/api/version")
+    .then((res: AxiosResponse<ServerInfo>) => {
+      setVersion(res.data.version)
+    })
+  }, [])
+  
   return (
     <>
       {/* <Seo templateTitle='Home' /> */}
@@ -36,7 +48,7 @@ export default function HomePage() {
             <button
               disabled={true}
               onClick={() => router.push("https://github.com/nleroy917/optipyzer")} 
-              className="flex flex-row items-center w-32 px-2 py-1 mr-1 font-bold transition-all border-2 border-black rounded-lg cursor-pointer justify-evenly hover:bg-gray-100"
+              className="flex flex-row items-center w-32 px-2 py-1 mr-1 font-bold transition-all bg-gray-100 border-2 border-black rounded-lg opacity-50 cursor-not-allowed justify-evenly"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -65,7 +77,7 @@ export default function HomePage() {
             </button>
           </div>
         </div>
-        <div className="fixed hidden mr-4 lg:block lg:top-48 lg:right-12 pb-14" style={{zIndex: -1}}>
+        <div className="fixed hidden mr-4 lg:block lg:top-1/3 lg:right-12 pb-14 xl:right-36" style={{zIndex: -1}}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               width="650"
@@ -83,8 +95,8 @@ export default function HomePage() {
           <p className="my-1">
             © 2021
           </p>
-          <a href="https://github.com/NLeRoy917/optipyzer" className="my-1">
-            Source
+          <a href="https://github.com/NLeRoy917/optipyzer" className="my-1 hover:underline">
+           v{version}
           </a>
           <p className="my-1">
             Made by Nathan LeRoy and Caleigh Roleck

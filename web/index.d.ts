@@ -29,3 +29,10 @@ export interface QueryError {
   response?: AxiosResponse
   stack?: Error
 }
+
+export interface ServerInfo {
+  message: string;
+  url: string;
+  version: string;
+  fastapi_version: string;
+}
