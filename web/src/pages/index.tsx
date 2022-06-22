@@ -45,18 +45,17 @@ export default function HomePage() {
               />
               <span className="px-1 text-sm">GitHub</span>
             </button>
-            <button
+            {/* <button
               onClick={() => router.push("https://github.com/nleroy917/optipyzer")} 
               className="flex flex-row items-center w-32 px-2 py-1 mr-1 font-bold transition-all bg-gray-100 border-2 border-black rounded-lg opacity-50 cursor-not-allowed justify-evenly"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 width="20px"
                 src={paper.src}
-                alt="GitHub logo"
+                alt="Paper logo"
               />
-              <span className="px-1 text-sm">GitHub</span>
-            </button>
+              <span className="px-1 text-sm">Publication</span>
+            </button> */}
           </div>
           <h1 className="py-4 mb-4 text-6xl font-bold text-center text-blue-600 md:text-left md:text-8xl">Optipyzer</h1>
           <p className="mb-8 text-sm text-center md:text-left md:text-base md:w-7/12">
@@ -92,7 +91,7 @@ export default function HomePage() {
       <footer className="bottom-0 w-full px-4 -translate-y-20">
         <div className="flex flex-col items-center justify-center text-xs text-gray-400 md:flex-row md:justify-evenly md:text-base">
           <p className="my-1">
-            © 2021
+            © {(new Date()).getFullYear()}
           </p>
           <a href="https://github.com/NLeRoy917/optipyzer" className="my-1 hover:underline">
            v{version}

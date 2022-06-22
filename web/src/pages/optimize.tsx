@@ -74,7 +74,7 @@ export default function OptimizePage() {
       <main className="flex flex-col items-start justify-start p-4">
         <div className="text-blue-600 underline">
           <Link href="/">
-            Back
+          ← Back
           </Link>
         </div>
         <h1 className="py-2 text-4xl font-bold text-blue-600 md:text-6xl">Optimize sequence:</h1>
