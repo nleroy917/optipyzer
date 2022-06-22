@@ -46,7 +46,6 @@ export default function HomePage() {
               <span className="px-1 text-sm">GitHub</span>
             </button>
             <button
-              disabled={true}
               onClick={() => router.push("https://github.com/nleroy917/optipyzer")} 
               className="flex flex-row items-center w-32 px-2 py-1 mr-1 font-bold transition-all bg-gray-100 border-2 border-black rounded-lg opacity-50 cursor-not-allowed justify-evenly"
             >
@@ -56,7 +55,7 @@ export default function HomePage() {
                 src={paper.src}
                 alt="GitHub logo"
               />
-              <span className="px-1 text-sm">Publication</span>
+              <span className="px-1 text-sm">GitHub</span>
             </button>
           </div>
           <h1 className="py-4 mb-4 text-6xl font-bold text-center text-blue-600 md:text-left md:text-8xl">Optipyzer</h1>
