@@ -11,7 +11,7 @@ const SeqTypeSelector: FC<Props> = (props) => {
   const {seqType, setSeqType } = props
   
   return (
-      <div className="flex flex-row p-2 mb-2 border border-black rounded-lg shadow-md">
+      <div className="flex flex-row p-2 mb-2 border border-black rounded-lg shadow-md w-max">
         <div className="flex flex-row items-center mr-2">
           <input 
             type="radio" 

@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import Link from 'next/link';
-import { useState } from 'react';
+import { FormEvent, useState } from 'react';
 
 import { Error } from '@/components/Error';
 import Results from '@/components/Results';
@@ -23,7 +23,8 @@ export default function OptimizePage() {
   const [result, setResult] = useState<QueryResult | null>(null)
   const [error, setError] = useState<QueryError | null>(null)
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
     setOptimizing(true)
 
     // purge unused species weights
@@ -77,13 +78,14 @@ export default function OptimizePage() {
           </Link>
         </div>
         <h1 className="py-2 text-4xl font-bold text-blue-600 md:text-6xl">Optimize sequence:</h1>
-        <p className="text-lg font-bold text-blue-600">Sequence type:</p>
+        <form className='w-full' onSubmit={handleSubmit}>
+        <label className="text-lg font-bold text-blue-600">Sequence type:</label>
           <SeqTypeSelector
             setSeqType={setSeqType}
             seqType={seqType}
           />
         <div className="w-full my-1 md:w-3/4">
-          <p className="text-lg font-bold text-blue-600">Select species:</p>
+          <label className="text-lg font-bold text-blue-600">Select species:</label>
           <SpeciesSelector 
             setSpecies={setSpecies}
             species={species}
@@ -95,7 +97,7 @@ export default function OptimizePage() {
           species.length === 0 ?
           <div></div>
           : 
-          <div>
+          <div className='w-max'>
             <p className="text-lg font-bold text-blue-600">Adjust weights:</p>
             <div className="flex flex-col w-full mr-2 md:flex-row">
             {
@@ -122,13 +124,12 @@ export default function OptimizePage() {
         />
         <button
           className="px-4 py-2 my-2 text-lg font-bold text-white transition-all bg-blue-600 border-2 border-blue-600 rounded-lg hover:bg-white hover:text-blue-600 hover:border-blue-600"
-          onClick={() => {
-            handleSubmit()
-          }}
+          type='submit'
           disabled={optimizing}
         >
           {optimizing ? "Optimizing..." : "Optimize"}
         </button>
+        </form>
       </main>
       </>
     )
