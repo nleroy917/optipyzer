@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { fontFamily } = require('tailwindcss/defaultTheme');
+const { fontFamily } = require('tailwindcss/defaultTheme')
 
 function withOpacity(variableName) {
   return ({ opacityValue }) => {
     if (opacityValue !== undefined) {
-      return `rgba(var(${variableName}), ${opacityValue})`;
+      return `rgba(var(${variableName}), ${opacityValue})`
     }
-    return `rgb(var(${variableName}))`;
-  };
+    return `rgb(var(${variableName}))`
+  }
 }
 
 /** @type {import("@types/tailwindcss/tailwind-config").TailwindConfig } */
@@ -50,4 +50,4 @@ module.exports = {
     extend: {},
   },
   plugins: [require('@tailwindcss/forms')],
-};
+}
