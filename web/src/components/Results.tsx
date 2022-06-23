@@ -1,13 +1,13 @@
-import { Dispatch, FC, SetStateAction, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 
-import { QueryResult } from "@/..";
+import { QueryResult } from '@/..'
 
-import CopyToClipboard from "./CopyToClipboard";
-import ResultInfo from '../components/ResultInfo';
+import CopyToClipboard from './CopyToClipboard'
+import ResultInfo from '../components/ResultInfo'
 
 interface Props {
-  result: QueryResult;
-  setResult: Dispatch<SetStateAction<QueryResult | null>>;
+  result: QueryResult
+  setResult: Dispatch<SetStateAction<QueryResult | null>>
 }
 
 const Results: FC<Props> = (props) => {
@@ -17,16 +17,15 @@ const Results: FC<Props> = (props) => {
   // state
   const [viewInfo, setViewInfo] = useState<boolean>(false)
 
-  return  (
+  return (
     <div className="flex flex-col items-center justify-center min-h-screen my-4">
       <div className="flex flex-col w-11/12 p-4 mx-6 font-bold text-left bg-blue-200 border-2 border-blue-500 rounded-lg shadow-lg md:w-3/4">
-        <ResultInfo 
-          open={viewInfo}
-          setOpen={setViewInfo}
-        />
+        <ResultInfo open={viewInfo} setOpen={setViewInfo} />
         <div className="flex flex-row items-start justify-between">
-          <p className="mb-2 text-4xl font-bold text-left md:text-5xl">Query Result:</p>
-          <p 
+          <p className="mb-2 text-4xl font-bold text-left md:text-5xl">
+            Query Result:
+          </p>
+          <p
             className="text-2xl font-bold cursor-pointer hover:text-blue-600"
             onClick={() => setViewInfo(true)}
           >
@@ -61,8 +60,11 @@ const Results: FC<Props> = (props) => {
           <p className="text-sm">{result.peptide_seq}</p>
         </div>
         <div className="flex flex-row">
-          <button onClick={() => setResult(null)} className="px-6 py-2 font-bold text-white transition-all bg-black border-2 border-black rounded-lg hover:bg-transparent hover:text-black">
-              Back
+          <button
+            onClick={() => setResult(null)}
+            className="px-6 py-2 font-bold text-white transition-all bg-black border-2 border-black rounded-lg hover:bg-white hover:text-black"
+          >
+            Back
           </button>
         </div>
       </div>
