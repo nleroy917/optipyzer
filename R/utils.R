@@ -23,6 +23,8 @@ library(hash)
 .codonMap[["CTC"]] <- "L"
 .codonMap[["CTG"]] <- "L"
 .codonMap[["CTT"]] <- "L"
+.codonMap[["TTA"]] <- "L"
+.codonMap[["TTG"]] <- "L"
 .codonMap[["CCA"]] <- "P"
 .codonMap[["CCC"]] <- "P"
 .codonMap[["CCG"]] <- "P"
@@ -57,8 +59,6 @@ library(hash)
 .codonMap[["TCT"]] <- "S"
 .codonMap[["TTC"]] <- "F"
 .codonMap[["TTT"]] <- "F"
-.codonMap[["TTA"]] <- "L"
-.codonMap[["TTG"]] <- "L"
 .codonMap[["TAC"]] <- "Y"
 .codonMap[["TAT"]] <- "Y"
 .codonMap[["TAA"]] <- "STOP"
@@ -68,7 +68,28 @@ library(hash)
 .codonMap[["TGA"]] <- "STOP"
 .codonMap[["TGG"]] <- "W"
 
-
+# convert a codon to an amino acid
 codon_to_aa <- function(codon) {
   return (.codonMap[[codon]])
+}
+
+
+# map org_id to species name
+.speciesMap <- hash()
+.speciesMap[["122771"]] <- "African Clawed Frog"
+.speciesMap[["16815"]]  <- "E. Coli"
+.speciesMap[["121713"]] <- "Bakers Yeast"
+.speciesMap[["122001"]] <- "C. Elegans"
+.speciesMap[["122056"]] <- "Fruit Fly"
+.speciesMap[["122263"]] <- "Thale Cress"
+.speciesMap[["122563"]] <- "Human"
+.speciesMap[["122638"]] <- "Mouse"
+.speciesMap[["122645"]] <- "Rat"
+.speciesMap[["122731"]] <- "Zebrafish"
+
+# convert an organism ID to the name
+org_id_to_name <- function(org_id) {
+  return (
+    .speciesMap[[as.character(org_id)]]
+  )
 }

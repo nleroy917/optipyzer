@@ -1,5 +1,4 @@
 library(ggplot2)
-
 source("./utils.R")
 
 # read in data
@@ -31,6 +30,8 @@ codon.counts.df$count_billion <- codon.counts.df$count/ONE.BILLION
 amino.acid.counts <- aggregate(codon.counts.df$count_billion, by=list(amino_acid=codon.counts.df$amino_acid), FUN=sum)
 names(amino.acid.counts)[names(amino.acid.counts) == 'x'] <- 'count_billion' # rename
 
+
+
 # plot codon counts
 pAA <- ggplot(amino.acid.counts, aes(x=reorder(amino_acid, -count_billion), y=count_billion)) +
   geom_bar(stat="identity", fill="black") + 
@@ -40,6 +41,7 @@ pAA <- ggplot(amino.acid.counts, aes(x=reorder(amino_acid, -count_billion), y=co
   ) +
   scale_y_continuous(limits=c(0,18), expand = c(0, 0)) +
   xlab("Residue") + ylab("Count (Billion)")
+pAA
 
 pCodon <- ggplot(codon.counts.df, aes(x=reorder(codon, -count_billion), y=count_billion)) +
   geom_bar(stat="identity", fill="black") + 
@@ -61,4 +63,16 @@ pCodon <- ggplot(codon.counts.df, aes(x=reorder(codon, -count_billion), y=count_
   scale_y_continuous(limits=c(0,6.5), expand = c(0, 0)) +
   xlab("Codon") + ylab("Count (Billion)")
 pCodon
+
+# dont use tiff -> use vector (change canvas size)
+# number of sequences ?
+# whats the claim its supporting?
+# codons are not used uniformly is the claim
+# plotting entropy or randomness?
+# random distribution v entropy v organism
+
+# a multinomial distribution might be too much
+# heatmap of the matrix (for one amino acid) -> normalized within
+# do that for 3, 4 or 5  amino acids (100 ish orgnaisms as example)
+# could group by species (most variable) or other species
 ggsave("codon_counts.tiff", units="px", width = 3200 , height = 2400, device='tiff', dpi=300)
