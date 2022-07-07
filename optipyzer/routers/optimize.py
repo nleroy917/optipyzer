@@ -6,9 +6,8 @@ from optipyzer.response_models import OptimizationResult
 
 from ..dependencies import verify_dna, verify_protein
 
-router = APIRouter(
-    prefix="/optimize"
-)
+router = APIRouter(prefix="/optimize")
+
 
 @router.post("/dna", response_model=OptimizationResult)
 def optimize_dna(query: OptimizeQuery = Depends(verify_dna)):
@@ -21,11 +20,10 @@ def optimize_dna(query: OptimizeQuery = Depends(verify_dna)):
     for org in query.weights:
         weights_cleaned[str(org)] = float(query.weights[org])
 
-    result = codon_optimize(
-        query.seq, organism_list, query.weights, seq_type='dna'
-    )
+    result = codon_optimize(query.seq, organism_list, query.weights, seq_type="dna")
 
     return result
+
 
 @router.post("/protein", response_model=OptimizationResult)
 def optimize_protein(query: OptimizeQuery = Depends(verify_protein)):
@@ -38,8 +36,6 @@ def optimize_protein(query: OptimizeQuery = Depends(verify_protein)):
     for org in query.weights:
         weights_cleaned[str(org)] = float(query.weights[org])
 
-    result = codon_optimize(
-        query.seq, organism_list, query.weights, seq_type='protein'
-    )
+    result = codon_optimize(query.seq, organism_list, query.weights, seq_type="protein")
 
     return result

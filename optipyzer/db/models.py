@@ -4,6 +4,7 @@ from .database import Base
 
 from sqlalchemy import Column, Integer, String, Float
 
+
 class Organism(Base):
     __tablename__ = "organisms"
 
@@ -21,11 +22,12 @@ class Organism(Base):
     GC2_perc = Column(Float)
     GC3_perc = Column(Float)
 
+
 # this is a truncated version of the above table
 # to improve browser performance
 class AutocompleteOrganism(Base):
     __tablename__ = "autocomplete_data"
-    
+
     org_id = Column(Integer, primary_key=True)
     division = Column(String)
     assembly = Column(String)
@@ -41,8 +43,9 @@ class AutocompleteOrganism(Base):
     GC3_perc = Column(Float)
     category = Column(String)
 
+
 class CodonUsage(Base):
-    
+
     __tablename__ = "codon_usage"
 
     org_id = Column(Integer, primary_key=True)

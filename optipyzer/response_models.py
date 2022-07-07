@@ -15,11 +15,12 @@ class OptimizationResult(BaseModel):
     optimized_ad: str
     min_difference_absvalue: float
     best_expression_ad: Dict[str, float]
-    
+
     class Config:
         orm_mode = True
 
-# model for organism       
+
+# model for organism
 class Organism(BaseModel):
     org_id: int
     division: str
@@ -38,11 +39,13 @@ class Organism(BaseModel):
     class Config:
         orm_mode = True
 
+
 # model for a search result
 class SearchResult(BaseModel):
     num_results: int
     organisms: List[Organism]
     search_query: str
+
 
 # model for codon usage data
 class CodonUsage(BaseModel):

@@ -1,6 +1,7 @@
 from typing import List, Dict
 from pydantic import BaseModel
 
+
 class Organism(BaseModel):
     org_id: int
     division: str
@@ -16,6 +17,7 @@ class Organism(BaseModel):
     GC2_perc: float
     GC3_perc: float
 
+
 class OptimizationResult(BaseModel):
     query: str
     weights: Dict[str, int]
@@ -30,10 +32,12 @@ class OptimizationResult(BaseModel):
     min_difference_absvalue: float
     best_expression_ad: Dict[str, float]
 
+
 class SearchResult(BaseModel):
     num_results: int
     organisms: List[Organism]
     search_query: str
+
 
 class CodonUsage(BaseModel):
     organism: Organism
