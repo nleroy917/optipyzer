@@ -105,8 +105,7 @@ class api():
 			f"/species/{org_id}/codons",
 		)
 		return result.json()
-		
-
+	
 
 if __name__ == '__main__':
 
