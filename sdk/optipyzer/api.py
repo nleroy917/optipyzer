@@ -1,15 +1,15 @@
 from typing import Dict
 import requests
 import time
-from const import LOCAL_SERVER_BASE, PUBLIC_SERVER_BASE, SESSION_HDRS, SLEEP_MIN
-from log import _LOGGER
-from helpers import verify_dna, verify_protein
+from .const import LOCAL_SERVER_BASE, PUBLIC_SERVER_BASE, SESSION_HDRS, SLEEP_MIN
+from .log import _LOGGER
+from .helpers import verify_dna, verify_protein
 
 # return types
 from requests import Response
-from models import SearchResult
-from const import VALID_SEQ_TYPES
-from models import CodonUsage, OptimizationResult
+from .models import SearchResult
+from .const import VALID_SEQ_TYPES
+from .models import CodonUsage, OptimizationResult
 
 
 class api():

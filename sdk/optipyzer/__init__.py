@@ -5,6 +5,11 @@
 import sys
 
 from .const import LICENSE, VERSION
+from .api import api
+from .models import *
+from .exceptions import *
+from .log import *
+from .helpers import *
 assert sys.version_info[0] == 3, "Optipyzer requires Python 3.0 or greater"
 
 """A library that provides a Python interface to the Optipyzer API"""

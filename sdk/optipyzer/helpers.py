@@ -1,5 +1,5 @@
 import re
-from const import VALID_AMINO_ACIDS
+from .const import VALID_AMINO_ACIDS
 
 def clean_seq(s: str) -> str:
     # remove all newlines and whitespace
