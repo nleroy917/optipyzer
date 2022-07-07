@@ -64,15 +64,4 @@ pCodon <- ggplot(codon.counts.df, aes(x=reorder(codon, -count_billion), y=count_
   xlab("Codon") + ylab("Count (Billion)")
 pCodon
 
-# dont use tiff -> use vector (change canvas size)
-# number of sequences ?
-# whats the claim its supporting?
-# codons are not used uniformly is the claim
-# plotting entropy or randomness?
-# random distribution v entropy v organism
-
-# a multinomial distribution might be too much
-# heatmap of the matrix (for one amino acid) -> normalized within
-# do that for 3, 4 or 5  amino acids (100 ish orgnaisms as example)
-# could group by species (most variable) or other species
 ggsave("codon_counts.tiff", units="px", width = 3200 , height = 2400, device='tiff', dpi=300)
