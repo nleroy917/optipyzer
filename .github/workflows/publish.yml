@@ -6,8 +6,10 @@ on:
 
 jobs:
   build-n-publish:
-    - name: Publish to to PyPI 📦
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}
+      runs-on: ubuntu-latest
+      steps:
+        - name: Publish to to PyPI 📦
+          uses: pypa/gh-action-pypi-publish@release/v1
+          with:
+            user: __token__
+            password: ${{ secrets.PYPI_API_TOKEN }}
