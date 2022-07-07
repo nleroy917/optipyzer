@@ -17,11 +17,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.get("/")
 async def root():
     return {
-        'message': "Optipyzer codon optimization server. For more details see https://github.com/nleroy917/optipyzer",
-        'url': 'https://github.com/nleroy917/optipyzer',
-        'version': VERSION,
-        'fastapi_version': fastapi.__version__
+        "message": "Optipyzer codon optimization server. For more details see https://github.com/nleroy917/optipyzer",
+        "url": "https://github.com/nleroy917/optipyzer",
+        "version": VERSION,
+        "fastapi_version": fastapi.__version__,
     }

@@ -12,16 +12,17 @@ def _get_db():
     finally:
         db.close()
 
+
 def get_autocomplete_organisms():
     """Return list of organisms for the autocomplete component"""
-    
+
     with SessionLocal() as db:
         return db.query(AutocompleteOrganism).all()
-    
+
 
 def calc_codon_usage(organism_id: int):
     """
-    Function to calculate the codon usage data for a given organism. 
+    Function to calculate the codon usage data for a given organism.
     The codon usage data in this context is the percentage that a particular
     codon is used when coding for a particular amino acid.
 
@@ -48,7 +49,11 @@ def calc_codon_usage(organism_id: int):
 
         # Check for data issues (Sometings codon usage data is low, and must be dealt with)
         if sum_codons == 0:
-            print('Not enough codon data found... Skipping Organism {}'.format(organism_id))
+            print(
+                "Not enough codon data found... Skipping Organism {}".format(
+                    organism_id
+                )
+            )
             break
 
         # define index or and new sub-dictionary
@@ -69,7 +74,7 @@ def calc_codon_usage(organism_id: int):
         for codon in codon_usage[aa]:
             codon_usage[aa][codon] /= sum_codons
 
-    return counts, codon_usage # Return this dictionary of dictiomaries
+    return counts, codon_usage  # Return this dictionary of dictiomaries
 
 
 def amino_acid_usage(org_id: int, aa: str):
@@ -87,10 +92,12 @@ def amino_acid_usage(org_id: int, aa: str):
         cols = [getattr(CodonUsage, c) for c in codons]
         return db.query(*cols).filter(CodonUsage.org_id == org_id).first()
 
+
 def search_for_species(name: str) -> list[Organism]:
     """Search for an organism based on a name"""
     with SessionLocal() as db:
         return db.query(Organism).filter(Organism.species.ilike(f"%{name}%")).all()
+
 
 def get_species_by_id(org_id: str) -> Organism:
     """return an organism object given an org_id"""

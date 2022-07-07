@@ -63,8 +63,27 @@ def remove_prohibited_codons(query, prohibited_codons, var_thresh=0.1):
     normalized
     """
     # a dictionary with the total number of amino acids that encode each amino acid with more than 1 codon
-    number_total_codons = {"A": 4, "R": 6, "N": 2, "D": 2, "C": 2, "Q": 2, "E": 2, "G": 4, "H": 2, "I": 3, "L": 6,
-                           "K": 2, "F": 2, "P": 4, "S": 6, "T": 4, "Y": 2, "V": 4, "Stop": 3}
+    number_total_codons = {
+        "A": 4,
+        "R": 6,
+        "N": 2,
+        "D": 2,
+        "C": 2,
+        "Q": 2,
+        "E": 2,
+        "G": 4,
+        "H": 2,
+        "I": 3,
+        "L": 6,
+        "K": 2,
+        "F": 2,
+        "P": 4,
+        "S": 6,
+        "T": 4,
+        "Y": 2,
+        "V": 4,
+        "Stop": 3,
+    }
     # initializes a list that will store any residue for which all codons would be considered "prohibited"
     inaccessible_residues = []
     # loops through the list of prohibited codons
@@ -84,9 +103,13 @@ def remove_prohibited_codons(query, prohibited_codons, var_thresh=0.1):
         for species in query:
             for codon in query[species][inaccessible_residues[i]]:
                 if codon not in preference_values:
-                    preference_values[codon] = [query[species][inaccessible_residues[i]][codon]]
+                    preference_values[codon] = [
+                        query[species][inaccessible_residues[i]][codon]
+                    ]
                 else:
-                    preference_values[codon].append(query[species][inaccessible_residues[i]][codon])
+                    preference_values[codon].append(
+                        query[species][inaccessible_residues[i]][codon]
+                    )
         # changes the preference_values from a list of all species' codon preferences for that codon to the
         # variance of that codon's preference amongst all species
         for codon in preference_values:
@@ -103,7 +126,11 @@ def remove_prohibited_codons(query, prohibited_codons, var_thresh=0.1):
                 allowed_codons[inaccessible_residues[i]] = [codon]
             # if the variance is within 10% of the average minimum variance, adds that variance to the minimum variance
             # list and that codon to the list of allowed codons for that residue
-            elif ((1 - var_thresh) * mean(min_var)) <= preference_values[codon] < ((1 + var_thresh) * mean(min_var)):
+            elif (
+                ((1 - var_thresh) * mean(min_var))
+                <= preference_values[codon]
+                < ((1 + var_thresh) * mean(min_var))
+            ):
                 min_var.append(preference_values[codon])
                 allowed_codons[inaccessible_residues[i]].append(codon)
     # removes the allowed codons from the list of prohibited codons
@@ -127,8 +154,13 @@ def remove_prohibited_codons(query, prohibited_codons, var_thresh=0.1):
                 # prohibited codons' preferences are set to 0
                 for codon in query[species][residue]:
                     # print(acceptable_codon_sum, flush=True)
-                    if codon not in prohibited_codons[residue] and acceptable_codon_sum != 0:
-                        query[species][residue][codon] = query[species][residue][codon] / acceptable_codon_sum
+                    if (
+                        codon not in prohibited_codons[residue]
+                        and acceptable_codon_sum != 0
+                    ):
+                        query[species][residue][codon] = (
+                            query[species][residue][codon] / acceptable_codon_sum
+                        )
                     else:
                         query[species][residue][codon] = 0
     # call to adjust allowed codons to ensure all residues have allowed codons
@@ -200,7 +232,7 @@ def codon_preference_priors(query_table, parameter=2.5):
             pref_sum = 0
             # raise each codon preference to the power of parameter-1 and update sum
             for codon in query_table[species][residue]:
-                query_table[species][residue][codon] **= (parameter - 1)
+                query_table[species][residue][codon] **= parameter - 1
                 pref_sum += query_table[species][residue][codon]
             # divide the codon preferences by sum
             for codon in query_table[species][residue]:
@@ -246,11 +278,15 @@ def averaged_table(query, equal_species, species_expression):
                 if codon not in multi_table[residue]:
                     # sets the value of each codon in the multi-table to the product of the species weight and codon
                     # preference during the first occurence of this codon/first species
-                    multi_table[residue][codon] = (species_weight[species] * query[species][residue][codon])
+                    multi_table[residue][codon] = (
+                        species_weight[species] * query[species][residue][codon]
+                    )
                 else:
                     # adds the product of the species weight and codon preference to the multi-table's value for that
                     # codon's averaged preference for all subsequent occurrences of this codon
-                    multi_table[residue][codon] += (species_weight[species] * query[species][residue][codon])
+                    multi_table[residue][codon] += (
+                        species_weight[species] * query[species][residue][codon]
+                    )
     return multi_table, species_expression
 
 
@@ -281,7 +317,7 @@ def get_multitable_randomnumbers(multi_table):
             random_num_multitable[residue][codon] = [value]
             # sets the upper bound of the random number to the lower bound + the codon preference * 100000
             # that upper bound becomes the lower bound for the next codon that encodes for that amino acid
-            value += (multi_table[residue][codon] * 100000000)
+            value += multi_table[residue][codon] * 100000000
             random_num_multitable[residue][codon].append(value)
     return random_num_multitable
 
@@ -293,27 +329,72 @@ def convert_DNA_to_protein(query):
     :return: fasta-formatted peptide sequence string
     """
     # dictionary with the key being the codon and amino acid as the value
-    conversion_table = {'GCT': 'A', 'GCC': 'A', 'GCA': 'A', 'GCG': 'A',
-                        'CGT': 'R', 'CGC': 'R', 'CGA': 'R', 'CGG': 'R', 'AGA': 'R', 'AGG': 'R',
-                        'AAT': 'N', 'AAC': 'N',
-                        'GAT': 'D', 'GAC': "D",
-                        'TGT': 'C', 'TGC': 'C',
-                        'CAA': 'Q', 'CAG': 'Q',
-                        'GAA': 'E', 'GAG': 'E',
-                        'GGT': 'G', 'GGC': 'G', 'GGA': 'G', 'GGG': 'G',
-                        'CAT': 'H', 'CAC': 'H',
-                        'ATT': 'I', 'ATC': 'I', 'ATA': 'I',
-                        'TTA': 'L', 'TTG': 'L', 'CTT': 'L', 'CTC': 'L', 'CTA': 'L', 'CTG': 'L',
-                        'AAA': 'K', 'AAG': 'K',
-                        'ATG': 'M',
-                        'TTT': 'F', 'TTC': 'F',
-                        'CCT': 'P', 'CCC': 'P', 'CCA': 'P', 'CCG': 'P',
-                        'TCT': 'S', 'TCC': 'S', 'TCA': 'S', 'TCG': 'S', 'AGT': 'S', 'AGC': 'S',
-                        'ACT': 'T', 'ACC': 'T', 'ACA': 'T', 'ACG': 'T',
-                        'TGG': 'W',
-                        'TAT': 'Y', 'TAC': 'Y',
-                        'GTT': 'V', 'GTC': 'V', 'GTA': 'V', 'GTG': 'V',
-                        'TAA': "!", 'TAG': "!", 'TGA': "!"}
+    conversion_table = {
+        "GCT": "A",
+        "GCC": "A",
+        "GCA": "A",
+        "GCG": "A",
+        "CGT": "R",
+        "CGC": "R",
+        "CGA": "R",
+        "CGG": "R",
+        "AGA": "R",
+        "AGG": "R",
+        "AAT": "N",
+        "AAC": "N",
+        "GAT": "D",
+        "GAC": "D",
+        "TGT": "C",
+        "TGC": "C",
+        "CAA": "Q",
+        "CAG": "Q",
+        "GAA": "E",
+        "GAG": "E",
+        "GGT": "G",
+        "GGC": "G",
+        "GGA": "G",
+        "GGG": "G",
+        "CAT": "H",
+        "CAC": "H",
+        "ATT": "I",
+        "ATC": "I",
+        "ATA": "I",
+        "TTA": "L",
+        "TTG": "L",
+        "CTT": "L",
+        "CTC": "L",
+        "CTA": "L",
+        "CTG": "L",
+        "AAA": "K",
+        "AAG": "K",
+        "ATG": "M",
+        "TTT": "F",
+        "TTC": "F",
+        "CCT": "P",
+        "CCC": "P",
+        "CCA": "P",
+        "CCG": "P",
+        "TCT": "S",
+        "TCC": "S",
+        "TCA": "S",
+        "TCG": "S",
+        "AGT": "S",
+        "AGC": "S",
+        "ACT": "T",
+        "ACC": "T",
+        "ACA": "T",
+        "ACG": "T",
+        "TGG": "W",
+        "TAT": "Y",
+        "TAC": "Y",
+        "GTT": "V",
+        "GTC": "V",
+        "GTA": "V",
+        "GTG": "V",
+        "TAA": "!",
+        "TAG": "!",
+        "TGA": "!",
+    }
     # ensures proper length of DNA query
     if len(query) % 3 != 0:
         print("Invalid entry. Query length should be divisible by 3.")
@@ -327,27 +408,31 @@ def convert_DNA_to_protein(query):
         position += 1
         # ensures no invalid characters were entered as a DNA-nucleotide base
         if base not in "ATCG":
-            print("Invalid base {} entered at position {}. Please fix and try again.".format(base, position))
+            print(
+                "Invalid base {} entered at position {}. Please fix and try again.".format(
+                    base, position
+                )
+            )
             exit()
         else:
             # finds the end of each codon
             if position % 3 == 0:
                 # defines the most recent codon
-                query_codon = query[position - 3: position]
+                query_codon = query[position - 3 : position]
                 # finds the amino acid encoded by that codon by looping through the conversion_table
                 for codon in conversion_table:
                     if codon == query_codon:
                         # if a stop codon was included, informs the user of the location and the peptide length
                         # and stops adding to the peptide sequence
                         if conversion_table[codon] == "!":
-                            #print("Stop codon found at nucleotide position {}."
-                                  #" Protein query {} residues long.".format(position, len(protein_query)))
+                            # print("Stop codon found at nucleotide position {}."
+                            # " Protein query {} residues long.".format(position, len(protein_query)))
                             stop_pos = position
                             break
                         # adds the proper amino acid to the protein_query
                         else:
                             protein_query += conversion_table[codon]
-    return protein_query,stop_pos
+    return protein_query, stop_pos
 
 
 def validate_query(query, DNA):
@@ -367,14 +452,18 @@ def validate_query(query, DNA):
     stop_pos = 0
     # converts the DNA query to a protein query if DNA query was entered
     if DNA:
-        query,stop_pos = convert_DNA_to_protein(query)
+        query, stop_pos = convert_DNA_to_protein(query)
     else:
         # if a protein query was entered, ensures no invalid characters were entered
         position = 0
         for residue in query:
             position += 1
             if residue not in "DTSEPGACVMILYFHKRWQN":
-                print("Invalid residue {} entered at position {}. Please fix and try again.".format(residue, position))
+                print(
+                    "Invalid residue {} entered at position {}. Please fix and try again.".format(
+                        residue, position
+                    )
+                )
                 exit()
     return query, stop_pos
 
@@ -398,13 +487,21 @@ def optimize_sequence(random_num_table, query):
         # compares random number to the random number bounds for that codon
         # adds the appropriate DNA codon (based on the random number) to the optimized query
         for codon in random_num_table[residue]:
-            if random_num_table[residue][codon][0] <= value < random_num_table[residue][codon][1]:
+            if (
+                random_num_table[residue][codon][0]
+                <= value
+                < random_num_table[residue][codon][1]
+            ):
                 optimmized_query += codon
     # generates a random integer between 1 and 100000 and compares it to the random number bounds for the stop codons
     # adds the selected stop codon to the optimized DNA sequence
     value = random.randint(1, 100000001)
-    for codon in random_num_table['Stop']:
-        if random_num_table['Stop'][codon][0] <= value < random_num_table['Stop'][codon][1]:
+    for codon in random_num_table["Stop"]:
+        if (
+            random_num_table["Stop"][codon][0]
+            <= value
+            < random_num_table["Stop"][codon][1]
+        ):
             optimmized_query += codon
     return optimmized_query
 
@@ -451,23 +548,30 @@ def get_rca_xyz(codon_counts, parameter=2.5):
         # initializes the base_position dictionary for each species
         # each base has its own dictionary for each species, and that dictionary has a key and value for counts at
         # each position of the codon, which are all initialized to 0 counts
-        base_position[species] = {"A": {1: 0, 2: 0, 3: 0}, "T": {1: 0, 2: 0, 3: 0}, "C": {1: 0, 2: 0, 3: 0},
-                                  "G": {1: 0, 2: 0, 3: 0}}
+        base_position[species] = {
+            "A": {1: 0, 2: 0, 3: 0},
+            "T": {1: 0, 2: 0, 3: 0},
+            "C": {1: 0, 2: 0, 3: 0},
+            "G": {1: 0, 2: 0, 3: 0},
+        }
         # loops through the codon_counts dictionary
         for residue in codon_counts[species]:
             for codon in codon_counts[species][residue]:
                 # initializes the base position to "1" at the start of each codon
                 i = 1
                 # calculates the codon
-                frequency[species][codon] = (codon_counts[species][residue][codon] / count_sum[species]) ** (
-                            parameter - 1)
+                frequency[species][codon] = (
+                    codon_counts[species][residue][codon] / count_sum[species]
+                ) ** (parameter - 1)
                 # adds to the total sum of all codon frequences
                 adjusted_frequency_sum += frequency[species][codon]
                 # loops through the codon string to determine which base occurs at which position
                 # updates the base_position dictionary to add the codon counts to all 3 of the appropriate bases
                 # and positions
                 for base in codon:
-                    base_position[species][base][i] += codon_counts[species][residue][codon]
+                    base_position[species][base][i] += codon_counts[species][residue][
+                        codon
+                    ]
                     i += 1
         # divides the adjusted frequency values by the sum of all the freqnecy values
         for codon in frequency[species]:
@@ -480,7 +584,7 @@ def get_rca_xyz(codon_counts, parameter=2.5):
             for i in base_position[species][base]:
                 base_position[species][base][i] /= count_sum[species]
                 # raises to prior parameter
-                base_position[species][base][i] **= (parameter - 1)
+                base_position[species][base][i] **= parameter - 1
                 # adds to total of base_position frequencies
                 base_sum[i] += base_position[species][base][i]
         # loops through the base position dictionary to divide base position frequency by sum of frequencies at
@@ -501,7 +605,7 @@ def get_rca_xyz(codon_counts, parameter=2.5):
                 pos_frequency *= base_position[species][base][i]
                 i += 1
             # calculates the codon rca_xyz value per species by dividing the numerator by pos_frequency
-            rca_xyz[species][codon] = (frequency[species][codon] / pos_frequency)
+            rca_xyz[species][codon] = frequency[species][codon] / pos_frequency
     return rca_xyz
 
 
@@ -532,7 +636,7 @@ def calculate_predicted_expression(rca_xyz, optimized_dna):
                 # resets the stored codon
                 codon = ""
         # raises the rca value to the power of 1/# of codons
-        rca[species] **= (1 / (len(optimized_dna) / 3))
+        rca[species] **= 1 / (len(optimized_dna) / 3)
         # subtracts 1 from the rca value to get the final rca value
     # initiates the minimum expression value
     min_exp = 1000000000000000000
@@ -558,8 +662,27 @@ def get_redundantaa_rn(query):
     used, excluding amino acids with only one codon
     """
     # initializes a dictionary of the counts of redundant residues in the query
-    aa_frequency = {"A": 0, "R": 0, "N": 0, "D": 0, "C": 0, "Q": 0, "E": 0, "G": 0, "H": 0, "I": 0, "L": 0,
-                    "K": 0, "F": 0, "P": 0, "S": 0, "T": 0, "Y": 0, "V": 0, "Stop": 1}
+    aa_frequency = {
+        "A": 0,
+        "R": 0,
+        "N": 0,
+        "D": 0,
+        "C": 0,
+        "Q": 0,
+        "E": 0,
+        "G": 0,
+        "H": 0,
+        "I": 0,
+        "L": 0,
+        "K": 0,
+        "F": 0,
+        "P": 0,
+        "S": 0,
+        "T": 0,
+        "Y": 0,
+        "V": 0,
+        "Stop": 1,
+    }
     # initializes a dictionary of the total number of redundant residues
     raa_sum = 1
     # calculates frequency of redundant codons out of all redundant codons
@@ -577,12 +700,14 @@ def get_redundantaa_rn(query):
         aa_rn[residue] = [value]
         # sets the upper bound of the random number to the lower bound + the codon preference * 100000
         # that upper bound becomes the lower bound for the next codon that encodes for that amino acid
-        value += (aa_frequency[residue] * 100000000)
+        value += aa_frequency[residue] * 100000000
         aa_rn[residue].append(value)
     return aa_rn
 
 
-def adjust_table(rca_expression_dif, species_expression, et, aa_rn, query_table, multi_table):
+def adjust_table(
+    rca_expression_dif, species_expression, et, aa_rn, query_table, multi_table
+):
     """
     Adjusts the table in favor of or against species that have a predicted expression different than their target
     expression
@@ -612,7 +737,7 @@ def adjust_table(rca_expression_dif, species_expression, et, aa_rn, query_table,
         # an expression threshold - percent of target expression
         if abs(rca_expression_dif[species]) > et * species_expression[species]:
             aa_adjusted = 0
-            cf = (rca_expression_dif[species] / 10)
+            cf = rca_expression_dif[species] / 10
             # randomly selects 6 redundant residues to adjust the preference towards based on their abundance
             # in the query
             while aa_adjusted < 10:
@@ -626,15 +751,24 @@ def adjust_table(rca_expression_dif, species_expression, et, aa_rn, query_table,
                         # predicted uses that as a weight to reaverage the current multi_table with that
                         # species personal table
                         for codon in multi_table[residue]:
-                            multi_table[residue][codon] = multi_table[residue][codon] + \
-                                                          (query_table[species][residue][codon] * cf)
+                            multi_table[residue][codon] = multi_table[residue][
+                                codon
+                            ] + (query_table[species][residue][codon] * cf)
                             new_sum += multi_table[residue][codon]
                         for codon in multi_table[residue]:
                             multi_table[residue][codon] /= new_sum
     return multi_table
 
 
-def optimize_multitable_sd(multi_table, query, query_table, rca_xyz, species_expression, et=0.05, iterations=1000):
+def optimize_multitable_sd(
+    multi_table,
+    query,
+    query_table,
+    rca_xyz,
+    species_expression,
+    et=0.05,
+    iterations=1000,
+):
     """
     iterates upon the multi_table while optimizing the query to select the best-optimized DNA sequence using a sum of
     squares of differences based method
@@ -677,7 +811,7 @@ def optimize_multitable_sd(multi_table, query, query_table, rca_xyz, species_exp
         for species in rca:
             rca_expression_dif[species] = species_expression[species] - rca[species]
             # adds the sum of the square of the difference to the sum_square_diff
-            square_diff += (rca_expression_dif[species] ** 2)
+            square_diff += rca_expression_dif[species] ** 2
             # initializes the minimum of the sum of square of differences and the best optimized sequence during the
             # first iteration
             if it == 1:
@@ -686,7 +820,14 @@ def optimize_multitable_sd(multi_table, query, query_table, rca_xyz, species_exp
                 best_expression = rca[species]
         # compares to see if current table is preforming worse than previous
         if square_diff > min_square_dif:
-            multi_table = adjust_table(rca_expression_dif, species_expression, et, aa_rn, query_table, multi_table)
+            multi_table = adjust_table(
+                rca_expression_dif,
+                species_expression,
+                et,
+                aa_rn,
+                query_table,
+                multi_table,
+            )
             # gets a new random number table for the new table
             rn = get_multitable_randomnumbers(multi_table)
         # if species has the minimum square difference, updates the parameters for the best optimized and minimum
@@ -698,7 +839,9 @@ def optimize_multitable_sd(multi_table, query, query_table, rca_xyz, species_exp
     return best_optimized, min_square_dif, best_expression
 
 
-def optimize_multitable_ad(multi_table, query, query_table, rca_xyz, species_expression, et=0, iterations=1000):
+def optimize_multitable_ad(
+    multi_table, query, query_table, rca_xyz, species_expression, et=0, iterations=1000
+):
     """
     iterates upon the multi_table while optimizing the query to select the best-optimized DNA sequence using an
     absolute-difference based method
@@ -750,7 +893,14 @@ def optimize_multitable_ad(multi_table, query, query_table, rca_xyz, species_exp
                 best_expression = rca[species]
         # compares to see if current table is preforming worse than previous
         if abs_diff > min_abs_dif:
-            multi_table = adjust_table(rca_expression_dif, species_expression, et, aa_rn, query_table, multi_table)
+            multi_table = adjust_table(
+                rca_expression_dif,
+                species_expression,
+                et,
+                aa_rn,
+                query_table,
+                multi_table,
+            )
             # gets a new random number table for the new table
             rn = get_multitable_randomnumbers(multi_table)
         # if species has the minimum absolute value of difference, updates the parameters for the best optimized and

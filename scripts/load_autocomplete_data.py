@@ -26,18 +26,19 @@ Algorithm:
 import sqlite3
 import sys
 
+
 def reset_table(curs):
 
-	try: 
-		# Drop table
-		query = ''' DROP TABLE autocomplete_data '''
-		curs.execute(query)
+    try:
+        # Drop table
+        query = """ DROP TABLE autocomplete_data """
+        curs.execute(query)
 
-	except:
-		# table probably doesnt exsist
+    except:
+        # table probably doesnt exsist
 
-		# Create new table
-		query = ''' CREATE TABLE autocomplete_data
+        # Create new table
+        query = """ CREATE TABLE autocomplete_data
 					(org_id INTEGER PRIMARY KEY, 
 	                division,
 	                assembly,
@@ -50,84 +51,98 @@ def reset_table(curs):
 	                GC_perc FLOAT,
 	                GC1_perc FLOAT,
 	                GC2_perc FLOAT,
-	                GC3_perc FLOAT);'''
-		curs.execute(query)
+	                GC3_perc FLOAT);"""
+        curs.execute(query)
 
-	return
+    return
+
 
 def load_data(curs):
 
-	# Get unqique species from database
-	query = '''SELECT * FROM ORGANISMS GROUP BY SPECIES'''
-	curs.execute(query)
-	result = curs.fetchall()
+    # Get unqique species from database
+    query = """SELECT * FROM ORGANISMS GROUP BY SPECIES"""
+    curs.execute(query)
+    result = curs.fetchall()
 
-	# Initialize empty name list
-	names = []
+    # Initialize empty name list
+    names = []
 
-	N = len(result)
-	i = 1
-	for row in result:
-		
-		# Update user
-		print('Cleaned {}/{} rows'.format(i,N))
-		i += 1
+    N = len(result)
+    i = 1
+    for row in result:
 
-		# isolate species from strain
-		name = isolate_species(row[4])
+        # Update user
+        print("Cleaned {}/{} rows".format(i, N))
+        i += 1
 
-		# check if already seen skip if seen, else insert into table
-		if name in names:
-			continue
-		else:
-			names.append(name)
-			query = '''INSERT INTO autocomplete_data VALUES			
-                    (?,?,?,?,?,?,?,?,?,?,?,?,?)'''
-			curs.execute(query, (row[0], row[1], row[2], row[3],
-                         			row[4], row[5], row[6],
-                         			row[7], row[8], row[9],
-                         			row[10], row[11],row[12]))
-	return
+        # isolate species from strain
+        name = isolate_species(row[4])
+
+        # check if already seen skip if seen, else insert into table
+        if name in names:
+            continue
+        else:
+            names.append(name)
+            query = """INSERT INTO autocomplete_data VALUES			
+                    (?,?,?,?,?,?,?,?,?,?,?,?,?)"""
+            curs.execute(
+                query,
+                (
+                    row[0],
+                    row[1],
+                    row[2],
+                    row[3],
+                    row[4],
+                    row[5],
+                    row[6],
+                    row[7],
+                    row[8],
+                    row[9],
+                    row[10],
+                    row[11],
+                    row[12],
+                ),
+            )
+    return
+
 
 def isolate_species(species_strain):
 
-	# Split on spaces
-	words = species_strain.split(' ')
+    # Split on spaces
+    words = species_strain.split(" ")
 
-	# Create new string to represent only species and not the strain
-	try:
-		species = words[0] + ' ' + words[1]
-	except:
-		species = words[0]
+    # Create new string to represent only species and not the strain
+    try:
+        species = words[0] + " " + words[1]
+    except:
+        species = words[0]
 
-	return species
-
+    return species
 
 
 def connect_to_db(db_file):
 
-	# Attempt to connect to databse with specified file
+    # Attempt to connect to databse with specified file
     try:
         conn = sqlite3.connect(db_file)
-        #print('Connection made')
+        # print('Connection made')
     except:
-        print('Unable to connect to database... Are you sure you have the right file?')
+        print("Unable to connect to database... Are you sure you have the right file?")
         exit(1)
 
-    return conn, conn.cursor() # Return the cursor object
+    return conn, conn.cursor()  # Return the cursor object
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 
-	db_file = sys.argv[1]
+    db_file = sys.argv[1]
 
-	if not db_file:
-		print('Please specify database file')
-		exit(1)
+    if not db_file:
+        print("Please specify database file")
+        exit(1)
 
-	conn, curs = connect_to_db(db_file)
-	reset_table(curs)
-	load_data(curs)
+    conn, curs = connect_to_db(db_file)
+    reset_table(curs)
+    load_data(curs)
 
-	conn.commit()
-
+    conn.commit()
