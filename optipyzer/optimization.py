@@ -36,8 +36,6 @@ def codon_optimize(
     for org_id in organism_list:
         counts[org_id], usage_data[org_id] = calc_codon_usage(org_id)
 
-    # usage_data = codon_preference_priors(usage_data)
-
     query_prohibited_codons = find_prohibited_codons(usage_data)
 
     usage_data = remove_prohibited_codons(usage_data, query_prohibited_codons)
