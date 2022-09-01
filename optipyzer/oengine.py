@@ -631,9 +631,7 @@ def calculate_predicted_expression(rca_xyz, optimized_dna):
         # subtracts 1 from the rca value to get the final rca value
     # initiates the minimum expression value
     min_exp = 1000000000000000000
-    # raises 10 to the power of the RCA, as the RCA is proportional to the log of expression
     for species in rca:
-        rca[species] = 10 ** (rca[species])
         # determines the minimum predicted expression value
         if rca[species] < min_exp:
             min_exp = rca[species]
