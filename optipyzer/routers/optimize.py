@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends
 from optipyzer.optimization import codon_optimize
 from optipyzer.request_models import OptimizeQuery
 from optipyzer.response_models import OptimizationResult
+from optipyzer.const import DEFAULT_NUM_ITERATIONS
 
 from ..dependencies import verify_dna, verify_protein
 
@@ -20,7 +21,7 @@ def optimize_dna(query: OptimizeQuery = Depends(verify_dna)):
     for org in query.weights:
         weights_cleaned[str(org)] = float(query.weights[org])
 
-    result = codon_optimize(query.seq, organism_list, query.weights, seq_type="dna")
+    result = codon_optimize(query.seq, organism_list, query.weights, seq_type="dna", iterations= (query.iterations or DEFAULT_NUM_ITERATIONS))
 
     return result
 
@@ -36,6 +37,6 @@ def optimize_protein(query: OptimizeQuery = Depends(verify_protein)):
     for org in query.weights:
         weights_cleaned[str(org)] = float(query.weights[org])
 
-    result = codon_optimize(query.seq, organism_list, query.weights, seq_type="protein")
+    result = codon_optimize(query.seq, organism_list, query.weights, seq_type="protein", iterations= (query.iterations or DEFAULT_NUM_ITERATIONS))
 
     return result

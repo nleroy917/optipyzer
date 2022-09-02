@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, Optional
 from fastapi import Query
 from pydantic import BaseModel
 
@@ -6,6 +6,7 @@ from pydantic import BaseModel
 class OptimizeQuery(BaseModel):
     seq: str
     weights: Dict[str, int]
+    iterations: Optional[int]
 
     class Config:
         schema_extra = {

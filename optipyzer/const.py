@@ -115,3 +115,5 @@ AA_CODON_LIBRARY = {
     "V": ["GTT", "GTC", "GTA", "GTG"],
     "Stop": ["TAA", "TAG", "TGA"],
 }
+
+DEFAULT_NUM_ITERATIONS=1000
