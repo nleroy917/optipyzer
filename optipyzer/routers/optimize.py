@@ -21,7 +21,13 @@ def optimize_dna(query: OptimizeQuery = Depends(verify_dna)):
     for org in query.weights:
         weights_cleaned[str(org)] = float(query.weights[org])
 
-    result = codon_optimize(query.seq, organism_list, query.weights, seq_type="dna", iterations= (query.iterations or DEFAULT_NUM_ITERATIONS))
+    result = codon_optimize(
+        query.seq,
+        organism_list,
+        query.weights,
+        seq_type="dna",
+        iterations=(query.iterations or DEFAULT_NUM_ITERATIONS),
+    )
 
     return result
 
@@ -37,6 +43,12 @@ def optimize_protein(query: OptimizeQuery = Depends(verify_protein)):
     for org in query.weights:
         weights_cleaned[str(org)] = float(query.weights[org])
 
-    result = codon_optimize(query.seq, organism_list, query.weights, seq_type="protein", iterations= (query.iterations or DEFAULT_NUM_ITERATIONS))
+    result = codon_optimize(
+        query.seq,
+        organism_list,
+        query.weights,
+        seq_type="protein",
+        iterations=(query.iterations or DEFAULT_NUM_ITERATIONS),
+    )
 
     return result

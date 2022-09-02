@@ -23,7 +23,11 @@ def _calc_average_table(usage_data: dict, weights: dict):
 
 
 def codon_optimize(
-    seq: str, organism_list: list[str], weights: dict = None, seq_type: str = None, iterations: int = DEFAULT_NUM_ITERATIONS
+    seq: str,
+    organism_list: list[str],
+    weights: dict = None,
+    seq_type: str = None,
+    iterations: int = DEFAULT_NUM_ITERATIONS,
 ):
     """Optimize a sequence given an organism list and a map/dictionary of weights"""
     if seq_type is None:
@@ -51,7 +55,9 @@ def codon_optimize(
         optimized_sd,
         min_difference_sumsquares,
         best_expression_sd,
-    ) = optimize_multitable_sd(average_table, peptide_seq, usage_data, rca_xyz, weights, iterations=iterations)
+    ) = optimize_multitable_sd(
+        average_table, peptide_seq, usage_data, rca_xyz, weights, iterations=iterations
+    )
 
     optimized_ad, min_difference_absvalue, best_expression_ad = optimize_multitable_ad(
         average_table, peptide_seq, usage_data, rca_xyz, weights, iterations=iterations

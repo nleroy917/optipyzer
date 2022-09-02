@@ -827,7 +827,13 @@ def optimize_multitable_sd(
 
 
 def optimize_multitable_ad(
-    multi_table, query, query_table, rca_xyz, species_expression, et=0.05, iterations=1000
+    multi_table,
+    query,
+    query_table,
+    rca_xyz,
+    species_expression,
+    et=0.05,
+    iterations=1000,
 ):
     """
     iterates upon the multi_table while optimizing the query to select the best-optimized DNA sequence using an
