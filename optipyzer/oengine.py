@@ -553,7 +553,7 @@ def get_rca_xyz(codon_counts, parameter=2.5):
                 # calculates the codon
                 frequency[species][codon] = (
                     codon_counts[species][residue][codon] / count_sum[species]
-                ) ** (parameter - 1)
+                )
                 # adds to the total sum of all codon frequences
                 adjusted_frequency_sum += frequency[species][codon]
                 # loops through the codon string to determine which base occurs at which position
@@ -574,8 +574,6 @@ def get_rca_xyz(codon_counts, parameter=2.5):
         for base in base_position[species]:
             for i in base_position[species][base]:
                 base_position[species][base][i] /= count_sum[species]
-                # raises to prior parameter
-                base_position[species][base][i] **= parameter - 1
                 # adds to total of base_position frequencies
                 base_sum[i] += base_position[species][base][i]
         # loops through the base position dictionary to divide base position frequency by sum of frequencies at
