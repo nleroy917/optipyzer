@@ -200,37 +200,6 @@ def get_species_weight(species_expression):
     return species_weight
 
 
-def codon_preference_priors(query_table, parameter=2.5):
-    """
-    get dirichlet density for codon preference
-        corrected codon preference =
-            (product (codon preference)^(parameter(i) - 1)) / sum of corrected codon preferences
-        Where all the parameters are equal
-    :param query_table: a three-layer nested dictionary. The outermost layer uses species' ID as the key. The value is
-    dictionary, where the keys are the one-letter abbreviations for amino acids. Those values are another dictionary,
-    where the keys are the codons that encode for that amino acid. The value of the codon keys is the codon preference
-    expressed as a decimal
-    :param parameter: the initial codon prefernce calculation is raised to the power of the parameter - 1
-    :return: an updated query - a three-layer nested dictionary. The outermost layer uses species' ID as the key.
-    The value is dictionary, where the keys are the one-letter abbreviations for amino acids. Those values are another
-    dictionary, where the keys are the codons that encode for that amino acid. The value of the codon keys is the
-    codon preference expressed as a decimal after obtaining the dirichlet prior value
-    """
-    # loop through query table
-    for species in query_table:
-        for residue in query_table[species]:
-            # initialize sum value
-            pref_sum = 0
-            # raise each codon preference to the power of parameter-1 and update sum
-            for codon in query_table[species][residue]:
-                query_table[species][residue][codon] **= parameter - 1
-                pref_sum += query_table[species][residue][codon]
-            # divide the codon preferences by sum
-            for codon in query_table[species][residue]:
-                query_table[species][residue][codon] /= pref_sum
-    return query_table
-
-
 def averaged_table(query, equal_species, species_expression):
     """
     Creates the 0th iteration multi-table, which is just an average of the individual codon preferences of species
@@ -497,7 +466,7 @@ def optimize_sequence(random_num_table, query):
     return optimmized_query
 
 
-def get_rca_xyz(codon_counts, parameter=2.5):
+def get_rca_xyz(codon_counts):
     """
     a function for determining the rca_xyz value of each codon for each species where
         rca_xyz(xyz) = f(xyz)/f1(x)f2(y)f3(z)
@@ -507,8 +476,6 @@ def get_rca_xyz(codon_counts, parameter=2.5):
     dictionary, where the keys are the one-letter abbreviations for amino acids. Those values are another dictionary,
     where the keys are the codons that encode for that amino acid. The value of the codon keys is the total counts for
     that codon
-    :param parameter: to use Dirichlet priors to improve accuracy of frequency values, both codon frequency and
-    base positional frequency will be raised to the power of this parameter -1 and then renormalized to sum to 1
     :return: a two-layer nested dictionary. The outermost layer uses species' ID as the key, and the value is a
     dictionary in which the key is a codon, and the value is the rca_xyz value for that codon for that species
     """
@@ -553,7 +520,7 @@ def get_rca_xyz(codon_counts, parameter=2.5):
                 # calculates the codon
                 frequency[species][codon] = (
                     codon_counts[species][residue][codon] / count_sum[species]
-                ) ** (parameter - 1)
+                )
                 # adds to the total sum of all codon frequences
                 adjusted_frequency_sum += frequency[species][codon]
                 # loops through the codon string to determine which base occurs at which position
@@ -574,8 +541,6 @@ def get_rca_xyz(codon_counts, parameter=2.5):
         for base in base_position[species]:
             for i in base_position[species][base]:
                 base_position[species][base][i] /= count_sum[species]
-                # raises to prior parameter
-                base_position[species][base][i] **= parameter - 1
                 # adds to total of base_position frequencies
                 base_sum[i] += base_position[species][base][i]
         # loops through the base position dictionary to divide base position frequency by sum of frequencies at
@@ -631,9 +596,7 @@ def calculate_predicted_expression(rca_xyz, optimized_dna):
         # subtracts 1 from the rca value to get the final rca value
     # initiates the minimum expression value
     min_exp = 1000000000000000000
-    # raises 10 to the power of the RCA, as the RCA is proportional to the log of expression
     for species in rca:
-        rca[species] = 10 ** (rca[species])
         # determines the minimum predicted expression value
         if rca[species] < min_exp:
             min_exp = rca[species]
@@ -705,7 +668,7 @@ def adjust_table(
     :param query_table: a three-layer nested dictionary. The outermost layer uses species' ID as the key.
     The value is dictionary, where the keys are the one-letter abbreviations for amino acids. Those values are another
     dictionary, where the keys are the codons that encode for that amino acid. The value of the codon keys is the codon
-    preference. This is after taking the Dirichlet priors and removing prohibited codons
+    preference.
     :param rca_expression_dif: a dictionary of the target expression of a species minus the predicted expression,
     indexed by the species ID
     :param species_expression: a dictionary of the target expression of a species indexed by the species ID
@@ -771,7 +734,7 @@ def optimize_multitable_sd(
     :param query_table: a three-layer nested dictionary. The outermost layer uses species' ID as the key.
     The value is dictionary, where the keys are the one-letter abbreviations for amino acids. Those values are another
     dictionary, where the keys are the codons that encode for that amino acid. The value of the codon keys is the codon
-    preference. This is after taking the Dirichlet priors and removing prohibited codons
+    preference.
     :param rca_xyz: a two-layer nested dictionary. The outermost layer uses species' ID as the key, and the value is a
     dictionary in which the key is a codon, and the value is the rca value for that codon for that species
     :param species_expression: a dictionary in which the index is the species ID and the value is the relative
@@ -831,7 +794,13 @@ def optimize_multitable_sd(
 
 
 def optimize_multitable_ad(
-    multi_table, query, query_table, rca_xyz, species_expression, et=0, iterations=1000
+    multi_table,
+    query,
+    query_table,
+    rca_xyz,
+    species_expression,
+    et=0.05,
+    iterations=1000,
 ):
     """
     iterates upon the multi_table while optimizing the query to select the best-optimized DNA sequence using an
@@ -844,7 +813,7 @@ def optimize_multitable_ad(
     :param query_table: a three-layer nested dictionary. The outermost layer uses species' ID as the key.
     The value is dictionary, where the keys are the one-letter abbreviations for amino acids. Those values are another
     dictionary, where the keys are the codons that encode for that amino acid. The value of the codon keys is the codon
-    preference. This is after taking the Dirichlet priors and removing prohibited codons
+    preference.
     :param rca_xyz: a two-layer nested dictionary. The outermost layer uses species' ID as the key, and the value is a
     dictionary in which the key is a codon, and the value is the rca value for that codon for that species
     :param species_expression: a dictionary in which the index is the species ID and the value is the relative
