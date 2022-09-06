@@ -476,8 +476,6 @@ def get_rca_xyz(codon_counts):
     dictionary, where the keys are the one-letter abbreviations for amino acids. Those values are another dictionary,
     where the keys are the codons that encode for that amino acid. The value of the codon keys is the total counts for
     that codon
-    :param parameter: to use Dirichlet priors to improve accuracy of frequency values, both codon frequency and
-    base positional frequency will be raised to the power of this parameter -1 and then renormalized to sum to 1
     :return: a two-layer nested dictionary. The outermost layer uses species' ID as the key, and the value is a
     dictionary in which the key is a codon, and the value is the rca_xyz value for that codon for that species
     """
