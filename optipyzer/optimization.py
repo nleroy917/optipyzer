@@ -1,5 +1,6 @@
+from typing import Union
 from optipyzer.const import DEFAULT_NUM_ITERATIONS
-from .oengine import (
+from optipyzer.oengine import (
     averaged_table,
     remove_prohibited_codons,
     find_prohibited_codons,
@@ -8,8 +9,8 @@ from .oengine import (
     optimize_multitable_ad,
     optimize_multitable_sd,
 )
-from .utils import seq_detect, aa_to_dna
-from .db.interfaces import calc_codon_usage
+from optipyzer.utils import seq_detect, aa_to_dna
+from optipyzer.db.interfaces import calc_codon_usage
 
 
 def _calc_average_table(usage_data: dict, weights: dict):
@@ -28,7 +29,7 @@ def codon_optimize(
     weights: dict = None,
     seq_type: str = None,
     iterations: int = DEFAULT_NUM_ITERATIONS,
-    seed: int = None,
+    seed: Union[str, int] = None,
 ):
     """Optimize a sequence given an organism list and a map/dictionary of weights"""
     if seq_type is None:

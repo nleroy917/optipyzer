@@ -13,6 +13,7 @@ import WeightSelector from '@/components/WeightSelector'
 import { QueryError, QueryResult, Species, Weights } from '@/..'
 import { purgeWeights } from '@/utils/purgeWeights'
 import { NextPage } from 'next'
+import HyperParameterSelection from '@/components/HyperParameterSelection'
 
 const OptimizePage: NextPage = () => {
   // state
@@ -20,6 +21,8 @@ const OptimizePage: NextPage = () => {
   const [species, setSpecies] = useState<Species[]>([])
   const [weights, setWeights] = useState<Weights>({})
   const [seq, setSeq] = useState<string>('')
+  const [iterations, setIterations] = useState<number | null>(null)
+  const [seed, setSeed] = useState<string | number | null>(null)
   const [optimizing, setOptimizing] = useState<boolean>(false)
   const [result, setResult] = useState<QueryResult | null>(null)
   const [error, setError] = useState<QueryError | null>(null)
@@ -45,6 +48,8 @@ const OptimizePage: NextPage = () => {
           seq: seq,
           org_list: species.map((s) => s.id),
           weights: weights,
+          seed: seed,
+          iterations: iterations,
         }
       )
       .then((res: AxiosResponse<QueryResult>) => {
@@ -128,7 +133,12 @@ const OptimizePage: NextPage = () => {
               Input sequence:
             </p>
             <SeqInput seq={seq} setSeq={setSeq} seqType={seqType} />
-
+            <HyperParameterSelection
+              iterations={iterations}
+              setIterations={setIterations}
+              seed={seed}
+              setSeed={setSeed}
+            />
             {optimizing ? (
               <button
                 className="px-4 py-2 my-2 text-lg font-bold text-white transition-all bg-blue-800 border-2 border-blue-800 rounded-lg cursor-wait"
