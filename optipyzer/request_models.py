@@ -7,6 +7,7 @@ class OptimizeQuery(BaseModel):
     seq: str
     weights: Dict[str, int]
     iterations: Optional[int]
+    seed: Optional[int]
 
     class Config:
         schema_extra = {

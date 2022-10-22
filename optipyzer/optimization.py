@@ -28,6 +28,7 @@ def codon_optimize(
     weights: dict = None,
     seq_type: str = None,
     iterations: int = DEFAULT_NUM_ITERATIONS,
+    seed: int = None,
 ):
     """Optimize a sequence given an organism list and a map/dictionary of weights"""
     if seq_type is None:
@@ -51,16 +52,34 @@ def codon_optimize(
 
     peptide_seq, stop_codon = validate_query(seq, (seq_type == "dna"))
 
+    # squared difference optimization
     (
         optimized_sd,
         min_difference_sumsquares,
         best_expression_sd,
     ) = optimize_multitable_sd(
-        average_table, peptide_seq, usage_data, rca_xyz, weights, iterations=iterations
+        average_table, 
+        peptide_seq, 
+        usage_data, 
+        rca_xyz, 
+        weights, 
+        iterations=iterations, 
+        seed=seed
     )
 
-    optimized_ad, min_difference_absvalue, best_expression_ad = optimize_multitable_ad(
-        average_table, peptide_seq, usage_data, rca_xyz, weights, iterations=iterations
+    # absolute difference optimization
+    (
+        optimized_ad, 
+        min_difference_absvalue, 
+        best_expression_ad 
+    ) = optimize_multitable_ad(
+        average_table, 
+        peptide_seq, 
+        usage_data, 
+        rca_xyz, 
+        weights, 
+        iterations=iterations, 
+        seed=seed
     )
 
     return {
