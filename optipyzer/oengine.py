@@ -428,7 +428,7 @@ def validate_query(query, DNA):
     return query, stop_pos
 
 
-def optimize_sequence(random_num_table, query):
+def optimize_sequence(random_num_table, query, seed=None):
     """
     takes the current iteration of the multi-species optimized codon preference table and uses it with a weighted
     codon-randomization method to convert a fasta-formatted protein sequence to an optimized DNA sequence
@@ -439,11 +439,17 @@ def optimize_sequence(random_num_table, query):
     :param query: a fasta=formatted protein sequence of the gene to be optimized
     :return:
     """
+    # set a seed if passed
+    # to create a random number generator
+    if seed:
+        rng = random.Random(seed)
+    else:
+        rng = random.Random()
     # initialize the DNA sequence
     optimmized_query = ""
     # loops through the query and generates a random integer between 1 and 100000 for each residue in query
     for residue in query:
-        value = random.randint(1, 100000001)
+        value = rng.randint(1, 100000001)
         # compares random number to the random number bounds for that codon
         # adds the appropriate DNA codon (based on the random number) to the optimized query
         for codon in random_num_table[residue]:
@@ -455,7 +461,7 @@ def optimize_sequence(random_num_table, query):
                 optimmized_query += codon
     # generates a random integer between 1 and 100000 and compares it to the random number bounds for the stop codons
     # adds the selected stop codon to the optimized DNA sequence
-    value = random.randint(1, 100000001)
+    value = rng.randint(1, 100000001)
     for codon in random_num_table["Stop"]:
         if (
             random_num_table["Stop"][codon][0]
@@ -660,7 +666,13 @@ def get_redundantaa_rn(query):
 
 
 def adjust_table(
-    rca_expression_dif, species_expression, et, aa_rn, query_table, multi_table
+    rca_expression_dif,
+    species_expression,
+    et,
+    aa_rn,
+    query_table,
+    multi_table,
+    seed=None,
 ):
     """
     Adjusts the table in favor of or against species that have a predicted expression different than their target
@@ -685,6 +697,10 @@ def adjust_table(
     encode that residue are the key, and the value is the codon preference after adjusting for species over- or under-
     performing.
     """
+    if seed is not None:
+        rng = random.Random(seed)
+    else:
+        rng = random.Random()
     for species in rca_expression_dif:
         # when current table is performing worse than the current best table, adjusts the multi_table
         # codon preferences in favor of species which currently has an expression difference greater than
@@ -696,7 +712,7 @@ def adjust_table(
             # in the query
             while aa_adjusted < 10:
                 aa_adjusted += 1
-                v = random.randint(1, 100000001)
+                v = rng.randint(1, 100000001)
                 for residue in aa_rn:
                     new_sum = 0
                     if aa_rn[residue][0] <= v < aa_rn[residue][1]:
@@ -722,6 +738,7 @@ def optimize_multitable_sd(
     species_expression,
     et=0.05,
     iterations=1000,
+    seed=None,
 ):
     """
     iterates upon the multi_table while optimizing the query to select the best-optimized DNA sequence using a sum of
@@ -756,7 +773,7 @@ def optimize_multitable_sd(
         # levels
         square_diff = 0
         # calls to optimmize the query sequence
-        optimized_seq = optimize_sequence(rn, query)
+        optimized_seq = optimize_sequence(rn, query, seed=seed)
         # calculates the rca measure of relative expression for each species
         rca = calculate_predicted_expression(rca_xyz, optimized_seq)
         # initializes a dictionary to store the difference in species expression
@@ -781,6 +798,7 @@ def optimize_multitable_sd(
                 aa_rn,
                 query_table,
                 multi_table,
+                seed=seed,
             )
             # gets a new random number table for the new table
             rn = get_multitable_randomnumbers(multi_table)
@@ -801,6 +819,7 @@ def optimize_multitable_ad(
     species_expression,
     et=0.05,
     iterations=1000,
+    seed=None,
 ):
     """
     iterates upon the multi_table while optimizing the query to select the best-optimized DNA sequence using an
@@ -860,6 +879,7 @@ def optimize_multitable_ad(
                 aa_rn,
                 query_table,
                 multi_table,
+                seed=seed,
             )
             # gets a new random number table for the new table
             rn = get_multitable_randomnumbers(multi_table)

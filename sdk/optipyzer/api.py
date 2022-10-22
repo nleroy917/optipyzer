@@ -1,15 +1,20 @@
-from typing import Dict
+from typing import Dict, Optional, Union
 import requests
 import time
-from .const import LOCAL_SERVER_BASE, PUBLIC_SERVER_BASE, SESSION_HDRS, SLEEP_MIN
-from .log import _LOGGER
-from .helpers import verify_dna, verify_protein
+from sdk.optipyzer.const import (
+    LOCAL_SERVER_BASE,
+    PUBLIC_SERVER_BASE,
+    SESSION_HDRS,
+    SLEEP_MIN,
+)
+from sdk.optipyzer.log import _LOGGER
+from sdk.optipyzer.helpers import verify_dna, verify_protein
 
 # return types
 from requests import Response
-from .models import SearchResult
-from .const import VALID_SEQ_TYPES
-from .models import CodonUsage, OptimizationResult
+from sdk.optipyzer.models import SearchResult
+from sdk.optipyzer.const import VALID_SEQ_TYPES
+from sdk.optipyzer.models import CodonUsage, OptimizationResult
 
 
 class api:
@@ -75,7 +80,12 @@ class api:
         return search_results
 
     def optimize(
-        self, seq: str, weights: Dict[str, int], seq_type: str = "dna"
+        self,
+        seq: str,
+        weights: Dict[str, int],
+        seq_type: str = "dna",
+        iterations: Optional[int] = None,
+        seed: Optional[Union[int, str]] = None,
     ) -> OptimizationResult:
         """Optimize a sequence given specific organism weights"""
         # force seq_type lower
@@ -93,7 +103,12 @@ class api:
         result = self._make_request(
             f"/optimize/{seq_type}",
             method="POST",
-            body_={"seq": seq, "weights": weights},
+            body_={
+                "seq": seq,
+                "weights": weights,
+                "iterations": iterations,
+                "seed": seed,
+            },
         )
         return result.json()
 

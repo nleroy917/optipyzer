@@ -27,6 +27,7 @@ def optimize_dna(query: OptimizeQuery = Depends(verify_dna)):
         query.weights,
         seq_type="dna",
         iterations=(query.iterations or DEFAULT_NUM_ITERATIONS),
+        seed=query.seed,
     )
 
     return result
@@ -49,6 +50,7 @@ def optimize_protein(query: OptimizeQuery = Depends(verify_protein)):
         query.weights,
         seq_type="protein",
         iterations=(query.iterations or DEFAULT_NUM_ITERATIONS),
+        seed=query.seed,
     )
 
     return result
