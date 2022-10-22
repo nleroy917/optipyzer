@@ -1,7 +1,12 @@
 from typing import Dict, Optional, Union
 import requests
 import time
-from sdk.optipyzer.const import LOCAL_SERVER_BASE, PUBLIC_SERVER_BASE, SESSION_HDRS, SLEEP_MIN
+from sdk.optipyzer.const import (
+    LOCAL_SERVER_BASE,
+    PUBLIC_SERVER_BASE,
+    SESSION_HDRS,
+    SLEEP_MIN,
+)
 from sdk.optipyzer.log import _LOGGER
 from sdk.optipyzer.helpers import verify_dna, verify_protein
 
@@ -75,12 +80,12 @@ class api:
         return search_results
 
     def optimize(
-        self, 
-        seq: str, 
-        weights: Dict[str, int], 
-        seq_type: str = "dna", 
+        self,
+        seq: str,
+        weights: Dict[str, int],
+        seq_type: str = "dna",
         iterations: Optional[int] = None,
-        seed: Optional[Union[int, str]] = None
+        seed: Optional[Union[int, str]] = None,
     ) -> OptimizationResult:
         """Optimize a sequence given specific organism weights"""
         # force seq_type lower
@@ -99,10 +104,10 @@ class api:
             f"/optimize/{seq_type}",
             method="POST",
             body_={
-                "seq": seq, 
+                "seq": seq,
                 "weights": weights,
                 "iterations": iterations,
-                "seed": seed
+                "seed": seed,
             },
         )
         return result.json()

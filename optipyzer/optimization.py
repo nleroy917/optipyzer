@@ -59,28 +59,28 @@ def codon_optimize(
         min_difference_sumsquares,
         best_expression_sd,
     ) = optimize_multitable_sd(
-        average_table, 
-        peptide_seq, 
-        usage_data, 
-        rca_xyz, 
-        weights, 
-        iterations=iterations, 
-        seed=seed
+        average_table,
+        peptide_seq,
+        usage_data,
+        rca_xyz,
+        weights,
+        iterations=iterations,
+        seed=seed,
     )
 
     # absolute difference optimization
     (
-        optimized_ad, 
-        min_difference_absvalue, 
-        best_expression_ad 
+        optimized_ad,
+        min_difference_absvalue,
+        best_expression_ad,
     ) = optimize_multitable_ad(
-        average_table, 
-        peptide_seq, 
-        usage_data, 
-        rca_xyz, 
-        weights, 
-        iterations=iterations, 
-        seed=seed
+        average_table,
+        peptide_seq,
+        usage_data,
+        rca_xyz,
+        weights,
+        iterations=iterations,
+        seed=seed,
     )
 
     return {

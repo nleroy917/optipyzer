@@ -666,7 +666,13 @@ def get_redundantaa_rn(query):
 
 
 def adjust_table(
-    rca_expression_dif, species_expression, et, aa_rn, query_table, multi_table, seed=None
+    rca_expression_dif,
+    species_expression,
+    et,
+    aa_rn,
+    query_table,
+    multi_table,
+    seed=None,
 ):
     """
     Adjusts the table in favor of or against species that have a predicted expression different than their target
@@ -732,7 +738,7 @@ def optimize_multitable_sd(
     species_expression,
     et=0.05,
     iterations=1000,
-    seed=None
+    seed=None,
 ):
     """
     iterates upon the multi_table while optimizing the query to select the best-optimized DNA sequence using a sum of
@@ -792,7 +798,7 @@ def optimize_multitable_sd(
                 aa_rn,
                 query_table,
                 multi_table,
-                seed=seed
+                seed=seed,
             )
             # gets a new random number table for the new table
             rn = get_multitable_randomnumbers(multi_table)
@@ -813,7 +819,7 @@ def optimize_multitable_ad(
     species_expression,
     et=0.05,
     iterations=1000,
-    seed=None
+    seed=None,
 ):
     """
     iterates upon the multi_table while optimizing the query to select the best-optimized DNA sequence using an
@@ -873,7 +879,7 @@ def optimize_multitable_ad(
                 aa_rn,
                 query_table,
                 multi_table,
-                seed=seed
+                seed=seed,
             )
             # gets a new random number table for the new table
             rn = get_multitable_randomnumbers(multi_table)
