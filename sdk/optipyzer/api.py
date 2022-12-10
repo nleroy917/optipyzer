@@ -16,6 +16,7 @@ from .models import SearchResult
 from .const import VALID_SEQ_TYPES, POPULAR_SPECIES
 from .models import CodonUsage, OptimizationResult
 
+
 class API:
     """
     Python interface for the Optipyzer web API.
@@ -84,7 +85,7 @@ class API:
         time.sleep(max(SLEEP_MIN, self.sleep_time))
 
         return response
-    
+
     def _prepare_org_id(self, org_id: Union[str, int]) -> int:
         """
         Prepare an organism ID for use in a request
@@ -151,7 +152,7 @@ class API:
             verify_dna(seq)
         else:
             verify_protein(seq)
-        
+
         # replace species names with ids
         for species in list(weights.keys()):
             weights[self._prepare_org_id(species)] = weights.pop(species)
@@ -169,7 +170,7 @@ class API:
         )
         return result.json()
 
-    def pull_codons(self, org_id: Union[int,str]) -> CodonUsage:
+    def pull_codons(self, org_id: Union[int, str]) -> CodonUsage:
         """
         Pull codon usage data for a specific organism
 

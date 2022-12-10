@@ -1,5 +1,6 @@
 import optipyzer
 
+
 def test_create_api():
     api = optipyzer.API()
     assert api
