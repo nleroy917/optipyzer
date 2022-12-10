@@ -1,0 +1,15 @@
+targets:
+  page:
+    jinja_template: v1/generic.jinja
+    mm_templates: https://databio.org/mm_templates/
+    command: |
+      pandoc \
+        --from markdown \
+        --to rst \
+        -o {output_file}
+  index:
+    inherits_from: page
+    output_file: source/index.rst
+    data:
+      md_files:
+        data: md/index.md
