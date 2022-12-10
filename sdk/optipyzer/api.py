@@ -151,6 +151,10 @@ class API:
             verify_dna(seq)
         else:
             verify_protein(seq)
+        
+        # replace species names with ids
+        for species in list(weights.keys()):
+            weights[self._prepare_org_id(species)] = weights.pop(species)
 
         # make optimization request
         result = self._make_request(
@@ -173,7 +177,7 @@ class API:
 
         :return: A CodonUsage object
         """
-
+        org_id = self._prepare_org_id(org_id)
         result = self._make_request(
             f"/species/{org_id}/codons",
         )
