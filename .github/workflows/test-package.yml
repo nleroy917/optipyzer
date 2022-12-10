@@ -1,6 +1,9 @@
 name: Test Python Package
 
 on:
+  pull_request:
+    paths:
+      - sdk/**
   push:
     paths:
       - sdk/**
@@ -24,6 +27,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install .
           pip install pytest
-      - name: Run non user endpoints integration tests
+      - name: Run all tests for the package
         run: |
           pytest -x -vv tests

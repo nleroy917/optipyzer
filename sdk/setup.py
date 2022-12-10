@@ -1,5 +1,4 @@
 import setuptools
-from optipyzer.const import VERSION
 
 # create long desc.
 with open("README.md", "r") as fh:
@@ -9,6 +8,13 @@ with open("README.md", "r") as fh:
 requirements = []
 with open("requirements.txt") as f:
     requirements = f.read().splitlines()
+
+# get version from package
+with open("optipyzer/__init__.py") as f:
+    for line in f:
+        if line.startswith("__version__"):
+            VERSION = line.split("=")[1].strip().strip('"')
+            break
 
 setuptools.setup(
     name="optipyzer",
