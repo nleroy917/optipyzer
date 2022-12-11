@@ -23,6 +23,7 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install -r requirements.txt
+          pip install httpx
 
       # run tests
       - name: Run Tests
