@@ -10,10 +10,10 @@ with open("requirements.txt") as f:
     requirements = f.read().splitlines()
 
 # get version from package
-with open("optipyzer/__init__.py") as f:
+with open("optipyzer/const.py") as f:
     for line in f:
-        if line.startswith("__version__"):
-            VERSION = line.split("=")[1].strip().strip('"')
+        if line.startswith("VERSION"):
+            VERSION=line.split("=")[1].strip().strip('"')
             print("Uploading version:", VERSION)
             break
 
