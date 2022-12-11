@@ -14,6 +14,7 @@ with open("optipyzer/__init__.py") as f:
     for line in f:
         if line.startswith("__version__"):
             VERSION = line.split("=")[1].strip().strip('"')
+            print("Uploading version:", VERSION)
             break
 
 setuptools.setup(

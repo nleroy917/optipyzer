@@ -2,9 +2,9 @@
 
 ## Introduction
 
-The optipyzer is a lightweight python package that interfaces the core opitpyzer server for use inside python programs. It lets you codon optimize any DNA or protein sequences inside python by providing a convenient API to construct and make requests to the optimization server. It returns the results as python objects for downstream use.
+_optipyzer_ is a lightweight python package that interfaces the core opitpyzer server for use inside python programs. It lets you codon optimize any DNA or protein sequences inside python by providing a convenient API to construct and make requests to the optimization server. It returns the results as python objects for downstream use.
 
-If you are intereted in the optimization algorithm, see the [algorithm section](#the-algorithm) below.
+If you are interested in the optimization algorithm, see the [algorithm section](#the-algorithm) below.
 
 ## Installation
 
@@ -14,7 +14,7 @@ pip install optipyzer
 
 ## Quick Start
 
-To get started, simply crete an `API` instance, and start making requests:
+To get started, simply create an `API` instance, and start making requests:
 
 ```python
 import optipyzer

@@ -1,34 +1,33 @@
-# Optipyzer SDK
-This is the Software Developer Kit for the Optipyzer engine. It privides an API for the engine, as well as a wrapper for the web-API that lets you search organisms and pull codon usage data for an organism. This library is inteneded for use by those who want to customize their codon optimization beyond the capabilities of the site.
+# Optipyzer
 
-# Installation
-```sh
+_optipyzer_ is a lightweight python package that interfaces the core opitpyzer server for use inside python programs. It lets you codon optimize any DNA or protein sequences inside python by providing a convenient API to construct and make requests to the optimization server. It returns the results as python objects for downstream use.
+
+## Installation
+
+```console
 pip install optipyzer
 ```
 
-# Quick Start
+## Quick Start
+
+To get started, simply create an `API` instance, and start making requests:
+
 ```python
 import optipyzer
 
-# initalize API
-optipyzer = optipyzer.api()
+api = optipyzer.API()
 
-# search for e coli
-results = optipyzer.search(name='Escherichia Coli')
-org1 = results[0]
+gblock = "ATGGCCCTTTAA"
 
-# search for campylbacter
-results = optipyzer.search(name='Campylobacter')
-org2 = results[0]
+result = api.optimize(
+        seq=dna_seq,
+        seq_type="dna",
+        weights={"human": 2, "mouse": 1},
+    )
 
-# pull codon usage for those organisms
-codon_usage1 = optipyzer.pull_codons(org1)
-codon_usage2 = optipyzer.pull_codons(org2)
-
-# optimize a sequence to those organisms, weight campylobascter twice as much
-seq = 'ATGGCTACTGCATGCTTAGCATGCATGACT'
-optimized = optipyzer.optimize(seq,org_list=[org1,org2],weights=[1,2])
+print(result['optimized_sd'])
 ```
 
-# More Information
-For a more detailed tutorial, please visit the [dev tools page](https://optipyzer.herokuapp.com)
+## More Information
+
+For a more detailed tutorial, please visit the [docs](https://optipyzer.readthedocs.org)
