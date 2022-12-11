@@ -1,0 +1,2 @@
+sphinx==3.4.3
+sphinx_autodoc_typehints==1.12.0
