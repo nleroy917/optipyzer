@@ -114,7 +114,7 @@ $$
 
 <br></br>
 
-![**a.)** Heatmap describing the codon usage preferences for the top 24 most common codons and 10 popular species. Each species uses codons in a preferential manner. **b.)** Basic input and output flow of Optipyzer. A query sequence and species weights are required as input, and Optipyzer will output an optimized sequence. **c.)** Detailed flow of the Optipyzer algorithm. Species codon usage data are combined using a weighted average to create a unified usage table. This table is combined with a query sequence and a new sequence is generated. The new sequence is checked using RCA to predict the relative expression in each species. If the relative expression does not align with the input query, the combined table is updated and a new sequence is generated and checked again. Once the sequence exhibits the desired predicted expression profile the algorithm stops. **d.)** The architecture of Optipyzer is structured with a central optimization server. The web client and Python API communicate to the server through HTTP.](../images/fig1.png)
+![figure 1](../images/fig1.png)
 
 <br></br>
 
