@@ -2,16 +2,26 @@ library(tidyverse)
 
 gc <- read_csv("results/pairwise_gc_content.csv")
 gc_melted <- gc %>% 
-  select(idt_gc, optipyzer_gc, id) %>% 
+  select(idt_gc, optipyzer_gc, jcat_gc, id) %>% 
   reshape2::melt(id.vars='id')
+
+# anova
+
 
 # bar plot
 gc_melted %>% 
-  ggplot(aes(x=id, y=value, fill=variable)) +
-  geom_bar(stat='identity', position='dodge') +
+  ggplot(aes(x=id, y=value, fill=variable, color=variable)) +
+  geom_bar(stat='identity', position='dodge', alpha=0.8, show.legend=FALSE) +
   theme_classic() +
   labs(x="Protein", "GC-Content") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+ggsave(
+  "~/Desktop/gc_analysis.svg",
+  height=100,
+  width=80,
+  units="mm"
+)
 
 # scatter
 gc %>% 
