@@ -20,7 +20,9 @@ def optimize_dna(query: OptimizeQuery = Depends(verify_dna)):
         for species in list(query.weights.keys()):
             query.weights[prepare_org_id(species)] = query.weights.pop(species)
     except ValueError as e:
-        raise HTTPException(status_code=400, detail=f"Error validating organism id: {e}")
+        raise HTTPException(
+            status_code=400, detail=f"Error validating organism id: {e}"
+        )
 
     result = codon_optimize(
         query.seq,
@@ -43,7 +45,9 @@ def optimize_protein(query: OptimizeQuery = Depends(verify_protein)):
         for species in list(query.weights.keys()):
             query.weights[prepare_org_id(species)] = query.weights.pop(species)
     except ValueError as e:
-        raise HTTPException(status_code=400, detail=f"Error validating organism id: {e}")
+        raise HTTPException(
+            status_code=400, detail=f"Error validating organism id: {e}"
+        )
 
     result = codon_optimize(
         query.seq,

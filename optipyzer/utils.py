@@ -37,6 +37,7 @@ def clean_seq(s: str) -> str:
     # remove all newlines and whitespace
     return re.sub(r"\s+", "", s)
 
+
 def prepare_org_id(org_id: Union[str, int]) -> int:
     """
     Prepare an organism ID for use in a request
