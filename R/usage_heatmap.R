@@ -34,6 +34,19 @@ colnames(cud.popular.normalized) <- (
   c("org_id", unlist(POPULAR_AMINO_ACIDS))
 )
 
+cud.popular.normalized$org_name <-sapply(
+  cud.popular.normalized$org_id, function(i) {
+    return (
+      org_id_to_name(i)
+    )
+  }
+)
+
+.sub.cud.popular.noramlized <- .sub.cud.popular.noramlized[,
+  c("org_name", "GGT", "GGC","GGA", "GGG")
+]
+
+
 
 # convert to long format
 cud.popular.normalized.long <- pivot_longer(
@@ -68,6 +81,10 @@ p <- ggplot(
   geom_tile(color = "black") +
   scale_fill_gradient(low = "white", high = "red") +
   theme(
+    panel.background = element_rect(fill = "transparent"),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    plot.background = element_rect(fill = "transparent", color = NA),
     axis.text.x = element_text(
       size=10, angle = 90, vjust = 0.5, hjust=1
     ),

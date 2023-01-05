@@ -117,3 +117,16 @@ AA_CODON_LIBRARY = {
 }
 
 DEFAULT_NUM_ITERATIONS = 1000
+
+POPULAR_SPECIES = {
+    "african_clawed_frog": 122771,
+    "yeast": 121713,
+    "c_elegans": 122001,
+    "e_coli": 16815,
+    "drosophila": 122056,
+    "human": 122563,
+    "mouse": 122638,
+    "rat": 122645,
+    "thale_cress": 122263,
+    "zebrafish": 122731,
+}
