@@ -1,11 +1,12 @@
 from fastapi import APIRouter, Depends
+from fastapi.exceptions import HTTPException
 
-from optipyzer.optimization import codon_optimize
-from optipyzer.request_models import OptimizeQuery
-from optipyzer.response_models import OptimizationResult
-from optipyzer.const import DEFAULT_NUM_ITERATIONS
-
+from ..optimization import codon_optimize
+from ..request_models import OptimizeQuery
+from ..response_models import OptimizationResult
+from ..const import DEFAULT_NUM_ITERATIONS
 from ..dependencies import verify_dna, verify_protein
+from ..utils import prepare_org_id
 
 router = APIRouter(prefix="/optimize")
 
@@ -14,12 +15,14 @@ router = APIRouter(prefix="/optimize")
 def optimize_dna(query: OptimizeQuery = Depends(verify_dna)):
     """Codon optimize a DNA sequence given a list of organism weights"""
     # map to list of organisms
-    organism_list = [str(x) for x in query.weights]
-
-    # coerce all weights and org_id's to str
-    weights_cleaned = {}
-    for org in query.weights:
-        weights_cleaned[str(org)] = float(query.weights[org])
+    try:
+        organism_list = [prepare_org_id(x) for x in query.weights]
+        for species in list(query.weights.keys()):
+            query.weights[prepare_org_id(species)] = query.weights.pop(species)
+    except ValueError as e:
+        raise HTTPException(
+            status_code=400, detail=f"Error validating organism id: {e}"
+        )
 
     result = codon_optimize(
         query.seq,
@@ -37,12 +40,14 @@ def optimize_dna(query: OptimizeQuery = Depends(verify_dna)):
 def optimize_protein(query: OptimizeQuery = Depends(verify_protein)):
     """Codon optimize a protein sequence given a list of organism weights"""
     # map to list of organisms
-    organism_list = [str(x) for x in query.weights]
-
-    # coerce all weights and org_id's to str
-    weights_cleaned = {}
-    for org in query.weights:
-        weights_cleaned[str(org)] = float(query.weights[org])
+    try:
+        organism_list = [prepare_org_id(x) for x in query.weights]
+        for species in list(query.weights.keys()):
+            query.weights[prepare_org_id(species)] = query.weights.pop(species)
+    except ValueError as e:
+        raise HTTPException(
+            status_code=400, detail=f"Error validating organism id: {e}"
+        )
 
     result = codon_optimize(
         query.seq,
