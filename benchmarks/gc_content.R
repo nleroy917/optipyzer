@@ -11,9 +11,9 @@ gc_melted <- gc %>%
 # bar plot
 gc_melted %>% 
   ggplot(aes(x=id, y=value, fill=variable, color=variable)) +
-  geom_bar(stat='identity', position='dodge', alpha=0.8, show.legend=FALSE) +
+  geom_bar(stat='identity', position='dodge', alpha=0.8) +
   theme_classic() +
-  labs(x="Protein", "GC-Content") +
+  labs(x="Protein", y="GC-Content") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
 ggsave(
