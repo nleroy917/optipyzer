@@ -13,8 +13,7 @@
     "prettier:check": "prettier -c src",
     "format": "prettier -w src",
     "release": "standard-version",
-    "push-release": "git push --follow-tags origin main",
-    "postbuild": "next-sitemap"
+    "push-release": "git push --follow-tags origin main"
   },
   "dependencies": {
     "@headlessui/react": "^1.6.5",
