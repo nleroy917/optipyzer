@@ -28,7 +28,6 @@ import sys
 
 
 def reset_table(curs):
-
     try:
         # Drop table
         query = """ DROP TABLE autocomplete_data """
@@ -58,7 +57,6 @@ def reset_table(curs):
 
 
 def load_data(curs):
-
     # Get unqique species from database
     query = """SELECT * FROM ORGANISMS GROUP BY SPECIES"""
     curs.execute(query)
@@ -70,7 +68,6 @@ def load_data(curs):
     N = len(result)
     i = 1
     for row in result:
-
         # Update user
         print("Cleaned {}/{} rows".format(i, N))
         i += 1
@@ -107,7 +104,6 @@ def load_data(curs):
 
 
 def isolate_species(species_strain):
-
     # Split on spaces
     words = species_strain.split(" ")
 
@@ -121,7 +117,6 @@ def isolate_species(species_strain):
 
 
 def connect_to_db(db_file):
-
     # Attempt to connect to databse with specified file
     try:
         conn = sqlite3.connect(db_file)
@@ -134,7 +129,6 @@ def connect_to_db(db_file):
 
 
 if __name__ == "__main__":
-
     db_file = sys.argv[1]
 
     if not db_file:

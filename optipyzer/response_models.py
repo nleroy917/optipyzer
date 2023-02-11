@@ -1,6 +1,7 @@
 from typing import Dict, List
 from pydantic import BaseModel
 
+
 # model for an optimization result
 class OptimizationResult(BaseModel):
     query: str

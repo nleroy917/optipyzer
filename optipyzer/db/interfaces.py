@@ -2,6 +2,7 @@ from .database import SessionLocal
 from .models import Organism, AutocompleteOrganism, CodonUsage
 from ..const import AA_CODON_LIBRARY
 
+
 # not used unless the database connection
 # is required at the endpoint level
 def _get_db():
@@ -40,7 +41,6 @@ def calc_codon_usage(organism_id: int):
 
     # Iterate through each amino acid in the library, and pull data for it
     for aa in AA_CODON_LIBRARY:
-
         # Pull data for that particular amino acid and its codon preferences
         result = amino_acid_usage(organism_id, aa)
 
@@ -83,7 +83,6 @@ def amino_acid_usage(org_id: int, aa: str):
     a particular amino acid.
     """
     with SessionLocal() as db:
-
         # get list of codons
         codons = AA_CODON_LIBRARY[aa]
 
