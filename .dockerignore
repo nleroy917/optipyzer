@@ -1,0 +1,11 @@
+web/
+.env
+.venv
+venv
+env
+.vscode/
+benchmarks/
+R/
+scripts/
+sdk/
+tests/
