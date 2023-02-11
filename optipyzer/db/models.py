@@ -45,7 +45,6 @@ class AutocompleteOrganism(Base):
 
 
 class CodonUsage(Base):
-
     __tablename__ = "codon_usage"
 
     org_id = Column(Integer, primary_key=True)

@@ -18,7 +18,6 @@ def protein_seq():
 
 
 def test_optimize_dna(api: optipyzer.API, dna_seq: str):
-
     result = api.optimize(
         seq=dna_seq,
         seq_type="dna",
@@ -30,7 +29,6 @@ def test_optimize_dna(api: optipyzer.API, dna_seq: str):
 
 
 def test_optimize_dna_with_pop_names(api: optipyzer.API, dna_seq: str):
-
     result = api.optimize(
         seq=dna_seq,
         seq_type="dna",
@@ -42,7 +40,6 @@ def test_optimize_dna_with_pop_names(api: optipyzer.API, dna_seq: str):
 
 
 def test_optimize_protein(api: optipyzer.API, protein_seq: str):
-
     result = api.optimize(
         seq=protein_seq,
         seq_type="protein",
@@ -54,7 +51,6 @@ def test_optimize_protein(api: optipyzer.API, protein_seq: str):
 
 
 def test_optimize_protein_with_pop_names(api: optipyzer.API, protein_seq: str):
-
     result = api.optimize(
         seq=protein_seq,
         seq_type="protein",
