@@ -1,11 +1,15 @@
-# Optipyzer
+<h1 align="center">
+    <img height="175" src="web/public/optipyzer.svg" alt="Optipyzer logo" />
+    <div align="center">
+  <a href="https://doi.org/10.1101/2023.05.22.541759"><img src="http://img.shields.io/badge/DOI-10.1101/2023.05.22.541759-B31B1B.svg" alt="DOI:10.1101/2021.01.08.425840"></a>
+  <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a>
+  <img src="https://vercelbadge.vercel.app/api/nleroy917/optipyzer" alt="Vercel">
+  <a href="https://badge.fury.io/py/optipyzer"><img src="https://badge.fury.io/py/optipyzer.svg" alt="PyPI version"></a>
+</div>
+</h1>
 
-![Heroku](https://pyheroku-badge.herokuapp.com/?app=optipyzer-api)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-![Vercel](https://vercelbadge.vercel.app/api/nleroy917/optipyzer)
-[![PyPI version](https://badge.fury.io/py/optipyzer.svg)](https://badge.fury.io/py/optipyzer)
 
-A fast and flexible codon optimization tool. Optipyzer is capable of codon-optimizing both DNA and peptide sequences for multiple species at once while giving prefernce to certain species. The optimizer is hosted as a publically available web server with both a [web-interface](https://optipyzer.com) and a [python programming interface](https://pypi.org/project/optipyzer/) for one-off queries or more high-throughput frameworks.
+A fast and flexible codon optimization tool. Optipyzer is capable of codon-optimizing both DNA and peptide sequences for multiple species at once while giving prefernce to certain species. The optimizer is hosted as a publically available web server with both a [web-interface](https://optipyzer.com) and a [python programming interface](https://pypi.org/project/optipyzer/) for one-off queries or more high-throughput frameworks. You can read more about the algorithm and the tool in our [preprint](https://doi.org/10.1101/2023.05.22.541759).
 
 ## Web Application
 
