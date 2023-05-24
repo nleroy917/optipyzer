@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from 'axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import paper from '../../public/images/paper.png'
 
 import Seo from '@/components/Seo'
 
@@ -10,6 +11,7 @@ import github_logo from '../../public/images/github.png'
 // import paper from '../../public/images/paper.png'
 import landing_card from '../../public/images/query_result.png'
 import { NextPage } from 'next'
+import Image from 'next/image'
 
 const HomePage: NextPage = () => {
   // instantiate router and state
@@ -34,27 +36,28 @@ const HomePage: NextPage = () => {
       <main className="flex flex-col items-center justify-center h-screen">
         <div className="px-4 lg:max-w-screen-lg sm:max-w-screen-sm md:max-w-screen-sm">
           <div className="flex flex-row items-center justify-center md:justify-start">
-            <button
-              onClick={() =>
-                router.push('https://github.com/nleroy917/optipyzer')
-              }
-              className="flex flex-row items-center px-2 py-1 mr-1 font-bold transition-all bg-blue-200 border-2 border-black rounded-lg cursor-pointer justify-evenly w-28 hover:bg-blue-300"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img width="20px" src={github_logo.src} alt="GitHub logo" />
-              <span className="px-1 text-sm">GitHub</span>
-            </button>
-            {/* <button
-              onClick={() => router.push("https://github.com/nleroy917/optipyzer")} 
-              className="flex flex-row items-center w-32 px-2 py-1 mr-1 font-bold transition-all bg-gray-100 border-2 border-black rounded-lg opacity-50 cursor-not-allowed justify-evenly"
-            >
-              <img
-                width="20px"
-                src={paper.src}
-                alt="Paper logo"
-              />
-              <span className="px-1 text-sm">Publication</span>
-            </button> */}
+            <a href="https://github.com/nleroy917/optipyzer">
+              <button
+                className="flex flex-row items-center px-2 py-1 mr-1 font-bold transition-all bg-blue-200 border-2 border-black rounded-lg cursor-pointer justify-evenly w-28 hover:bg-blue-300"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img width="20px" src={github_logo.src} alt="GitHub logo" />
+                <span className="px-1 text-sm">GitHub</span>
+              </button>
+            </a>
+            <a href="https://www.biorxiv.org/content/10.1101/2023.05.22.541759v1" >
+              <button
+                className="flex flex-row items-center w-32 px-2 py-1 mr-1 font-bold transition-all bg-gray-100 border-2 border-black rounded-lg justify-evenly hover:bg-gray-300"
+              >
+                <Image
+                  height="20"
+                  width="20"
+                  src={paper.src}
+                  alt="Paper logo"
+                />
+                <span className="px-1 text-sm">Publication</span>
+              </button>
+            </a>
           </div>
           <h1 className="py-4 mb-4 text-6xl font-bold text-center text-blue-600 md:text-left md:text-8xl">
             Optipyzer
