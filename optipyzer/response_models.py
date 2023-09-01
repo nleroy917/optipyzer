@@ -1,21 +1,21 @@
-from typing import Dict, List
+from typing import Dict, List, Union
 from pydantic import BaseModel
 
 
 # model for an optimization result
 class OptimizationResult(BaseModel):
     query: str
-    weights: Dict[str, int]
+    weights: Dict[Union[str, int], int]
     seq_type: str
     peptide_seq: str
     dna_seq: str
     stop_codon: int
     optimized_sd: str
     min_difference_sumsquares: float
-    best_expression_sd: Dict[str, float]
+    best_expression_sd: Dict[Union[str, int], float]
     optimized_ad: str
     min_difference_absvalue: float
-    best_expression_ad: Dict[str, float]
+    best_expression_ad: Dict[Union[str, int], float]
 
     class Config:
         orm_mode = True

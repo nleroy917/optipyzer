@@ -34,13 +34,13 @@ import optipyzer
 
 api = optipyzer.API()
 
-gblock = "ATGGCCCTTTAA"
+dna_seq = "ATGGCCCTTTAA"
 
 result = api.optimize(
-        seq=dna_seq,
-        seq_type="dna",
-        weights={"human": 2, "mouse": 1},
-    )
+    seq=dna_seq,
+    seq_type="dna",
+    weights={"human": 2, "mouse": 1},
+)
 
 print(result['optimized_sd'])
 ```
@@ -69,13 +69,13 @@ import optipyzer
 
 api = optipyzer.API(local=True) # <--- specify you are using a local server
 
-gblock = "ATGGCCCTTTAA"
+dna_seq = "ATGGCCCTTTAA"
 
 result = api.optimize(
-        seq=dna_seq,
-        seq_type="dna",
-        weights={"human": 2, "mouse": 1},
-    )
+    seq=dna_seq,
+    seq_type="dna",
+    weights={"human": 2, "mouse": 1},
+)
 
 print(result['optimized_sd'])
 ```
