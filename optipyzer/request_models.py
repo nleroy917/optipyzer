@@ -10,7 +10,7 @@ class OptimizeQuery(BaseModel):
     seed: Optional[Union[int, str]]
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "description": "The optimization query that includes the sequence, and the organism weights",
             "example": {
                 "seq": "ATGCGTACTAGTCAGTCAGACTGACTG",
