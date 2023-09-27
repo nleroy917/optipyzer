@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router'
 import paper from '../../public/images/paper.png'
 
 import Seo from '@/components/Seo'
@@ -11,9 +10,6 @@ import Image from 'next/image'
 import { useServerVersion } from '@/queries/useServerVersion'
 
 const HomePage: NextPage = () => {
-  // instantiate router and state
-  const router = useRouter()
-
   // fetch version on load
   const { data: serverVersion } = useServerVersion()
 
@@ -57,20 +53,18 @@ const HomePage: NextPage = () => {
             sequence for you in seconds.
           </p>
           <div className="flex flex-row items-center justify-center my-4 md:justify-start">
-            <button
+            <a
               className="px-8 py-2 mr-2 text-lg font-bold text-white transition-all bg-blue-600 border-2 border-white rounded-lg hover:bg-blue-700"
-              onClick={() => router.push('/optimize')}
+              href="/optimize"
             >
               Optimize
-            </button>
-            <button
+            </a>
+            <a
               className="px-8 py-2 mr-2 text-lg font-bold text-blue-600 transition-all border-2 border-blue-600 rounded-lg hover:bg-gray-100"
-              onClick={() =>
-                router.push('https://github.com/nleroy917/optipyzer')
-              }
+              href="https://github.com/nleroy917/optipyzer"
             >
               About
-            </button>
+            </a>
           </div>
         </div>
         <div
