@@ -1,31 +1,21 @@
-import axios, { AxiosResponse } from 'axios'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
 import paper from '../../public/images/paper.png'
 
 import Seo from '@/components/Seo'
-
-import { ServerInfo } from '@/..'
 
 import github_logo from '../../public/images/github.png'
 // import paper from '../../public/images/paper.png'
 import landing_card from '../../public/images/query_result.png'
 import { NextPage } from 'next'
 import Image from 'next/image'
+import { useServerVersion } from '@/queries/useServerVersion'
 
 const HomePage: NextPage = () => {
   // instantiate router and state
   const router = useRouter()
-  const [version, setVersion] = useState<string>('0.1.0')
 
   // fetch version on load
-  useEffect(() => {
-    axios
-      .get<ServerInfo>('/api/version')
-      .then((res: AxiosResponse<ServerInfo>) => {
-        setVersion(res.data.version)
-      })
-  }, [])
+  const { data: serverVersion } = useServerVersion()
 
   return (
     <>
@@ -37,18 +27,14 @@ const HomePage: NextPage = () => {
         <div className="px-4 lg:max-w-screen-lg sm:max-w-screen-sm md:max-w-screen-sm">
           <div className="flex flex-row items-center justify-center md:justify-start">
             <a href="https://github.com/nleroy917/optipyzer">
-              <button
-                className="flex flex-row items-center px-2 py-1 mr-1 font-bold transition-all bg-blue-200 border-2 border-black rounded-lg cursor-pointer justify-evenly w-28 hover:bg-blue-300"
-              >
+              <button className="flex flex-row items-center px-2 py-1 mr-1 font-bold transition-all bg-blue-200 border-2 border-black rounded-lg cursor-pointer justify-evenly w-28 hover:bg-blue-300">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img width="20px" src={github_logo.src} alt="GitHub logo" />
                 <span className="px-1 text-sm">GitHub</span>
               </button>
             </a>
-            <a href="https://www.biorxiv.org/content/10.1101/2023.05.22.541759v1" >
-              <button
-                className="flex flex-row items-center w-32 px-2 py-1 mr-1 font-bold transition-all bg-gray-100 border-2 border-black rounded-lg justify-evenly hover:bg-gray-300"
-              >
+            <a href="https://www.biorxiv.org/content/10.1101/2023.05.22.541759v1">
+              <button className="flex flex-row items-center w-32 px-2 py-1 mr-1 font-bold transition-all bg-gray-100 border-2 border-black rounded-lg justify-evenly hover:bg-gray-300">
                 <Image
                   height="20"
                   width="20"
@@ -109,7 +95,7 @@ const HomePage: NextPage = () => {
             href="https://github.com/NLeRoy917/optipyzer"
             className="my-1 hover:underline"
           >
-            v{version}
+            v{serverVersion?.version ? serverVersion.version : '0.0.0'}
           </a>
           <p className="my-1">Made by Nathan LeRoy and Caleigh Roleck</p>
         </div>
