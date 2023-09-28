@@ -3,7 +3,7 @@ from statistics import *
 from math import *
 
 
-def find_prohibited_codons(query, preference_threshold=0.1):
+def find_prohibited_codons(query, preference_threshold: float = 0.1):
     """
     Searches through the query species codon tables to identify codons with
     preferences below a threshold for any query species
@@ -33,7 +33,7 @@ def find_prohibited_codons(query, preference_threshold=0.1):
     return prohibited_codons
 
 
-def remove_prohibited_codons(query, prohibited_codons, var_thresh=0.1):
+def remove_prohibited_codons(query, prohibited_codons, var_thresh: float = 0.1):
     """
     Adjusts the individual speciee' codon tables to set the preference of prohibited codons to 0 and
     normalize the acceptable codons so that each residue's total sum of codon preferences is equal to 1
