@@ -56,15 +56,12 @@ def calc_codon_usage(organism_id: int):
             )
             break
 
-        # define index or and new sub-dictionary
-        i = 0
         aa_dict = {}
 
         # for each codon associated with that amino acid
         # we will add the usage data to it and make an amino acid dictionjary data structure for it.
-        for codon in AA_CODON_LIBRARY[aa]:
+        for i, codon in enumerate(AA_CODON_LIBRARY[aa]):
             aa_dict[codon] = result[i]
-            i += 1
 
         # add this amino acid dicitionary to the total codon usage dictionary.
         counts[aa] = aa_dict
