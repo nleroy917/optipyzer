@@ -672,7 +672,7 @@ def adjust_table(
     aa_rn,
     query_table,
     multi_table,
-    seed=None,
+    seed = None,
 ):
     """
     Adjusts the table in favor of or against species that have a predicted expression different than their target
