@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction, useState } from 'react'
+import { Dispatch, FC, SetStateAction, useEffect, useState } from 'react'
 
 import { validateSequence } from '@/utils/validateSequence'
 
@@ -26,6 +26,18 @@ const SeqInput: FC<Props> = (props) => {
   const invalidStyling =
     'w-full p-2 mb-2 text-sm text-red-600 border border-red-600 rounded-lg shadow-md md:w-3/4 focus:border-red-600'
 
+  useEffect(() => {
+    const { isValid, message } = validateSequence(seq, seqType)
+
+    if (!isValid) {
+      setSeqIsInvalid(true)
+      setSeqValidationMessage(message)
+    } else {
+      setSeqIsInvalid(false)
+      setSeqValidationMessage(null)
+    }
+  }, [seqType, seq])
+
   return (
     <div className="w-full">
       <textarea
@@ -33,16 +45,6 @@ const SeqInput: FC<Props> = (props) => {
         onChange={(e) => {
           let s = e.target.value
           s = s.replace(/ {2}|\r\n|\n|\r/gm, '')
-
-          const { isValid, message } = validateSequence(s, seqType)
-
-          if (!isValid) {
-            setSeqIsInvalid(true)
-            setSeqValidationMessage(message)
-          } else {
-            setSeqIsInvalid(false)
-            setSeqValidationMessage(null)
-          }
 
           setSeq(s)
         }}
