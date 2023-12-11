@@ -44,8 +44,8 @@ const SeqInput: FC<Props> = (props) => {
         value={seq}
         onChange={(e) => {
           let s = e.target.value
+          // remove all whitespace and newlines
           s = s.replace(/ {2}|\r\n|\n|\r/gm, '')
-
           setSeq(s)
         }}
         className={seqIsInvalid ? invalidStyling : validStyling}
