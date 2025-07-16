@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> After nearly five years of running the public Optipyzer server at $7/month, I’ve decided to shut it down. While I know it’s been helpful to many, continuing to host it no longer makes sense financially—especially since self-hosting is straightforward. The server may return in the future, but for now, it's offline. If you need help setting up your own instance, feel free to reach out.
+
 <h1 align="center">
     <img height="175" src="web/public/optipyzer.svg" alt="Optipyzer logo" />
     <div align="center">
